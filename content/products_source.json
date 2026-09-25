@@ -1,0 +1,825 @@
+{
+  "version": 1,
+  "products": [
+    {
+      "name": "Samsung 990 PRO",
+      "slug": "samsung-990-pro",
+      "category": "hardware",
+      "official_url": "https://semiconductor.samsung.com/consumer-storage/internal-ssd/990-pro/",
+      "publisher": "Samsung",
+      "amazon_query": "Samsung 990 PRO NVMe SSD",
+      "summary": "Performance-focused internal solid-state storage in Samsung's consumer range.",
+      "interface": "PCIe NVMe storage interface",
+      "form": "Internal M.2 SSD",
+      "operations": "Check slot support, firmware, cooling, lane sharing, and backups.",
+      "best_for": "Workstations that prioritize fast local storage.",
+      "decision": "workstations that prioritize fast local storage"
+    },
+    {
+      "name": "WD_BLACK SN850X",
+      "slug": "wd-black-sn850x",
+      "category": "hardware",
+      "official_url": "https://www.westerndigital.com/products/internal-drives/wd-black-sn850x-nvme-ssd",
+      "publisher": "Western Digital",
+      "amazon_query": "WD BLACK SN850X NVMe SSD",
+      "summary": "An internal NVMe drive positioned for demanding PC workloads.",
+      "interface": "PCIe NVMe storage interface",
+      "form": "Internal M.2 SSD",
+      "operations": "Check platform support, firmware, thermals, lane sharing, and backups.",
+      "best_for": "Performance desktops and upgradeable development systems.",
+      "decision": "performance desktops and upgradeable development systems"
+    },
+    {
+      "name": "Crucial T500",
+      "slug": "crucial-t500",
+      "category": "hardware",
+      "official_url": "https://www.crucial.com/ssd/t500/ct1000t500ssd8",
+      "publisher": "Crucial",
+      "amazon_query": "Crucial T500 NVMe SSD",
+      "summary": "A modern internal NVMe drive for PCs and storage-intensive applications.",
+      "interface": "PCIe NVMe storage interface",
+      "form": "Internal M.2 SSD",
+      "operations": "Confirm motherboard support, firmware, heat management, and backups.",
+      "best_for": "Modern PC storage upgrades.",
+      "decision": "modern pc storage upgrades"
+    },
+    {
+      "name": "Samsung T7 Shield",
+      "slug": "samsung-t7-shield",
+      "category": "hardware",
+      "official_url": "https://semiconductor.samsung.com/consumer-storage/portable-ssd/t7-shield/",
+      "publisher": "Samsung",
+      "amazon_query": "Samsung T7 Shield portable SSD",
+      "summary": "Portable solid-state storage in a protective external enclosure.",
+      "interface": "USB host connection",
+      "form": "Portable external SSD",
+      "operations": "Plan cable compatibility, host performance, encryption, handling, and backups.",
+      "best_for": "Portable project storage across compatible systems.",
+      "decision": "portable project storage across compatible systems"
+    },
+    {
+      "name": "Crucial X9 Pro",
+      "slug": "crucial-x9-pro",
+      "category": "hardware",
+      "official_url": "https://www.crucial.com/ssd/x9-pro/ct1000x9prossd9",
+      "publisher": "Crucial",
+      "amazon_query": "Crucial X9 Pro portable SSD",
+      "summary": "A compact external solid-state drive for portable and creative workflows.",
+      "interface": "USB host connection",
+      "form": "Portable external SSD",
+      "operations": "Host ports affect performance; plan secure handling, encryption, and backups.",
+      "best_for": "Moving development or creative working sets between devices.",
+      "decision": "moving development or creative working sets between devices"
+    },
+    {
+      "name": "Keychron Q1 Max",
+      "slug": "keychron-q1-max",
+      "category": "hardware",
+      "official_url": "https://www.keychron.com/products/keychron-q1-max-qmk-via-wireless-custom-mechanical-keyboard",
+      "publisher": "Keychron",
+      "amazon_query": "Keychron Q1 Max keyboard",
+      "summary": "A customizable mechanical keyboard with wired and wireless connection options.",
+      "interface": "USB and supported wireless connections",
+      "form": "Desktop mechanical keyboard",
+      "operations": "Review layout, switches, firmware tools, wireless policy, and OS mapping.",
+      "best_for": "Fixed desks where programmability matters.",
+      "decision": "fixed desks where programmability matters"
+    },
+    {
+      "name": "Logitech MX Mechanical",
+      "slug": "logitech-mx-mechanical",
+      "category": "hardware",
+      "official_url": "https://www.logitech.com/en-us/products/keyboards/mx-mechanical.html",
+      "publisher": "Logitech",
+      "amazon_query": "Logitech MX Mechanical keyboard",
+      "summary": "A productivity mechanical keyboard designed for multi-device desktop use.",
+      "interface": "USB receiver and supported wireless connections",
+      "form": "Desktop mechanical keyboard",
+      "operations": "Confirm receiver support, layout, charging, device policy, and OS support.",
+      "best_for": "Office and development desks using multiple devices.",
+      "decision": "office and development desks using multiple devices"
+    },
+    {
+      "name": "Dell UltraSharp U2723QE",
+      "slug": "dell-ultrasharp-u2723qe",
+      "category": "hardware",
+      "official_url": "https://www.dell.com/en-us/shop/dell-ultrasharp-27-4k-usb-c-hub-monitor-u2723qe/apd/210-bdpf/monitors-monitor-accessories",
+      "publisher": "Dell",
+      "amazon_query": "Dell UltraSharp U2723QE monitor",
+      "summary": "A 27-inch UltraSharp display with high-resolution and USB-C hub functions.",
+      "interface": "Display and USB-C hub connections",
+      "form": "27-inch desktop monitor",
+      "operations": "Verify host charging, cable capability, scaling, ports, and ergonomics.",
+      "best_for": "Single-display workstations needing integrated hub connectivity.",
+      "decision": "single-display workstations needing integrated hub connectivity"
+    },
+    {
+      "name": "LG 27UP850-W",
+      "slug": "lg-27up850-w",
+      "category": "hardware",
+      "official_url": "https://www.lg.com/us/monitors/lg-27up850-w-uhd-monitor",
+      "publisher": "LG",
+      "amazon_query": "LG 27UP850-W monitor",
+      "summary": "A 27-inch UHD monitor with USB-C connectivity for desktop work.",
+      "interface": "Display and USB-C connections",
+      "form": "27-inch desktop monitor",
+      "operations": "Check charging needs, color workflow, scaling, cables, and stand requirements.",
+      "best_for": "Productivity and creative desks using a high-resolution panel.",
+      "decision": "productivity and creative desks using a high-resolution panel"
+    },
+    {
+      "name": "CalDigit TS4",
+      "slug": "caldigit-ts4",
+      "category": "hardware",
+      "official_url": "https://www.caldigit.com/thunderbolt-station-4/",
+      "publisher": "CalDigit",
+      "amazon_query": "CalDigit TS4 dock",
+      "summary": "A Thunderbolt dock consolidating display, storage, network, and peripheral access.",
+      "interface": "Thunderbolt host connection",
+      "form": "Desktop docking station",
+      "operations": "Verify host compatibility, displays, cables, power delivery, and drivers.",
+      "best_for": "Desk setups needing one-cable access to many peripherals.",
+      "decision": "desk setups needing one-cable access to many peripherals"
+    },
+    {
+      "name": "Raspberry Pi 5",
+      "slug": "raspberry-pi-5",
+      "category": "servers",
+      "official_url": "https://www.raspberrypi.com/products/raspberry-pi-5/",
+      "publisher": "Raspberry Pi",
+      "amazon_query": "Raspberry Pi 5",
+      "summary": "A compact single-board computer in the Raspberry Pi ecosystem.",
+      "interface": "Board-level I/O and network connectivity",
+      "form": "Single-board computer",
+      "operations": "Requires suitable power, storage, cooling, enclosure, OS, and backups.",
+      "best_for": "Learning, automation, lightweight services, and compact lab nodes.",
+      "decision": "learning, automation, lightweight services, and compact lab nodes"
+    },
+    {
+      "name": "Intel NUC 13 Pro",
+      "slug": "intel-nuc-13-pro",
+      "category": "servers",
+      "official_url": "https://www.intel.com/content/www/us/en/products/sku/233098/intel-nuc-13-pro-kit-nuc13anki7/specifications.html",
+      "publisher": "Intel",
+      "amazon_query": "Intel NUC 13 Pro kit",
+      "summary": "A compact x86 PC kit from Intel's NUC 13 Pro generation.",
+      "interface": "Integrated PC I/O and networking",
+      "form": "Compact barebone PC kit",
+      "operations": "Confirm memory, storage, OS, lifecycle, thermals, and regional support.",
+      "best_for": "Compact x86 lab nodes and business desktops.",
+      "decision": "compact x86 lab nodes and business desktops"
+    },
+    {
+      "name": "Minisforum MS-01",
+      "slug": "minisforum-ms-01",
+      "category": "servers",
+      "official_url": "https://store.minisforum.com/products/minisforum-ms-01",
+      "publisher": "Minisforum",
+      "amazon_query": "Minisforum MS-01 workstation",
+      "summary": "A compact workstation platform with networking and expansion options.",
+      "interface": "Integrated network, storage, and expansion interfaces",
+      "form": "Compact workstation",
+      "operations": "Validate configuration, memory, storage, network modules, thermals, and firmware.",
+      "best_for": "Space-constrained labs needing more expansion than a basic mini PC.",
+      "decision": "space-constrained labs needing more expansion than a basic mini pc"
+    },
+    {
+      "name": "Synology DiskStation DS923+",
+      "slug": "synology-ds923-plus",
+      "category": "servers",
+      "official_url": "https://www.synology.com/en-global/products/DS923+",
+      "publisher": "Synology",
+      "amazon_query": "Synology DS923 Plus NAS",
+      "summary": "A four-bay network storage system in Synology's DiskStation Plus family.",
+      "interface": "Ethernet network storage interface",
+      "form": "Four-bay desktop NAS",
+      "operations": "Plan compatible drives, RAID, backup separation, memory, networking, and service limits.",
+      "best_for": "Small teams and labs needing managed network storage.",
+      "decision": "small teams and labs needing managed network storage"
+    },
+    {
+      "name": "QNAP TS-464",
+      "slug": "qnap-ts-464",
+      "category": "servers",
+      "official_url": "https://www.qnap.com/en/product/ts-464",
+      "publisher": "QNAP",
+      "amazon_query": "QNAP TS-464 NAS",
+      "summary": "A four-bay network storage platform with QNAP management features.",
+      "interface": "Ethernet network storage interface",
+      "form": "Four-bay desktop NAS",
+      "operations": "Plan drives, storage pools, backups, app exposure, patching, and segmentation.",
+      "best_for": "Small offices and labs needing expandable managed storage.",
+      "decision": "small offices and labs needing expandable managed storage"
+    },
+    {
+      "name": "ASUSTOR Lockerstor 4 Gen2 AS6704T",
+      "slug": "asustor-as6704t",
+      "category": "servers",
+      "official_url": "https://www.asustor.com/product?p_id=77",
+      "publisher": "ASUSTOR",
+      "amazon_query": "ASUSTOR AS6704T NAS",
+      "summary": "A four-bay network storage appliance for managed files and applications.",
+      "interface": "Ethernet network storage interface",
+      "form": "Four-bay desktop NAS",
+      "operations": "Confirm drive support, memory, cache, backups, patching, and remote access controls.",
+      "best_for": "Prosumer and small-team storage deployments.",
+      "decision": "prosumer and small-team storage deployments"
+    },
+    {
+      "name": "Dell PowerEdge T350",
+      "slug": "dell-poweredge-t350",
+      "category": "servers",
+      "official_url": "https://www.dell.com/en-us/shop/ipovw/poweredge-t350",
+      "publisher": "Dell",
+      "amazon_query": "Dell PowerEdge T350 server",
+      "summary": "A tower server platform in Dell's PowerEdge family for small infrastructure workloads.",
+      "interface": "Server network, storage, and management interfaces",
+      "form": "Tower server",
+      "operations": "Plan configuration, lifecycle, power, acoustics, RAID, OS, warranty, and support.",
+      "best_for": "Small organizations needing a serviceable tower server.",
+      "decision": "small organizations needing a serviceable tower server"
+    },
+    {
+      "name": "HPE ProLiant MicroServer Gen10 Plus v2",
+      "slug": "hpe-microserver-gen10-plus-v2",
+      "category": "servers",
+      "official_url": "https://www.hpe.com/psnow/doc/a50002528enw",
+      "publisher": "HPE",
+      "amazon_query": "HPE ProLiant MicroServer Gen10 Plus v2",
+      "summary": "A compact HPE ProLiant server for small deployments and edge locations.",
+      "interface": "Server network, storage, and management interfaces",
+      "form": "Compact server tower",
+      "operations": "Review components, remote management, drives, power, support, and OS compatibility.",
+      "best_for": "Small offices and edge sites needing a compact serviceable server.",
+      "decision": "small offices and edge sites needing a compact serviceable server"
+    },
+    {
+      "name": "Fractal Design Node 804",
+      "slug": "fractal-node-804",
+      "category": "servers",
+      "official_url": "https://www.fractal-design.com/products/cases/node/node-804/black/",
+      "publisher": "Fractal Design",
+      "amazon_query": "Fractal Design Node 804 case",
+      "summary": "A cube enclosure with room for a storage-focused custom system.",
+      "interface": "Interfaces depend on selected motherboard and components",
+      "form": "Cube PC enclosure",
+      "operations": "Requires selecting compute, board, power, cooling, network, storage, and software.",
+      "best_for": "Custom NAS and home-lab builders wanting component choice.",
+      "decision": "custom nas and home-lab builders wanting component choice"
+    },
+    {
+      "name": "SilverStone CS381",
+      "slug": "silverstone-cs381",
+      "category": "servers",
+      "official_url": "https://www.silverstonetek.com/en/product/info/server-nas/CS381/",
+      "publisher": "SilverStone",
+      "amazon_query": "SilverStone CS381 case",
+      "summary": "A compact server and NAS enclosure for a storage-dense custom build.",
+      "interface": "Backplane and motherboard interfaces depend on the build",
+      "form": "Compact server enclosure",
+      "operations": "Validate backplane, HBA, board, cooling, power, cabling, drives, and software.",
+      "best_for": "Custom storage servers where drive access matters.",
+      "decision": "custom storage servers where drive access matters"
+    },
+    {
+      "name": "TP-Link Omada ER605",
+      "slug": "tp-link-er605",
+      "category": "networking",
+      "official_url": "https://www.tp-link.com/us/business-networking/omada-router-wired-router/er605/",
+      "publisher": "TP-Link",
+      "amazon_query": "TP-Link Omada ER605 router",
+      "summary": "A wired VPN router that can work independently or in the Omada ecosystem.",
+      "interface": "Ethernet WAN and LAN interfaces",
+      "form": "Desktop wired router",
+      "operations": "Validate throughput, VPN requirements, controller choice, firmware, and failover.",
+      "best_for": "Small networks using Omada or needing a compact wired router.",
+      "decision": "small networks using omada or needing a compact wired router"
+    },
+    {
+      "name": "Ubiquiti Cloud Gateway Ultra",
+      "slug": "ubiquiti-cloud-gateway-ultra",
+      "category": "networking",
+      "official_url": "https://store.ui.com/us/en/category/cloud-gateways-compact/collections/cloud-gateway-ultra",
+      "publisher": "Ubiquiti",
+      "amazon_query": "Ubiquiti Cloud Gateway Ultra",
+      "summary": "A compact UniFi gateway combining network management with routing and security.",
+      "interface": "Ethernet WAN and LAN interfaces",
+      "form": "Compact network gateway",
+      "operations": "Size routing, inspection, managed devices, storage, firmware, and topology.",
+      "best_for": "Small UniFi deployments wanting an integrated controller and gateway.",
+      "decision": "small unifi deployments wanting an integrated controller and gateway"
+    },
+    {
+      "name": "MikroTik hEX S",
+      "slug": "mikrotik-hex-s",
+      "category": "networking",
+      "official_url": "https://mikrotik.com/product/hex_s",
+      "publisher": "MikroTik",
+      "amazon_query": "MikroTik hEX S router",
+      "summary": "A compact wired router running MikroTik RouterOS.",
+      "interface": "Ethernet, SFP, and RouterOS management interfaces",
+      "form": "Desktop wired router",
+      "operations": "RouterOS requires learning; verify feature throughput, backups, updates, and support.",
+      "best_for": "Technical users valuing granular routing configuration.",
+      "decision": "technical users valuing granular routing configuration"
+    },
+    {
+      "name": "UniFi U7 Pro",
+      "slug": "unifi-u7-pro",
+      "category": "networking",
+      "official_url": "https://techspecs.ui.com/unifi/wifi/u7-pro",
+      "publisher": "Ubiquiti",
+      "amazon_query": "UniFi U7 Pro access point",
+      "summary": "A ceiling-mount UniFi wireless access point for managed Wi-Fi.",
+      "interface": "Ethernet uplink with Power over Ethernet",
+      "form": "Ceiling or wall wireless access point",
+      "operations": "Plan PoE, cabling, controller, placement, channels, and client compatibility.",
+      "best_for": "Managed UniFi wireless networks using a modern access point.",
+      "decision": "managed unifi wireless networks using a modern access point"
+    },
+    {
+      "name": "TP-Link Omada EAP773",
+      "slug": "tp-link-eap773",
+      "category": "networking",
+      "official_url": "https://www.tp-link.com/us/business-networking/omada-wifi-ceiling-mount/eap773/",
+      "publisher": "TP-Link",
+      "amazon_query": "TP-Link Omada EAP773 access point",
+      "summary": "A ceiling-mount Omada access point for centrally managed business Wi-Fi.",
+      "interface": "Ethernet uplink with Power over Ethernet",
+      "form": "Ceiling-mount wireless access point",
+      "operations": "Confirm switch speed, PoE, controller, cabling, clients, and radio design.",
+      "best_for": "Omada-managed offices upgrading wireless capacity.",
+      "decision": "omada-managed offices upgrading wireless capacity"
+    },
+    {
+      "name": "Aruba Instant On AP25",
+      "slug": "aruba-instant-on-ap25",
+      "category": "networking",
+      "official_url": "https://www.arubainstanton.com/products/access-points/access-point-25/",
+      "publisher": "HPE Aruba Networking",
+      "amazon_query": "Aruba Instant On AP25",
+      "summary": "A cloud-managed access point in the Instant On small-business portfolio.",
+      "interface": "Ethernet uplink with Power over Ethernet",
+      "form": "Indoor wireless access point",
+      "operations": "Validate PoE, uplink, cloud management, coverage, clients, and service terms.",
+      "best_for": "Small-business Wi-Fi using Instant On management.",
+      "decision": "small-business wi-fi using instant on management"
+    },
+    {
+      "name": "TP-Link TL-SG108-M2",
+      "slug": "tp-link-tl-sg108-m2",
+      "category": "networking",
+      "official_url": "https://www.tp-link.com/us/business-networking/unmanaged-switch/tl-sg108-m2/",
+      "publisher": "TP-Link",
+      "amazon_query": "TP-Link TL-SG108-M2 switch",
+      "summary": "An unmanaged desktop Ethernet switch for simple multi-gigabit connectivity.",
+      "interface": "Multi-gigabit Ethernet ports",
+      "form": "Desktop unmanaged switch",
+      "operations": "No advanced management; verify cables, endpoint speeds, heat, power, and uplink.",
+      "best_for": "Small networks needing simple faster wired links.",
+      "decision": "small networks needing simple faster wired links"
+    },
+    {
+      "name": "QNAP QSW-1105-5T",
+      "slug": "qnap-qsw-1105-5t",
+      "category": "networking",
+      "official_url": "https://www.qnap.com/en/product/qsw-1105-5t",
+      "publisher": "QNAP",
+      "amazon_query": "QNAP QSW-1105-5T switch",
+      "summary": "A compact unmanaged Ethernet switch for multiple multi-gigabit devices.",
+      "interface": "Multi-gigabit Ethernet ports",
+      "form": "Desktop unmanaged switch",
+      "operations": "Confirm cables, endpoint negotiation, aggregate traffic, cooling, and control needs.",
+      "best_for": "Home labs and small desks needing compact multi-gigabit switching.",
+      "decision": "home labs and small desks needing compact multi-gigabit switching"
+    },
+    {
+      "name": "NETGEAR GS308EP",
+      "slug": "netgear-gs308ep",
+      "category": "networking",
+      "official_url": "https://www.netgear.com/business/wired/switches/plus/gs308ep/",
+      "publisher": "NETGEAR",
+      "amazon_query": "NETGEAR GS308EP switch",
+      "summary": "A compact Plus switch with Power over Ethernet for small networks.",
+      "interface": "Gigabit Ethernet with Power over Ethernet ports",
+      "form": "Desktop managed-plus switch",
+      "operations": "Calculate PoE budget, endpoint standards, uplink, VLANs, firmware, and mounting.",
+      "best_for": "Small offices powering a few access points, cameras, or phones.",
+      "decision": "small offices powering a few access points, cameras, or phones"
+    },
+    {
+      "name": "Cable Matters USB-C 2.5GbE Adapter",
+      "slug": "cable-matters-usb-c-25gbe",
+      "category": "networking",
+      "official_url": "https://www.cablematters.com/pc-1333-126-usb-c-to-25-gigabit-ethernet-adapter.aspx",
+      "publisher": "Cable Matters",
+      "amazon_query": "Cable Matters USB-C 2.5GbE adapter",
+      "summary": "A USB-C adapter adding a multi-gigabit Ethernet connection to a compatible host.",
+      "interface": "USB-C host to Ethernet network interface",
+      "form": "Portable network adapter",
+      "operations": "Host USB mode, drivers, OS, cables, switch speed, and thermals affect results.",
+      "best_for": "Laptops and compact systems lacking faster built-in Ethernet.",
+      "decision": "laptops and compact systems lacking faster built-in ethernet"
+    },
+    {
+      "name": "Framework Laptop 13",
+      "slug": "framework-laptop-13",
+      "category": "dev_tools",
+      "official_url": "https://frame.work/products/laptop13-diy-intel-ultra-1",
+      "publisher": "Framework",
+      "amazon_query": "Framework Laptop 13",
+      "summary": "A modular 13-inch laptop designed around repairable and replaceable components.",
+      "interface": "USB-C expansion-card and internal PC interfaces",
+      "form": "Modular 13-inch laptop",
+      "operations": "Configuration, OS, memory, storage, expansion cards, battery, and support vary.",
+      "best_for": "Developers prioritizing repairability and component choice.",
+      "decision": "developers prioritizing repairability and component choice"
+    },
+    {
+      "name": "Apple Mac mini",
+      "slug": "apple-mac-mini",
+      "category": "dev_tools",
+      "official_url": "https://www.apple.com/mac-mini/",
+      "publisher": "Apple",
+      "amazon_query": "Apple Mac mini",
+      "summary": "A compact Apple desktop for macOS development and professional workloads.",
+      "interface": "Integrated Thunderbolt, USB, display, and network interfaces",
+      "form": "Compact desktop computer",
+      "operations": "Plan memory, storage, displays, peripherals, software compatibility, and repair model.",
+      "best_for": "Developers whose toolchain benefits from macOS.",
+      "decision": "developers whose toolchain benefits from macos"
+    },
+    {
+      "name": "Lenovo ThinkPad P14s Gen 5",
+      "slug": "lenovo-thinkpad-p14s-gen5",
+      "category": "dev_tools",
+      "official_url": "https://www.lenovo.com/us/en/p/laptops/thinkpad/thinkpadp/lenovo-thinkpad-p14s-gen-5-14-inch-intel-mobile-workstation/21g2002cus",
+      "publisher": "Lenovo",
+      "amazon_query": "Lenovo ThinkPad P14s Gen 5",
+      "summary": "A ThinkPad P-series mobile workstation for professional technical work.",
+      "interface": "Integrated laptop I/O, wireless, and docking interfaces",
+      "form": "14-inch mobile workstation",
+      "operations": "Exact CPU, GPU, display, memory, storage, ports, warranty, and region vary.",
+      "best_for": "Mobile developers needing a business workstation.",
+      "decision": "mobile developers needing a business workstation"
+    },
+    {
+      "name": "Logitech MX Master 3S",
+      "slug": "logitech-mx-master-3s",
+      "category": "dev_tools",
+      "official_url": "https://www.logitech.com/en-us/products/mice/mx-master-3s.html",
+      "publisher": "Logitech",
+      "amazon_query": "Logitech MX Master 3S mouse",
+      "summary": "A productivity mouse with configurable controls and multi-device workflows.",
+      "interface": "USB receiver and supported wireless connections",
+      "form": "Desktop productivity mouse",
+      "operations": "Confirm receiver, Bluetooth policy, mapping software, OS support, and ergonomics.",
+      "best_for": "Developers using shortcuts and multiple compatible computers.",
+      "decision": "developers using shortcuts and multiple compatible computers"
+    },
+    {
+      "name": "Keychron K8 Pro",
+      "slug": "keychron-k8-pro",
+      "category": "dev_tools",
+      "official_url": "https://www.keychron.com/products/keychron-k8-pro-qmk-via-wireless-mechanical-keyboard",
+      "publisher": "Keychron",
+      "amazon_query": "Keychron K8 Pro keyboard",
+      "summary": "A tenkeyless mechanical keyboard with configurable wired and wireless workflows.",
+      "interface": "USB and supported wireless connections",
+      "form": "Tenkeyless mechanical keyboard",
+      "operations": "Review switches, layout, firmware, mapping, wireless policy, charging, and OS.",
+      "best_for": "Developers wanting a smaller programmable keyboard.",
+      "decision": "developers wanting a smaller programmable keyboard"
+    },
+    {
+      "name": "Elgato Stream Deck MK.2",
+      "slug": "elgato-stream-deck-mk2",
+      "category": "dev_tools",
+      "official_url": "https://www.elgato.com/us/en/p/stream-deck-mk2-black",
+      "publisher": "Elgato",
+      "amazon_query": "Elgato Stream Deck MK.2",
+      "summary": "A programmable control pad for actions, shortcuts, and multi-step workflows.",
+      "interface": "USB host connection and desktop software",
+      "form": "Desktop programmable control pad",
+      "operations": "Value depends on integrations, host support, plugin trust, profiles, and desk space.",
+      "best_for": "Operators who repeat desktop actions frequently.",
+      "decision": "operators who repeat desktop actions frequently"
+    },
+    {
+      "name": "Raspberry Pi Debug Probe",
+      "slug": "raspberry-pi-debug-probe",
+      "category": "dev_tools",
+      "official_url": "https://www.raspberrypi.com/products/debug-probe/",
+      "publisher": "Raspberry Pi",
+      "amazon_query": "Raspberry Pi Debug Probe",
+      "summary": "A hardware debugging accessory for supported embedded development workflows.",
+      "interface": "USB host with supported debug and serial interfaces",
+      "form": "Portable debug accessory",
+      "operations": "Target voltage, pinout, toolchain, permissions, cables, and protocols require care.",
+      "best_for": "Embedded developers debugging compatible boards and serial consoles.",
+      "decision": "embedded developers debugging compatible boards and serial consoles"
+    },
+    {
+      "name": "YubiKey 5C NFC",
+      "slug": "yubikey-5c-nfc",
+      "category": "dev_tools",
+      "official_url": "https://www.yubico.com/product/yubikey-5c-nfc/",
+      "publisher": "Yubico",
+      "amazon_query": "YubiKey 5C NFC security key",
+      "summary": "A hardware security key for USB-C and NFC authentication workflows.",
+      "interface": "USB-C and NFC authentication interfaces",
+      "form": "Portable hardware security key",
+      "operations": "Enroll backups, confirm protocols and services, protect spares, and plan recovery.",
+      "best_for": "Developers and administrators strengthening account authentication.",
+      "decision": "developers and administrators strengthening account authentication"
+    },
+    {
+      "name": "GitHub Actions in Action",
+      "slug": "github-actions-in-action-book",
+      "category": "dev_tools",
+      "official_url": "https://www.manning.com/books/github-actions-in-action",
+      "publisher": "Manning",
+      "amazon_query": "GitHub Actions in Action book",
+      "summary": "A technical book about designing and operating automation with GitHub Actions.",
+      "interface": "Print or digital reference material",
+      "form": "Technical book",
+      "operations": "Check edition, examples, platform changes, and team workflow maturity.",
+      "best_for": "Teams learning to build and maintain GitHub Actions workflows.",
+      "decision": "teams learning to build and maintain github actions workflows"
+    },
+    {
+      "name": "Kubernetes Up and Running",
+      "slug": "kubernetes-up-and-running-book",
+      "category": "dev_tools",
+      "official_url": "https://www.oreilly.com/library/view/kubernetes-up-and/9781098110192/",
+      "publisher": "O'Reilly Media",
+      "amazon_query": "Kubernetes Up and Running book",
+      "summary": "A technical reference introducing Kubernetes concepts and operational patterns.",
+      "interface": "Print or digital reference material",
+      "form": "Technical book",
+      "operations": "Confirm edition recency, cluster version, provider differences, and practice needs.",
+      "best_for": "Developers and operators building Kubernetes foundations.",
+      "decision": "developers and operators building kubernetes foundations"
+    }
+  ],
+  "intents": [
+    {
+      "name": "a bootstrapped SaaS team with limited desk or rack space",
+      "slug": "bootstrapped-saas-limited-space"
+    },
+    {
+      "name": "a bootstrapped SaaS team prioritizing predictable maintenance",
+      "slug": "bootstrapped-saas-predictable-maintenance"
+    },
+    {
+      "name": "a bootstrapped SaaS team standardizing equipment across users",
+      "slug": "bootstrapped-saas-equipment-standardization"
+    },
+    {
+      "name": "a bootstrapped SaaS team balancing performance and total cost",
+      "slug": "bootstrapped-saas-performance-cost-balance"
+    },
+    {
+      "name": "a bootstrapped SaaS team planning a three-year deployment",
+      "slug": "bootstrapped-saas-three-year-deployment"
+    },
+    {
+      "name": "a remote-first engineering team with limited desk or rack space",
+      "slug": "remote-engineering-limited-space"
+    },
+    {
+      "name": "a remote-first engineering team prioritizing predictable maintenance",
+      "slug": "remote-engineering-predictable-maintenance"
+    },
+    {
+      "name": "a remote-first engineering team standardizing equipment across users",
+      "slug": "remote-engineering-equipment-standardization"
+    },
+    {
+      "name": "a remote-first engineering team balancing performance and total cost",
+      "slug": "remote-engineering-performance-cost-balance"
+    },
+    {
+      "name": "a remote-first engineering team planning a three-year deployment",
+      "slug": "remote-engineering-three-year-deployment"
+    },
+    {
+      "name": "a small creative agency with limited desk or rack space",
+      "slug": "creative-agency-limited-space"
+    },
+    {
+      "name": "a small creative agency prioritizing predictable maintenance",
+      "slug": "creative-agency-predictable-maintenance"
+    },
+    {
+      "name": "a small creative agency standardizing equipment across users",
+      "slug": "creative-agency-equipment-standardization"
+    },
+    {
+      "name": "a small creative agency balancing performance and total cost",
+      "slug": "creative-agency-performance-cost-balance"
+    },
+    {
+      "name": "a small creative agency planning a three-year deployment",
+      "slug": "creative-agency-three-year-deployment"
+    },
+    {
+      "name": "a self-hosted home lab with limited desk or rack space",
+      "slug": "home-lab-limited-space"
+    },
+    {
+      "name": "a self-hosted home lab prioritizing predictable maintenance",
+      "slug": "home-lab-predictable-maintenance"
+    },
+    {
+      "name": "a self-hosted home lab standardizing equipment across users",
+      "slug": "home-lab-equipment-standardization"
+    },
+    {
+      "name": "a self-hosted home lab balancing performance and total cost",
+      "slug": "home-lab-performance-cost-balance"
+    },
+    {
+      "name": "a self-hosted home lab planning a three-year deployment",
+      "slug": "home-lab-three-year-deployment"
+    },
+    {
+      "name": "a growing small office with limited desk or rack space",
+      "slug": "small-office-limited-space"
+    },
+    {
+      "name": "a growing small office prioritizing predictable maintenance",
+      "slug": "small-office-predictable-maintenance"
+    },
+    {
+      "name": "a growing small office standardizing equipment across users",
+      "slug": "small-office-equipment-standardization"
+    },
+    {
+      "name": "a growing small office balancing performance and total cost",
+      "slug": "small-office-performance-cost-balance"
+    },
+    {
+      "name": "a growing small office planning a three-year deployment",
+      "slug": "small-office-three-year-deployment"
+    },
+    {
+      "name": "a freelance developer workspace with limited desk or rack space",
+      "slug": "freelance-developer-limited-space"
+    },
+    {
+      "name": "a freelance developer workspace prioritizing predictable maintenance",
+      "slug": "freelance-developer-predictable-maintenance"
+    },
+    {
+      "name": "a freelance developer workspace standardizing equipment across users",
+      "slug": "freelance-developer-equipment-standardization"
+    },
+    {
+      "name": "a freelance developer workspace balancing performance and total cost",
+      "slug": "freelance-developer-performance-cost-balance"
+    },
+    {
+      "name": "a freelance developer workspace planning a three-year deployment",
+      "slug": "freelance-developer-three-year-deployment"
+    },
+    {
+      "name": "an IT consulting practice with limited desk or rack space",
+      "slug": "it-consulting-limited-space"
+    },
+    {
+      "name": "an IT consulting practice prioritizing predictable maintenance",
+      "slug": "it-consulting-predictable-maintenance"
+    },
+    {
+      "name": "an IT consulting practice standardizing equipment across users",
+      "slug": "it-consulting-equipment-standardization"
+    },
+    {
+      "name": "an IT consulting practice balancing performance and total cost",
+      "slug": "it-consulting-performance-cost-balance"
+    },
+    {
+      "name": "an IT consulting practice planning a three-year deployment",
+      "slug": "it-consulting-three-year-deployment"
+    },
+    {
+      "name": "a distributed product team with limited desk or rack space",
+      "slug": "distributed-product-team-limited-space"
+    },
+    {
+      "name": "a distributed product team prioritizing predictable maintenance",
+      "slug": "distributed-product-team-predictable-maintenance"
+    },
+    {
+      "name": "a distributed product team standardizing equipment across users",
+      "slug": "distributed-product-team-equipment-standardization"
+    },
+    {
+      "name": "a distributed product team balancing performance and total cost",
+      "slug": "distributed-product-team-performance-cost-balance"
+    },
+    {
+      "name": "a distributed product team planning a three-year deployment",
+      "slug": "distributed-product-team-three-year-deployment"
+    }
+  ],
+  "pairs": [
+    [
+      "samsung-990-pro",
+      "wd-black-sn850x"
+    ],
+    [
+      "samsung-990-pro",
+      "crucial-t500"
+    ],
+    [
+      "wd-black-sn850x",
+      "crucial-t500"
+    ],
+    [
+      "samsung-t7-shield",
+      "crucial-x9-pro"
+    ],
+    [
+      "keychron-q1-max",
+      "logitech-mx-mechanical"
+    ],
+    [
+      "dell-ultrasharp-u2723qe",
+      "lg-27up850-w"
+    ],
+    [
+      "raspberry-pi-5",
+      "intel-nuc-13-pro"
+    ],
+    [
+      "intel-nuc-13-pro",
+      "minisforum-ms-01"
+    ],
+    [
+      "synology-ds923-plus",
+      "qnap-ts-464"
+    ],
+    [
+      "synology-ds923-plus",
+      "asustor-as6704t"
+    ],
+    [
+      "qnap-ts-464",
+      "asustor-as6704t"
+    ],
+    [
+      "dell-poweredge-t350",
+      "hpe-microserver-gen10-plus-v2"
+    ],
+    [
+      "fractal-node-804",
+      "silverstone-cs381"
+    ],
+    [
+      "tp-link-er605",
+      "ubiquiti-cloud-gateway-ultra"
+    ],
+    [
+      "tp-link-er605",
+      "mikrotik-hex-s"
+    ],
+    [
+      "ubiquiti-cloud-gateway-ultra",
+      "mikrotik-hex-s"
+    ],
+    [
+      "unifi-u7-pro",
+      "tp-link-eap773"
+    ],
+    [
+      "unifi-u7-pro",
+      "aruba-instant-on-ap25"
+    ],
+    [
+      "tp-link-eap773",
+      "aruba-instant-on-ap25"
+    ],
+    [
+      "tp-link-tl-sg108-m2",
+      "qnap-qsw-1105-5t"
+    ],
+    [
+      "framework-laptop-13",
+      "lenovo-thinkpad-p14s-gen5"
+    ],
+    [
+      "apple-mac-mini",
+      "framework-laptop-13"
+    ],
+    [
+      "keychron-k8-pro",
+      "keychron-q1-max"
+    ],
+    [
+      "github-actions-in-action-book",
+      "kubernetes-up-and-running-book"
+    ]
+  ]
+}

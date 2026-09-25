@@ -8,6 +8,8 @@ from pathlib import Path
 from typing import Any
 from urllib.parse import urlparse
 
+from .affiliate import validate_amazon_target
+
 _SLUG = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 _ALLOWED_STATUS = {"draft", "reviewed"}
 
@@ -61,8 +63,9 @@ class Source:
 @dataclass(frozen=True)
 class Resource:
     title: str
-    asin: str
     note: str
+    asin: str | None = None
+    target_url: str | None = None
 
 
 @dataclass(frozen=True)
@@ -140,14 +143,26 @@ def load_page(path: Path) -> tuple[Page, dict[str, Any]]:
         )
         for i, item in enumerate(raw.get("sources", []))
     )
-    resources = tuple(
-        Resource(
-            title=_text(item.get("title"), f"resources[{i}].title"),
-            asin=_text(item.get("asin"), f"resources[{i}].asin"),
-            note=_text(item.get("note"), f"resources[{i}].note", 20),
+    resource_items: list[Resource] = []
+    for i, item in enumerate(raw.get("resources", [])):
+        asin = item.get("asin")
+        target_url = item.get("target_url")
+        if bool(asin) == bool(target_url):
+            raise ContentError(f"resources[{i}] must contain exactly one of asin or target_url")
+        if target_url:
+            try:
+                target_url = validate_amazon_target(_https_url(target_url, f"resources[{i}].target_url"))
+            except ValueError as exc:
+                raise ContentError(str(exc)) from exc
+        resource_items.append(
+            Resource(
+                title=_text(item.get("title"), f"resources[{i}].title"),
+                note=_text(item.get("note"), f"resources[{i}].note", 20),
+                asin=_text(asin, f"resources[{i}].asin") if asin else None,
+                target_url=target_url,
+            )
         )
-        for i, item in enumerate(raw.get("resources", []))
-    )
+    resources = tuple(resource_items)
 
     page = Page(
         slug=slug,
@@ -196,4 +211,3 @@ def _validate_page(page: Page) -> None:
             raise ContentError("reviewed pages require a named editorial review role")
         if not 110 <= len(page.meta_description) <= 170:
             raise ContentError("reviewed meta descriptions must be 110-170 characters")
-

@@ -11,7 +11,7 @@ from xml.sax.saxutils import escape
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 from .affiliate import amazon_url, assert_required_tag
-from .schema import ContentError, Page, load_page
+from .schema import ContentError, Page, Resource, load_page
 from .store import StateStore
 
 SITEMAP_LIMIT = 45_000
@@ -63,7 +63,7 @@ def _json_ld(page: Page, public_url: str, site_name: str) -> str:
         )
         products.append(
             {
-                "@type": ["Product", "SoftwareApplication"],
+                "@type": "Product",
                 "@id": f"{public_url}#product-{position}",
                 "name": alternative.name,
                 "url": alternative.url,
@@ -136,6 +136,67 @@ def _markdown_table(page: Page) -> str:
     return "\n".join(rows)
 
 
+def _resource_url(resource: Resource) -> str:
+    if resource.target_url:
+        return resource.target_url
+    if resource.asin:
+        return amazon_url(resource.asin)
+    raise ContentError(f"Resource {resource.title!r} has no Amazon target")
+
+
+def _markdown_document(page: Page, public_url: str) -> str:
+    lines = [
+        f"# {page.title}",
+        "",
+        f"Canonical: {public_url}",
+        f"Updated: {page.updated_at}",
+        "",
+        _markdown_table(page),
+        "",
+        page.intro,
+        "",
+        "### Consenso Real de Compradores (Pros, Contras y Veredicto)",
+        "",
+        "No se atribuyen opiniones, calificaciones ni consenso de compradores sin evidencia verificable. "
+        "Los siguientes puntos son una síntesis editorial de la documentación oficial citada.",
+        "",
+        "#### Pros",
+        "",
+        *[f"- **{item.name}:** {item.summary}" for item in page.alternatives],
+        "",
+        "#### Contras",
+        "",
+        *[
+            f"- **{item.name}:** {item.specs.get('operations', 'Validate maintenance, security, and support requirements before adoption.')}"
+            for item in page.alternatives
+        ],
+        "",
+        f"**Veredicto:** {page.verdict}",
+        "",
+    ]
+    if page.resources:
+        lines.extend(["## Recursos", ""])
+        for position, resource in enumerate(page.resources):
+            label = (
+                "Ver disponibilidad y precio actualizado en Amazon"
+                if position % 2 == 0
+                else "Consultar especificaciones y oferta en Amazon"
+            )
+            lines.extend([f"- [{label}]({_resource_url(resource)}) — {resource.title}: {resource.note}"])
+        lines.extend(
+            [
+                "",
+                "StackSignal participa en el programa de afiliados de Amazon. Si compras a través de nuestros "
+                "enlaces recomendados, podemos recibir una comisión sin ningún costo adicional para vos.",
+                "",
+            ]
+        )
+    lines.extend(["## Fuentes", ""])
+    lines.extend(f"- [{source.label}]({source.url}) — {source.publisher}" for source in page.sources)
+    lines.append("")
+    return "\n".join(lines)
+
+
 def _write_sitemaps(output: Path, rows: list[object], base_url: str) -> None:
     chunks = [rows[i : i + SITEMAP_LIMIT] for i in range(0, len(rows), SITEMAP_LIMIT)] or [[]]
     if len(chunks) == 1:
@@ -173,7 +234,7 @@ def _write_llms(output: Path, pages: list[Page], base_url: str) -> None:
     for page in pages:
         title = " ".join(page.title.split())
         description = " ".join(page.meta_description.split())
-        lines.append(f"- [{title}]({base_url}/guides/{page.slug}/): {description}")
+        lines.append(f"- [{title}]({base_url}/guides/{page.slug}/index.md): {description}")
     lines.extend(
         [
             "",
@@ -247,10 +308,14 @@ def build_site(
                 canonical_url=public_url,
                 site_name="StackSignal",
                 amazon_url=amazon_url,
+                resource_url=_resource_url,
                 json_ld=_json_ld(page, public_url, "StackSignal"),
                 markdown_table=_markdown_table(page),
             )
             destination.write_text(html, encoding="utf-8")
+            (destination.parent / "index.md").write_text(
+                _markdown_document(page, public_url), encoding="utf-8"
+            )
             if store.upsert_page(
                 slug=page.slug,
                 content_hash=content_hash,
@@ -292,14 +357,7 @@ def build_site(
                 encoding="utf-8",
             )
         latest = reviewed_pages[0].updated_at if reviewed_pages else date_today()
-        sitemap_rows: list[object] = [
-            {"public_url": f"{base_url}/", "lastmod": latest},
-            *[
-                {"public_url": f"{base_url}/library/page/{number}/", "lastmod": latest}
-                for number in range(1, library_page_count + 1)
-            ],
-            *store.indexable_pages(),
-        ]
+        sitemap_rows: list[object] = [*store.indexable_pages()]
         _write_sitemaps(output_dir, sitemap_rows, base_url)
         _write_llms(output_dir, reviewed_pages, base_url)
 

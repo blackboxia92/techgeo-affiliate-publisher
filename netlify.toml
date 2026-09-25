@@ -1,5 +1,5 @@
 [build]
-  command = "python -m publisher build --content content/pages --output dist --state /tmp/techgeo-state.sqlite3 --base-url \"$URL\" --indexnow-key \"${INDEXNOW_KEY:-}\""
+  command = "python -m publisher build --content content/pages --output dist --state /tmp/techgeo-state.sqlite3 --base-url \"$URL\" --indexnow-key \"$(cat indexnow-key.txt)\""
   publish = "dist"
 
 [build.environment]

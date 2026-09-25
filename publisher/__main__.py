@@ -8,6 +8,7 @@ from pathlib import Path
 
 from .builder import build_site, expand_catalog
 from .indexnow import notify_indexnow
+from .mass_catalog import generate_mass_catalog
 from .weekly import generate_weekly_pages
 
 
@@ -32,6 +33,12 @@ def parser() -> argparse.ArgumentParser:
     weekly.add_argument("--catalog", type=Path, default=Path("content/catalog.json"))
     weekly.add_argument("--output", type=Path, default=Path("content/pages"))
     weekly.add_argument("--limit", type=int, default=20)
+
+    mass = commands.add_parser("mass", help="Build an exact reviewed catalog from curated product facts")
+    mass.add_argument("--source", type=Path, default=Path("content/products_source.json"))
+    mass.add_argument("--catalog", type=Path, default=Path("content/products_catalog.json"))
+    mass.add_argument("--output", type=Path, default=Path("content/pages"))
+    mass.add_argument("--total", type=int, default=1000)
 
     notify = commands.add_parser("notify", help="Submit changed reviewed URLs to IndexNow")
     notify.add_argument("--state", type=Path, default=Path(os.getenv("DATABASE_PATH", "data/state.sqlite3")))
@@ -60,6 +67,15 @@ def main() -> int:
             raise SystemExit(
                 f"Only {report.created} unused catalog comparisons remain; {args.limit} were required. Extend the catalog."
             )
+        return 0
+    if args.command == "mass":
+        report = generate_mass_catalog(
+            source_path=args.source,
+            pages_root=args.output,
+            catalog_path=args.catalog,
+            total=args.total,
+        )
+        print(json.dumps(report.__dict__ | {"catalog": str(report.catalog), "output": str(report.output)}, indent=2))
         return 0
     if args.command == "build":
         report = build_site(

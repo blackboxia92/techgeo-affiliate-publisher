@@ -3,7 +3,7 @@
 {% block description %}{{ page.meta_description }}{% endblock %}
 {% block og_title %}{{ page.title }}{% endblock %}
 {% block og_description %}{{ page.meta_description }}{% endblock %}
-{% block structured_data %}<script type="application/ld+json">{{ json_ld|safe }}</script>{% endblock %}
+{% block structured_data %}<link rel="alternate" type="text/markdown" href="{{ canonical_url }}index.md"><script type="application/ld+json">{{ json_ld|safe }}</script>{% endblock %}
 {% block content %}
 <main>
   {% if not page.indexable %}<div class="draft-banner">Editorial draft · excluded from search and sitemaps</div>{% endif %}
@@ -68,7 +68,7 @@
       <div class="section-heading compact"><div><span class="kicker">Further reading</span><h2 id="resources-heading">Technical books</h2></div></div>
       <div class="resource-grid">
         {% for resource in page.resources %}
-        <div class="resource-card"><div><h3>{{ resource.title }}</h3><p>{{ resource.note }}</p></div><a class="button-link" href="{{ amazon_url(resource.asin) }}" rel="sponsored nofollow noopener" target="_blank">{% if loop.index is odd %}Ver disponibilidad y precio actualizado en Amazon{% else %}Consultar especificaciones y oferta en Amazon{% endif %}</a></div>
+        <div class="resource-card"><div><h3>{{ resource.title }}</h3><p>{{ resource.note }}</p></div><a class="button-link" href="{{ resource_url(resource) }}" rel="sponsored nofollow noopener" target="_blank">{% if loop.index is odd %}Ver disponibilidad y precio actualizado en Amazon{% else %}Consultar especificaciones y oferta en Amazon{% endif %}</a></div>
         {% endfor %}
       </div>
     </section>

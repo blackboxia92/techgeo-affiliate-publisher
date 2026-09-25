@@ -10,11 +10,31 @@
   "updated_at": "2026-09-25",
   "reviewed_by": "Technical editorial desk",
   "criteria": [
-    {"key": "architecture", "label": "Engine architecture", "description": "How container lifecycle commands reach the runtime."},
-    {"key": "rootless", "label": "Unprivileged use", "description": "Documented rootless operation model."},
-    {"key": "compose", "label": "Multi-container workflow", "description": "How Compose-style projects are supported."},
-    {"key": "desktop", "label": "Desktop experience", "description": "Packaged local developer interface."},
-    {"key": "fit", "label": "Strongest fit", "description": "The workflow each option naturally supports."}
+    {
+      "key": "architecture",
+      "label": "Engine architecture",
+      "description": "How container lifecycle commands reach the runtime."
+    },
+    {
+      "key": "rootless",
+      "label": "Unprivileged use",
+      "description": "Documented rootless operation model."
+    },
+    {
+      "key": "compose",
+      "label": "Multi-container workflow",
+      "description": "How Compose-style projects are supported."
+    },
+    {
+      "key": "desktop",
+      "label": "Desktop experience",
+      "description": "Packaged local developer interface."
+    },
+    {
+      "key": "fit",
+      "label": "Strongest fit",
+      "description": "The workflow each option naturally supports."
+    }
   ],
   "alternatives": [
     {
@@ -43,17 +63,55 @@
     }
   ],
   "faq": [
-    {"question": "Can Podman run a Dockerfile?", "answer": "Podman documents building container images from Containerfiles or Dockerfiles. Compatibility should still be tested for the specific build features, registries, plugins, and surrounding scripts the project uses."},
-    {"question": "Is Podman a drop-in Docker replacement for every project?", "answer": "No. Command similarity helps, but Compose behavior, socket-based integrations, networking, desktop virtualization, build features, and third-party tools can expose differences."},
-    {"question": "Does Docker support rootless containers?", "answer": "Docker Engine documents a rootless mode. Teams should compare setup, host operating system support, networking, storage drivers, and integration constraints for their environment."},
-    {"question": "Which tool should a mixed Windows and macOS team standardize on?", "answer": "Test the packaged desktop experience, file sharing, networking, IDE integration and multi-container workflow on both systems. The smallest operational difference across the team's laptops often decides the result."}
+    {
+      "question": "Can Podman run a Dockerfile?",
+      "answer": "Podman documents building container images from Containerfiles or Dockerfiles. Compatibility should still be tested for the specific build features, registries, plugins, and surrounding scripts the project uses."
+    },
+    {
+      "question": "Is Podman a drop-in Docker replacement for every project?",
+      "answer": "No. Command similarity helps, but Compose behavior, socket-based integrations, networking, desktop virtualization, build features, and third-party tools can expose differences."
+    },
+    {
+      "question": "Does Docker support rootless containers?",
+      "answer": "Docker Engine documents a rootless mode. Teams should compare setup, host operating system support, networking, storage drivers, and integration constraints for their environment."
+    },
+    {
+      "question": "Which tool should a mixed Windows and macOS team standardize on?",
+      "answer": "Test the packaged desktop experience, file sharing, networking, IDE integration and multi-container workflow on both systems. The smallest operational difference across the team's laptops often decides the result."
+    }
   ],
   "sources": [
-    {"label": "Docker documentation", "publisher": "Docker", "url": "https://docs.docker.com/"},
-    {"label": "Docker Engine rootless mode", "publisher": "Docker", "url": "https://docs.docker.com/engine/security/rootless/"},
-    {"label": "Podman documentation", "publisher": "Podman", "url": "https://docs.podman.io/en/latest/"},
-    {"label": "Podman Compose documentation", "publisher": "Podman", "url": "https://docs.podman.io/en/latest/markdown/podman-compose.1.html"}
+    {
+      "label": "Docker documentation",
+      "publisher": "Docker",
+      "url": "https://docs.docker.com/"
+    },
+    {
+      "label": "Docker Engine rootless mode",
+      "publisher": "Docker",
+      "url": "https://docs.docker.com/engine/security/rootless/"
+    },
+    {
+      "label": "Podman documentation",
+      "publisher": "Podman",
+      "url": "https://docs.podman.io/en/latest/"
+    },
+    {
+      "label": "Podman Compose documentation",
+      "publisher": "Podman",
+      "url": "https://docs.podman.io/en/latest/markdown/podman-compose.1.html"
+    }
   ],
-  "resources": []
+  "resources": [
+    {
+      "title": "Docker technical references",
+      "target_url": "https://www.amazon.es/s?k=Docker+technical+book&tag=blackboxia92-21",
+      "note": "Check current technical references and availability for Docker workflows."
+    },
+    {
+      "title": "Podman technical references",
+      "target_url": "https://www.amazon.es/s?k=Podman+containers+technical+book&tag=blackboxia92-21",
+      "note": "Check current technical references and availability for Podman workflows."
+    }
+  ]
 }
-

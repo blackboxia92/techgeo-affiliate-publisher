@@ -58,6 +58,7 @@ jobs:
           --output dist
           --state /tmp/techgeo-state.sqlite3
           --base-url "$BASE_URL"
+          --indexnow-key "$(cat indexnow-key.txt)"
 
       - name: Verify generated site
         run: |
