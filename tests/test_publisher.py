@@ -11,6 +11,7 @@ from urllib.parse import parse_qs, urlparse
 from publisher.affiliate import AMAZON_ASSOCIATE_TAG, amazon_url, assert_required_tag
 from publisher.builder import build_site, expand_catalog
 from publisher.indexnow import notify_indexnow
+from publisher.schema import load_page
 from publisher.weekly import generate_weekly_pages
 
 
@@ -28,6 +29,14 @@ class AffiliateTests(unittest.TestCase):
 
 
 class BuildTests(unittest.TestCase):
+    @staticmethod
+    def reviewed_fixture_count() -> int:
+        return sum(
+            1
+            for path in (PROJECT / "content" / "pages").rglob("*.json")
+            if load_page(path)[0].indexable
+        )
+
     def test_reviewed_pages_are_indexed_and_affiliates_are_disclosed(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)
@@ -37,7 +46,7 @@ class BuildTests(unittest.TestCase):
                 state_path=root / "data" / "state.sqlite3",
                 base_url="https://guides.example",
             )
-            self.assertEqual(report.reviewed, 3)
+            self.assertEqual(report.reviewed, self.reviewed_fixture_count())
             self.assertEqual(report.drafts, 0)
             html = (root / "dist" / "guides" / "postgresql-vs-sqlite-backend" / "index.html").read_text(encoding="utf-8")
             self.assertIn("tag=blackboxia92-21", html)
@@ -96,7 +105,7 @@ class BuildTests(unittest.TestCase):
                 dry_run=True,
             )
             self.assertEqual(result["status"], "dry_run")
-            self.assertEqual(result["pending"], 3)
+            self.assertEqual(result["pending"], self.reviewed_fixture_count())
 
     def test_catalog_expansion_scales_pairwise_by_audience(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
