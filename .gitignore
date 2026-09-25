@@ -6,3 +6,6 @@ data/*.sqlite3
 data/*.sqlite3-*
 dist/
 
+
+# Local Netlify folder
+.netlify
