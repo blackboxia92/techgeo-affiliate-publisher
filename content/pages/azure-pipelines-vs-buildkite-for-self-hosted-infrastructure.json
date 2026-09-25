@@ -1,0 +1,91 @@
+{
+  "slug": "azure-pipelines-vs-buildkite-for-self-hosted-infrastructure",
+  "status": "reviewed",
+  "locale": "en",
+  "title": "Azure Pipelines vs Buildkite for self-hosted infrastructure: a technical decision guide",
+  "meta_description": "Compare Azure Pipelines and Buildkite for self-hosted infrastructure across architecture, operations, workflow fit, and practical adoption trade-offs using official do...",
+  "eyebrow": "Ci decision brief",
+  "intro": "This comparison examines Azure Pipelines and Buildkite for self-hosted infrastructure. The decision lens is control over deployment, data, upgrades, and failure recovery. It uses the maintained catalog and each project's official documentation to separate architectural differences from implementation details that should be verified before adoption.",
+  "verdict": "Start with Azure Pipelines when its documented model and strongest fit align with infrastructure managed directly by the adopting team. Prefer Buildkite when its operating model better matches that requirement. Validate the shortlist with a workload-specific proof of concept before committing production data or delivery pipelines.",
+  "updated_at": "2026-09-25",
+  "reviewed_by": "StackSignal structured catalog",
+  "criteria": [
+    {
+      "key": "model",
+      "label": "Technical model",
+      "description": "The product's primary architectural role."
+    },
+    {
+      "key": "operations",
+      "label": "Operating model",
+      "description": "The operational boundary described by the project."
+    },
+    {
+      "key": "fit",
+      "label": "Strongest fit",
+      "description": "The use case emphasized in the maintained catalog."
+    },
+    {
+      "key": "audience",
+      "label": "Audience lens",
+      "description": "Decision priority for self-hosted infrastructure."
+    }
+  ],
+  "alternatives": [
+    {
+      "name": "Azure Pipelines",
+      "url": "https://learn.microsoft.com/azure/devops/pipelines/",
+      "summary": "A CI/CD service in Azure DevOps with YAML or classic pipelines, hosted agents, self-hosted pools, environments, and approvals.",
+      "specs": {
+        "model": "Cloud pipeline service integrated with Azure DevOps",
+        "operations": "Choose hosted agents or maintain self-hosted agent pools",
+        "fit": "Organizations using Azure DevOps and Microsoft delivery tooling",
+        "audience": "Evaluate against: control over deployment, data, upgrades, and failure recovery"
+      }
+    },
+    {
+      "name": "Buildkite",
+      "url": "https://buildkite.com/docs",
+      "summary": "A hybrid CI platform that coordinates pipelines through a hosted control plane while jobs execute on customer-managed agents.",
+      "specs": {
+        "model": "Hosted orchestration with self-hosted build agents",
+        "operations": "Operate and secure the agent fleet used to execute jobs",
+        "fit": "Teams needing private compute with managed pipeline coordination",
+        "audience": "Evaluate against: control over deployment, data, upgrades, and failure recovery"
+      }
+    }
+  ],
+  "faq": [
+    {
+      "question": "Which is easier to evaluate first for self-hosted infrastructure?",
+      "answer": "Begin with the option whose operating model already matches control over deployment, data, upgrades, and failure recovery. Use a small proof of concept with the same deployment constraints, team access, and failure modes expected in production."
+    },
+    {
+      "question": "Can Azure Pipelines and Buildkite be tested with the same benchmark?",
+      "answer": "Only partly. Measure shared outcomes such as setup time, reliability, maintenance effort, and task completion, then add product-specific checks because the two options can expose different architectural boundaries."
+    },
+    {
+      "question": "What should be verified before making the final choice?",
+      "answer": "Confirm current support policies, security controls, deployment requirements, integration limits, and upgrade procedures in the official documentation. Recheck any time-sensitive limits immediately before adoption."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Azure Pipelines official documentation",
+      "publisher": "Azure Pipelines",
+      "url": "https://learn.microsoft.com/azure/devops/pipelines/"
+    },
+    {
+      "label": "Buildkite official documentation",
+      "publisher": "Buildkite",
+      "url": "https://buildkite.com/docs"
+    }
+  ],
+  "resources": [
+    {
+      "title": "Accelerate",
+      "asin": "1942788339",
+      "note": "Research-backed context for evaluating delivery performance, feedback loops, and engineering practices."
+    }
+  ]
+}
