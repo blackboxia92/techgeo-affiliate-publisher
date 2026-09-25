@@ -8,7 +8,7 @@
   "meta_description": "Dell PowerEdge T350 vs HPE ProLiant MicroServer Gen10 Plus v2: official specifications, compatibility, deployment fit, and operational requirements.",
   "eyebrow": "Servers comparison",
   "intro": "This source-backed comparison evaluates Dell PowerEdge T350 and HPE ProLiant MicroServer Gen10 Plus v2 for a distributed product team balancing performance and total cost. It focuses on stable technical characteristics, deployment fit, interfaces, form factor, and operational trade-offs. It does not copy volatile prices, stock, star ratings, or unverified user claims.",
-  "verdict": "Choose Dell PowerEdge T350 when small organizations needing a serviceable tower server is the leading requirement. Choose HPE ProLiant MicroServer Gen10 Plus v2 when small offices and edge sites needing a compact serviceable server matters more. For a distributed product team balancing performance and total cost, verify compatibility, support, current availability, and workload limits in the cited manufacturer documentation before purchase.",
+  "verdict": "Choose Dell PowerEdge T350 when small organizations needing a serviceable tower server is the leading requirement. Choose HPE ProLiant MicroServer Gen10 Plus v2 when small offices and edge sites needing a compact serviceable server matters more. For a distributed product team balancing performance and total cost, verify compatibility, support, current availability, and workload limits in the cited manufacturer documentation before purchase. The renewed M920q is the value reference at an estimated USD 240; the live listing determines the exact configuration and final price.",
   "updated_at": "2026-09-25",
   "reviewed_by": "StackSignal technical editorial desk",
   "criteria": [
@@ -41,6 +41,21 @@
       "key": "intent",
       "label": "Decision lens",
       "description": "How the option maps to this long-tail buying intent."
+    },
+    {
+      "key": "memory_channel",
+      "label": "Canal de Memoria (Single/Dual)",
+      "description": "Canal documentado o estado no aplicable."
+    },
+    {
+      "key": "ram_limit",
+      "label": "Límite de RAM Real",
+      "description": "Máximo validado por el fabricante."
+    },
+    {
+      "key": "idle_watts",
+      "label": "Consumo en reposo (Watts)",
+      "description": "Medición publicada o ausencia de una medición verificable."
     }
   ],
   "alternatives": [
@@ -54,7 +69,10 @@
         "form": "Tower server",
         "operations": "Plan configuration, lifecycle, power, acoustics, RAID, OS, warranty, and support.",
         "fit": "Small organizations needing a serviceable tower server. For this comparison, assess it specifically for a distributed product team balancing performance and total cost.",
-        "intent": "Use when small organizations needing a serviceable tower server best supports a distributed product team balancing performance and total cost."
+        "intent": "Use when small organizations needing a serviceable tower server best supports a distributed product team balancing performance and total cost.",
+        "memory_channel": "Dual-channel server memory architecture",
+        "ram_limit": "128 GB vendor-validated maximum",
+        "idle_watts": "No independently verified idle-watt measurement in the cited source"
       }
     },
     {
@@ -67,7 +85,26 @@
         "form": "Compact server tower",
         "operations": "Review components, remote management, drives, power, support, and OS compatibility.",
         "fit": "Small offices and edge sites needing a compact serviceable server. For this comparison, assess it specifically for a distributed product team balancing performance and total cost.",
-        "intent": "Use when small offices and edge sites needing a compact serviceable server best supports a distributed product team balancing performance and total cost."
+        "intent": "Use when small offices and edge sites needing a compact serviceable server best supports a distributed product team balancing performance and total cost.",
+        "memory_channel": "Dual-channel capable DDR4 UDIMM layout",
+        "ram_limit": "32 GB vendor-validated maximum",
+        "idle_watts": "No independently verified idle-watt measurement in the cited source"
+      }
+    },
+    {
+      "name": "Lenovo ThinkCentre M920q Tiny — Amazon Renewed / Enterprise Usado",
+      "url": "https://www.amazon.es/s?k=Lenovo+ThinkCentre+M920q+Tiny+Renewed+16GB+512GB&tag=blackboxia92-21",
+      "summary": "A compact enterprise desktop sold through renewed or used channels; exact CPU, memory, storage, warranty, and cosmetic condition vary by listing.",
+      "specs": {
+        "model": "ThinkCentre M920q Tiny; renewed listing configuration varies",
+        "interface": "Gigabit Ethernet, USB, DisplayPort/HDMI, NVMe and SATA options",
+        "form": "Enterprise 1-litre Tiny desktop",
+        "operations": "Used condition, SSD health, included adapter, warranty, exact CPU, and seller refurbishment quality require verification.",
+        "fit": "Budget homelabs and compact x86 infrastructure for a distributed product team balancing performance and total cost.",
+        "intent": "Use when enterprise serviceability and price matter for a distributed product team balancing performance and total cost.",
+        "memory_channel": "Dual-channel capable; two DDR4 SO-DIMM slots",
+        "ram_limit": "32 GB vendor-validated maximum",
+        "idle_watts": "12–15 W measured on a reviewed quad-core configuration; exact build varies"
       }
     }
   ],
@@ -95,6 +132,16 @@
       "label": "HPE ProLiant MicroServer Gen10 Plus v2 official documentation",
       "publisher": "HPE",
       "url": "https://www.hpe.com/psnow/doc/a50002528enw"
+    },
+    {
+      "label": "ThinkCentre M920 Tiny platform specification",
+      "publisher": "Lenovo PSREF",
+      "url": "https://psref.lenovo.com/syspool/Sys/PDF/ThinkCentre/ThinkCentre_M920_Tiny/ThinkCentre_M920_Tiny_Spec.html"
+    },
+    {
+      "label": "ThinkCentre M920q measured idle power",
+      "publisher": "ServeTheHome",
+      "url": "https://www.servethehome.com/lenovo-thinkcentre-m920-and-m920q-tiny-guide-and-review/3/"
     }
   ],
   "resources": [
@@ -107,18 +154,30 @@
       "title": "HPE ProLiant MicroServer Gen10 Plus v2",
       "target_url": "https://www.amazon.es/s?k=HPE+ProLiant+MicroServer+Gen10+Plus+v2&tag=blackboxia92-21",
       "note": "Check current specifications and availability for HPE ProLiant MicroServer Gen10 Plus v2."
+    },
+    {
+      "title": "Lenovo ThinkCentre M920q Tiny — Amazon Renewed / Enterprise Usado",
+      "target_url": "https://www.amazon.es/s?k=Lenovo+ThinkCentre+M920q+Tiny+Renewed+16GB+512GB&tag=blackboxia92-21",
+      "note": "Check the exact renewed configuration, seller warranty, current price, and availability before purchase."
     }
   ],
   "buyer_consensus": {
     "status": "No independently verified buyer-review dataset is available; technical synthesis only.",
     "pros": [
       "A tower server platform in Dell's PowerEdge family for small infrastructure workloads.",
-      "A compact HPE ProLiant server for small deployments and edge locations."
+      "A compact HPE ProLiant server for small deployments and edge locations.",
+      "A compact enterprise desktop sold through renewed or used channels; exact CPU, memory, storage, warranty, and cosmetic condition vary by listing."
     ],
     "cons": [
       "Plan configuration, lifecycle, power, acoustics, RAID, OS, warranty, and support.",
-      "Review components, remote management, drives, power, support, and OS compatibility."
+      "Review components, remote management, drives, power, support, and OS compatibility.",
+      "Used condition, SSD health, included adapter, warranty, exact CPU, and seller refurbishment quality require verification."
     ],
-    "verdict": "Choose Dell PowerEdge T350 when small organizations needing a serviceable tower server is the leading requirement. Choose HPE ProLiant MicroServer Gen10 Plus v2 when small offices and edge sites needing a compact serviceable server matters more. For a distributed product team balancing performance and total cost, verify compatibility, support, current availability, and workload limits in the cited manufacturer documentation before purchase."
+    "verdict": "Choose Dell PowerEdge T350 when small organizations needing a serviceable tower server is the leading requirement. Choose HPE ProLiant MicroServer Gen10 Plus v2 when small offices and edge sites needing a compact serviceable server matters more. For a distributed product team balancing performance and total cost, verify compatibility, support, current availability, and workload limits in the cited manufacturer documentation before purchase. The renewed M920q is the value reference at an estimated USD 240; the live listing determines the exact configuration and final price."
+  },
+  "recommendation": {
+    "winner": "Lenovo ThinkCentre M920q Tiny — Amazon Renewed / Enterprise Usado",
+    "estimated_price_usd": 240,
+    "amazon_url": "https://www.amazon.es/s?k=Lenovo+ThinkCentre+M920q+Tiny+Renewed+16GB+512GB&tag=blackboxia92-21"
   }
 }

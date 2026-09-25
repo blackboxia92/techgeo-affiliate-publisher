@@ -41,6 +41,21 @@
       "key": "intent",
       "label": "Decision lens",
       "description": "How the option maps to this long-tail buying intent."
+    },
+    {
+      "key": "memory_channel",
+      "label": "Canal de Memoria (Single/Dual)",
+      "description": "Canal documentado o estado no aplicable."
+    },
+    {
+      "key": "ram_limit",
+      "label": "Límite de RAM Real",
+      "description": "Máximo validado por el fabricante."
+    },
+    {
+      "key": "idle_watts",
+      "label": "Consumo en reposo (Watts)",
+      "description": "Medición publicada o ausencia de una medición verificable."
     }
   ],
   "alternatives": [
@@ -54,7 +69,10 @@
         "form": "Ceiling or wall wireless access point",
         "operations": "Plan PoE, cabling, controller, placement, channels, and client compatibility.",
         "fit": "Managed UniFi wireless networks using a modern access point. For this comparison, assess it specifically for a remote-first engineering team with limited desk or rack space.",
-        "intent": "Use when managed unifi wireless networks using a modern access point best supports a remote-first engineering team with limited desk or rack space."
+        "intent": "Use when managed unifi wireless networks using a modern access point best supports a remote-first engineering team with limited desk or rack space.",
+        "memory_channel": "Not user-configurable; channel topology is not published",
+        "ram_limit": "Fixed appliance memory; vendor limit is not user-upgradable",
+        "idle_watts": "No independently verified idle-watt measurement in the cited source"
       }
     },
     {
@@ -67,7 +85,10 @@
         "form": "Indoor wireless access point",
         "operations": "Validate PoE, uplink, cloud management, coverage, clients, and service terms.",
         "fit": "Small-business Wi-Fi using Instant On management. For this comparison, assess it specifically for a remote-first engineering team with limited desk or rack space.",
-        "intent": "Use when small-business wi-fi using instant on management best supports a remote-first engineering team with limited desk or rack space."
+        "intent": "Use when small-business wi-fi using instant on management best supports a remote-first engineering team with limited desk or rack space.",
+        "memory_channel": "Not user-configurable; channel topology is not published",
+        "ram_limit": "Fixed appliance memory; vendor limit is not user-upgradable",
+        "idle_watts": "No independently verified idle-watt measurement in the cited source"
       }
     }
   ],

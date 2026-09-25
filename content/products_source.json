@@ -13,7 +13,10 @@
       "form": "Internal M.2 SSD",
       "operations": "Check slot support, firmware, cooling, lane sharing, and backups.",
       "best_for": "Workstations that prioritize fast local storage.",
-      "decision": "workstations that prioritize fast local storage"
+      "decision": "workstations that prioritize fast local storage",
+      "memory_channel": "N/A — the product does not use user-addressable system RAM",
+      "ram_limit": "N/A — the product does not use user-addressable system RAM",
+      "idle_watts": "N/A — component or peripheral; the host system determines idle draw"
     },
     {
       "name": "WD_BLACK SN850X",
@@ -27,7 +30,10 @@
       "form": "Internal M.2 SSD",
       "operations": "Check platform support, firmware, thermals, lane sharing, and backups.",
       "best_for": "Performance desktops and upgradeable development systems.",
-      "decision": "performance desktops and upgradeable development systems"
+      "decision": "performance desktops and upgradeable development systems",
+      "memory_channel": "N/A — the product does not use user-addressable system RAM",
+      "ram_limit": "N/A — the product does not use user-addressable system RAM",
+      "idle_watts": "N/A — component or peripheral; the host system determines idle draw"
     },
     {
       "name": "Crucial T500",
@@ -41,7 +47,10 @@
       "form": "Internal M.2 SSD",
       "operations": "Confirm motherboard support, firmware, heat management, and backups.",
       "best_for": "Modern PC storage upgrades.",
-      "decision": "modern pc storage upgrades"
+      "decision": "modern pc storage upgrades",
+      "memory_channel": "N/A — the product does not use user-addressable system RAM",
+      "ram_limit": "N/A — the product does not use user-addressable system RAM",
+      "idle_watts": "N/A — component or peripheral; the host system determines idle draw"
     },
     {
       "name": "Samsung T7 Shield",
@@ -55,7 +64,10 @@
       "form": "Portable external SSD",
       "operations": "Plan cable compatibility, host performance, encryption, handling, and backups.",
       "best_for": "Portable project storage across compatible systems.",
-      "decision": "portable project storage across compatible systems"
+      "decision": "portable project storage across compatible systems",
+      "memory_channel": "N/A — the product does not use user-addressable system RAM",
+      "ram_limit": "N/A — the product does not use user-addressable system RAM",
+      "idle_watts": "N/A — component or peripheral; the host system determines idle draw"
     },
     {
       "name": "Crucial X9 Pro",
@@ -69,7 +81,10 @@
       "form": "Portable external SSD",
       "operations": "Host ports affect performance; plan secure handling, encryption, and backups.",
       "best_for": "Moving development or creative working sets between devices.",
-      "decision": "moving development or creative working sets between devices"
+      "decision": "moving development or creative working sets between devices",
+      "memory_channel": "N/A — the product does not use user-addressable system RAM",
+      "ram_limit": "N/A — the product does not use user-addressable system RAM",
+      "idle_watts": "N/A — component or peripheral; the host system determines idle draw"
     },
     {
       "name": "Keychron Q1 Max",
@@ -83,7 +98,10 @@
       "form": "Desktop mechanical keyboard",
       "operations": "Review layout, switches, firmware tools, wireless policy, and OS mapping.",
       "best_for": "Fixed desks where programmability matters.",
-      "decision": "fixed desks where programmability matters"
+      "decision": "fixed desks where programmability matters",
+      "memory_channel": "N/A — the product does not use user-addressable system RAM",
+      "ram_limit": "N/A — the product does not use user-addressable system RAM",
+      "idle_watts": "N/A — component or peripheral; the host system determines idle draw"
     },
     {
       "name": "Logitech MX Mechanical",
@@ -97,7 +115,10 @@
       "form": "Desktop mechanical keyboard",
       "operations": "Confirm receiver support, layout, charging, device policy, and OS support.",
       "best_for": "Office and development desks using multiple devices.",
-      "decision": "office and development desks using multiple devices"
+      "decision": "office and development desks using multiple devices",
+      "memory_channel": "N/A — the product does not use user-addressable system RAM",
+      "ram_limit": "N/A — the product does not use user-addressable system RAM",
+      "idle_watts": "N/A — component or peripheral; the host system determines idle draw"
     },
     {
       "name": "Dell UltraSharp U2723QE",
@@ -111,7 +132,10 @@
       "form": "27-inch desktop monitor",
       "operations": "Verify host charging, cable capability, scaling, ports, and ergonomics.",
       "best_for": "Single-display workstations needing integrated hub connectivity.",
-      "decision": "single-display workstations needing integrated hub connectivity"
+      "decision": "single-display workstations needing integrated hub connectivity",
+      "memory_channel": "N/A — the product does not use user-addressable system RAM",
+      "ram_limit": "N/A — the product does not use user-addressable system RAM",
+      "idle_watts": "N/A — component or peripheral; the host system determines idle draw"
     },
     {
       "name": "LG 27UP850-W",
@@ -125,7 +149,10 @@
       "form": "27-inch desktop monitor",
       "operations": "Check charging needs, color workflow, scaling, cables, and stand requirements.",
       "best_for": "Productivity and creative desks using a high-resolution panel.",
-      "decision": "productivity and creative desks using a high-resolution panel"
+      "decision": "productivity and creative desks using a high-resolution panel",
+      "memory_channel": "N/A — the product does not use user-addressable system RAM",
+      "ram_limit": "N/A — the product does not use user-addressable system RAM",
+      "idle_watts": "N/A — component or peripheral; the host system determines idle draw"
     },
     {
       "name": "CalDigit TS4",
@@ -139,7 +166,10 @@
       "form": "Desktop docking station",
       "operations": "Verify host compatibility, displays, cables, power delivery, and drivers.",
       "best_for": "Desk setups needing one-cable access to many peripherals.",
-      "decision": "desk setups needing one-cable access to many peripherals"
+      "decision": "desk setups needing one-cable access to many peripherals",
+      "memory_channel": "N/A — the product does not use user-addressable system RAM",
+      "ram_limit": "N/A — the product does not use user-addressable system RAM",
+      "idle_watts": "N/A — component or peripheral; the host system determines idle draw"
     },
     {
       "name": "Raspberry Pi 5",
@@ -153,7 +183,10 @@
       "form": "Single-board computer",
       "operations": "Requires suitable power, storage, cooling, enclosure, OS, and backups.",
       "best_for": "Learning, automation, lightweight services, and compact lab nodes.",
-      "decision": "learning, automation, lightweight services, and compact lab nodes"
+      "decision": "learning, automation, lightweight services, and compact lab nodes",
+      "memory_channel": "On-board LPDDR4X; not user-upgradable",
+      "ram_limit": "Up to 16 GB on current board variants",
+      "idle_watts": "Approximately 3–5 W at idle depending on RAM, firmware, and attached devices"
     },
     {
       "name": "Intel NUC 13 Pro",
@@ -167,7 +200,10 @@
       "form": "Compact barebone PC kit",
       "operations": "Confirm memory, storage, OS, lifecycle, thermals, and regional support.",
       "best_for": "Compact x86 lab nodes and business desktops.",
-      "decision": "compact x86 lab nodes and business desktops"
+      "decision": "compact x86 lab nodes and business desktops",
+      "memory_channel": "Dual-channel capable; two SO-DIMM slots",
+      "ram_limit": "64 GB vendor-validated maximum",
+      "idle_watts": "No independently verified idle-watt measurement in the cited source"
     },
     {
       "name": "Minisforum MS-01",
@@ -181,7 +217,10 @@
       "form": "Compact workstation",
       "operations": "Validate configuration, memory, storage, network modules, thermals, and firmware.",
       "best_for": "Space-constrained labs needing more expansion than a basic mini PC.",
-      "decision": "space-constrained labs needing more expansion than a basic mini pc"
+      "decision": "space-constrained labs needing more expansion than a basic mini pc",
+      "memory_channel": "Dual-channel capable; two DDR5 SO-DIMM slots",
+      "ram_limit": "96 GB vendor-stated maximum",
+      "idle_watts": "No independently verified idle-watt measurement in the cited source"
     },
     {
       "name": "Synology DiskStation DS923+",
@@ -195,7 +234,10 @@
       "form": "Four-bay desktop NAS",
       "operations": "Plan compatible drives, RAID, backup separation, memory, networking, and service limits.",
       "best_for": "Small teams and labs needing managed network storage.",
-      "decision": "small teams and labs needing managed network storage"
+      "decision": "small teams and labs needing managed network storage",
+      "memory_channel": "Two ECC DDR4 SO-DIMM slots; channel mode not stated",
+      "ram_limit": "32 GB vendor-validated maximum",
+      "idle_watts": "About 11.5 W in HDD hibernation; installed drives affect results"
     },
     {
       "name": "QNAP TS-464",
@@ -209,7 +251,10 @@
       "form": "Four-bay desktop NAS",
       "operations": "Plan drives, storage pools, backups, app exposure, patching, and segmentation.",
       "best_for": "Small offices and labs needing expandable managed storage.",
-      "decision": "small offices and labs needing expandable managed storage"
+      "decision": "small offices and labs needing expandable managed storage",
+      "memory_channel": "Two DDR4 SO-DIMM slots; channel mode depends on configuration",
+      "ram_limit": "16 GB vendor-stated maximum",
+      "idle_watts": "No independently verified idle-watt measurement in the cited source"
     },
     {
       "name": "ASUSTOR Lockerstor 4 Gen2 AS6704T",
@@ -223,7 +268,10 @@
       "form": "Four-bay desktop NAS",
       "operations": "Confirm drive support, memory, cache, backups, patching, and remote access controls.",
       "best_for": "Prosumer and small-team storage deployments.",
-      "decision": "prosumer and small-team storage deployments"
+      "decision": "prosumer and small-team storage deployments",
+      "memory_channel": "Dual-channel capable DDR4 SO-DIMM configuration",
+      "ram_limit": "16 GB vendor-stated maximum",
+      "idle_watts": "No independently verified idle-watt measurement in the cited source"
     },
     {
       "name": "Dell PowerEdge T350",
@@ -237,7 +285,10 @@
       "form": "Tower server",
       "operations": "Plan configuration, lifecycle, power, acoustics, RAID, OS, warranty, and support.",
       "best_for": "Small organizations needing a serviceable tower server.",
-      "decision": "small organizations needing a serviceable tower server"
+      "decision": "small organizations needing a serviceable tower server",
+      "memory_channel": "Dual-channel server memory architecture",
+      "ram_limit": "128 GB vendor-validated maximum",
+      "idle_watts": "No independently verified idle-watt measurement in the cited source"
     },
     {
       "name": "HPE ProLiant MicroServer Gen10 Plus v2",
@@ -251,7 +302,10 @@
       "form": "Compact server tower",
       "operations": "Review components, remote management, drives, power, support, and OS compatibility.",
       "best_for": "Small offices and edge sites needing a compact serviceable server.",
-      "decision": "small offices and edge sites needing a compact serviceable server"
+      "decision": "small offices and edge sites needing a compact serviceable server",
+      "memory_channel": "Dual-channel capable DDR4 UDIMM layout",
+      "ram_limit": "32 GB vendor-validated maximum",
+      "idle_watts": "No independently verified idle-watt measurement in the cited source"
     },
     {
       "name": "Fractal Design Node 804",
@@ -265,7 +319,10 @@
       "form": "Cube PC enclosure",
       "operations": "Requires selecting compute, board, power, cooling, network, storage, and software.",
       "best_for": "Custom NAS and home-lab builders wanting component choice.",
-      "decision": "custom nas and home-lab builders wanting component choice"
+      "decision": "custom nas and home-lab builders wanting component choice",
+      "memory_channel": "N/A — the product does not use user-addressable system RAM",
+      "ram_limit": "N/A — the product does not use user-addressable system RAM",
+      "idle_watts": "N/A — component or peripheral; the host system determines idle draw"
     },
     {
       "name": "SilverStone CS381",
@@ -279,7 +336,10 @@
       "form": "Compact server enclosure",
       "operations": "Validate backplane, HBA, board, cooling, power, cabling, drives, and software.",
       "best_for": "Custom storage servers where drive access matters.",
-      "decision": "custom storage servers where drive access matters"
+      "decision": "custom storage servers where drive access matters",
+      "memory_channel": "N/A — the product does not use user-addressable system RAM",
+      "ram_limit": "N/A — the product does not use user-addressable system RAM",
+      "idle_watts": "N/A — component or peripheral; the host system determines idle draw"
     },
     {
       "name": "TP-Link Omada ER605",
@@ -293,7 +353,10 @@
       "form": "Desktop wired router",
       "operations": "Validate throughput, VPN requirements, controller choice, firmware, and failover.",
       "best_for": "Small networks using Omada or needing a compact wired router.",
-      "decision": "small networks using omada or needing a compact wired router"
+      "decision": "small networks using omada or needing a compact wired router",
+      "memory_channel": "Not user-configurable; channel topology is not published",
+      "ram_limit": "Fixed appliance memory; vendor limit is not user-upgradable",
+      "idle_watts": "No independently verified idle-watt measurement in the cited source"
     },
     {
       "name": "Ubiquiti Cloud Gateway Ultra",
@@ -307,7 +370,10 @@
       "form": "Compact network gateway",
       "operations": "Size routing, inspection, managed devices, storage, firmware, and topology.",
       "best_for": "Small UniFi deployments wanting an integrated controller and gateway.",
-      "decision": "small unifi deployments wanting an integrated controller and gateway"
+      "decision": "small unifi deployments wanting an integrated controller and gateway",
+      "memory_channel": "Not user-configurable; channel topology is not published",
+      "ram_limit": "Fixed appliance memory; vendor limit is not user-upgradable",
+      "idle_watts": "No independently verified idle-watt measurement in the cited source"
     },
     {
       "name": "MikroTik hEX S",
@@ -321,7 +387,10 @@
       "form": "Desktop wired router",
       "operations": "RouterOS requires learning; verify feature throughput, backups, updates, and support.",
       "best_for": "Technical users valuing granular routing configuration.",
-      "decision": "technical users valuing granular routing configuration"
+      "decision": "technical users valuing granular routing configuration",
+      "memory_channel": "Not user-configurable; channel topology is not published",
+      "ram_limit": "Fixed appliance memory; vendor limit is not user-upgradable",
+      "idle_watts": "No independently verified idle-watt measurement in the cited source"
     },
     {
       "name": "UniFi U7 Pro",
@@ -335,7 +404,10 @@
       "form": "Ceiling or wall wireless access point",
       "operations": "Plan PoE, cabling, controller, placement, channels, and client compatibility.",
       "best_for": "Managed UniFi wireless networks using a modern access point.",
-      "decision": "managed unifi wireless networks using a modern access point"
+      "decision": "managed unifi wireless networks using a modern access point",
+      "memory_channel": "Not user-configurable; channel topology is not published",
+      "ram_limit": "Fixed appliance memory; vendor limit is not user-upgradable",
+      "idle_watts": "No independently verified idle-watt measurement in the cited source"
     },
     {
       "name": "TP-Link Omada EAP773",
@@ -349,7 +421,10 @@
       "form": "Ceiling-mount wireless access point",
       "operations": "Confirm switch speed, PoE, controller, cabling, clients, and radio design.",
       "best_for": "Omada-managed offices upgrading wireless capacity.",
-      "decision": "omada-managed offices upgrading wireless capacity"
+      "decision": "omada-managed offices upgrading wireless capacity",
+      "memory_channel": "Not user-configurable; channel topology is not published",
+      "ram_limit": "Fixed appliance memory; vendor limit is not user-upgradable",
+      "idle_watts": "No independently verified idle-watt measurement in the cited source"
     },
     {
       "name": "Aruba Instant On AP25",
@@ -363,7 +438,10 @@
       "form": "Indoor wireless access point",
       "operations": "Validate PoE, uplink, cloud management, coverage, clients, and service terms.",
       "best_for": "Small-business Wi-Fi using Instant On management.",
-      "decision": "small-business wi-fi using instant on management"
+      "decision": "small-business wi-fi using instant on management",
+      "memory_channel": "Not user-configurable; channel topology is not published",
+      "ram_limit": "Fixed appliance memory; vendor limit is not user-upgradable",
+      "idle_watts": "No independently verified idle-watt measurement in the cited source"
     },
     {
       "name": "TP-Link TL-SG108-M2",
@@ -377,7 +455,10 @@
       "form": "Desktop unmanaged switch",
       "operations": "No advanced management; verify cables, endpoint speeds, heat, power, and uplink.",
       "best_for": "Small networks needing simple faster wired links.",
-      "decision": "small networks needing simple faster wired links"
+      "decision": "small networks needing simple faster wired links",
+      "memory_channel": "Not user-configurable; channel topology is not published",
+      "ram_limit": "Fixed appliance memory; vendor limit is not user-upgradable",
+      "idle_watts": "No independently verified idle-watt measurement in the cited source"
     },
     {
       "name": "QNAP QSW-1105-5T",
@@ -391,7 +472,10 @@
       "form": "Desktop unmanaged switch",
       "operations": "Confirm cables, endpoint negotiation, aggregate traffic, cooling, and control needs.",
       "best_for": "Home labs and small desks needing compact multi-gigabit switching.",
-      "decision": "home labs and small desks needing compact multi-gigabit switching"
+      "decision": "home labs and small desks needing compact multi-gigabit switching",
+      "memory_channel": "Not user-configurable; channel topology is not published",
+      "ram_limit": "Fixed appliance memory; vendor limit is not user-upgradable",
+      "idle_watts": "No independently verified idle-watt measurement in the cited source"
     },
     {
       "name": "NETGEAR GS308EP",
@@ -405,7 +489,10 @@
       "form": "Desktop managed-plus switch",
       "operations": "Calculate PoE budget, endpoint standards, uplink, VLANs, firmware, and mounting.",
       "best_for": "Small offices powering a few access points, cameras, or phones.",
-      "decision": "small offices powering a few access points, cameras, or phones"
+      "decision": "small offices powering a few access points, cameras, or phones",
+      "memory_channel": "Not user-configurable; channel topology is not published",
+      "ram_limit": "Fixed appliance memory; vendor limit is not user-upgradable",
+      "idle_watts": "No independently verified idle-watt measurement in the cited source"
     },
     {
       "name": "Cable Matters USB-C 2.5GbE Adapter",
@@ -419,7 +506,10 @@
       "form": "Portable network adapter",
       "operations": "Host USB mode, drivers, OS, cables, switch speed, and thermals affect results.",
       "best_for": "Laptops and compact systems lacking faster built-in Ethernet.",
-      "decision": "laptops and compact systems lacking faster built-in ethernet"
+      "decision": "laptops and compact systems lacking faster built-in ethernet",
+      "memory_channel": "Not user-configurable; channel topology is not published",
+      "ram_limit": "Fixed appliance memory; vendor limit is not user-upgradable",
+      "idle_watts": "No independently verified idle-watt measurement in the cited source"
     },
     {
       "name": "Framework Laptop 13",
@@ -433,7 +523,10 @@
       "form": "Modular 13-inch laptop",
       "operations": "Configuration, OS, memory, storage, expansion cards, battery, and support vary.",
       "best_for": "Developers prioritizing repairability and component choice.",
-      "decision": "developers prioritizing repairability and component choice"
+      "decision": "developers prioritizing repairability and component choice",
+      "memory_channel": "Dual-channel capable; two SO-DIMM slots on the referenced configuration",
+      "ram_limit": "96 GB platform maximum on supported configurations",
+      "idle_watts": "No independently verified idle-watt measurement in the cited source"
     },
     {
       "name": "Apple Mac mini",
@@ -447,7 +540,10 @@
       "form": "Compact desktop computer",
       "operations": "Plan memory, storage, displays, peripherals, software compatibility, and repair model.",
       "best_for": "Developers whose toolchain benefits from macOS.",
-      "decision": "developers whose toolchain benefits from macos"
+      "decision": "developers whose toolchain benefits from macos",
+      "memory_channel": "Unified memory; conventional single/dual-channel labeling does not apply",
+      "ram_limit": "Configuration-dependent; verify the current model before purchase",
+      "idle_watts": "No independently verified idle-watt measurement in the cited source"
     },
     {
       "name": "Lenovo ThinkPad P14s Gen 5",
@@ -461,7 +557,10 @@
       "form": "14-inch mobile workstation",
       "operations": "Exact CPU, GPU, display, memory, storage, ports, warranty, and region vary.",
       "best_for": "Mobile developers needing a business workstation.",
-      "decision": "mobile developers needing a business workstation"
+      "decision": "mobile developers needing a business workstation",
+      "memory_channel": "Dual-channel capable; configuration depends on model",
+      "ram_limit": "Configuration-dependent; verify the exact machine type",
+      "idle_watts": "No independently verified idle-watt measurement in the cited source"
     },
     {
       "name": "Logitech MX Master 3S",
@@ -475,7 +574,10 @@
       "form": "Desktop productivity mouse",
       "operations": "Confirm receiver, Bluetooth policy, mapping software, OS support, and ergonomics.",
       "best_for": "Developers using shortcuts and multiple compatible computers.",
-      "decision": "developers using shortcuts and multiple compatible computers"
+      "decision": "developers using shortcuts and multiple compatible computers",
+      "memory_channel": "N/A — the product does not use user-addressable system RAM",
+      "ram_limit": "N/A — the product does not use user-addressable system RAM",
+      "idle_watts": "N/A — component or peripheral; the host system determines idle draw"
     },
     {
       "name": "Keychron K8 Pro",
@@ -489,7 +591,10 @@
       "form": "Tenkeyless mechanical keyboard",
       "operations": "Review switches, layout, firmware, mapping, wireless policy, charging, and OS.",
       "best_for": "Developers wanting a smaller programmable keyboard.",
-      "decision": "developers wanting a smaller programmable keyboard"
+      "decision": "developers wanting a smaller programmable keyboard",
+      "memory_channel": "N/A — the product does not use user-addressable system RAM",
+      "ram_limit": "N/A — the product does not use user-addressable system RAM",
+      "idle_watts": "N/A — component or peripheral; the host system determines idle draw"
     },
     {
       "name": "Elgato Stream Deck MK.2",
@@ -503,7 +608,10 @@
       "form": "Desktop programmable control pad",
       "operations": "Value depends on integrations, host support, plugin trust, profiles, and desk space.",
       "best_for": "Operators who repeat desktop actions frequently.",
-      "decision": "operators who repeat desktop actions frequently"
+      "decision": "operators who repeat desktop actions frequently",
+      "memory_channel": "N/A — the product does not use user-addressable system RAM",
+      "ram_limit": "N/A — the product does not use user-addressable system RAM",
+      "idle_watts": "N/A — component or peripheral; the host system determines idle draw"
     },
     {
       "name": "Raspberry Pi Debug Probe",
@@ -517,7 +625,10 @@
       "form": "Portable debug accessory",
       "operations": "Target voltage, pinout, toolchain, permissions, cables, and protocols require care.",
       "best_for": "Embedded developers debugging compatible boards and serial consoles.",
-      "decision": "embedded developers debugging compatible boards and serial consoles"
+      "decision": "embedded developers debugging compatible boards and serial consoles",
+      "memory_channel": "N/A — the product does not use user-addressable system RAM",
+      "ram_limit": "N/A — the product does not use user-addressable system RAM",
+      "idle_watts": "N/A — component or peripheral; the host system determines idle draw"
     },
     {
       "name": "YubiKey 5C NFC",
@@ -531,7 +642,10 @@
       "form": "Portable hardware security key",
       "operations": "Enroll backups, confirm protocols and services, protect spares, and plan recovery.",
       "best_for": "Developers and administrators strengthening account authentication.",
-      "decision": "developers and administrators strengthening account authentication"
+      "decision": "developers and administrators strengthening account authentication",
+      "memory_channel": "N/A — the product does not use user-addressable system RAM",
+      "ram_limit": "N/A — the product does not use user-addressable system RAM",
+      "idle_watts": "N/A — component or peripheral; the host system determines idle draw"
     },
     {
       "name": "GitHub Actions in Action",
@@ -545,7 +659,10 @@
       "form": "Technical book",
       "operations": "Check edition, examples, platform changes, and team workflow maturity.",
       "best_for": "Teams learning to build and maintain GitHub Actions workflows.",
-      "decision": "teams learning to build and maintain github actions workflows"
+      "decision": "teams learning to build and maintain github actions workflows",
+      "memory_channel": "N/A — the product does not use user-addressable system RAM",
+      "ram_limit": "N/A — the product does not use user-addressable system RAM",
+      "idle_watts": "N/A — component or peripheral; the host system determines idle draw"
     },
     {
       "name": "Kubernetes Up and Running",
@@ -559,7 +676,10 @@
       "form": "Technical book",
       "operations": "Confirm edition recency, cluster version, provider differences, and practice needs.",
       "best_for": "Developers and operators building Kubernetes foundations.",
-      "decision": "developers and operators building kubernetes foundations"
+      "decision": "developers and operators building kubernetes foundations",
+      "memory_channel": "N/A — the product does not use user-addressable system RAM",
+      "ram_limit": "N/A — the product does not use user-addressable system RAM",
+      "idle_watts": "N/A — component or peripheral; the host system determines idle draw"
     }
   ],
   "intents": [
@@ -820,6 +940,28 @@
     [
       "github-actions-in-action-book",
       "kubernetes-up-and-running-book"
+    ]
+  ],
+  "renewed_enterprise_pairs": [
+    [
+      "raspberry-pi-5",
+      "intel-nuc-13-pro"
+    ],
+    [
+      "intel-nuc-13-pro",
+      "minisforum-ms-01"
+    ],
+    [
+      "dell-poweredge-t350",
+      "hpe-microserver-gen10-plus-v2"
+    ],
+    [
+      "framework-laptop-13",
+      "lenovo-thinkpad-p14s-gen5"
+    ],
+    [
+      "apple-mac-mini",
+      "framework-laptop-13"
     ]
   ]
 }

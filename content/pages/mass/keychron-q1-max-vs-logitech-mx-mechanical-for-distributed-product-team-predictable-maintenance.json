@@ -41,6 +41,21 @@
       "key": "intent",
       "label": "Decision lens",
       "description": "How the option maps to this long-tail buying intent."
+    },
+    {
+      "key": "memory_channel",
+      "label": "Canal de Memoria (Single/Dual)",
+      "description": "Canal documentado o estado no aplicable."
+    },
+    {
+      "key": "ram_limit",
+      "label": "Límite de RAM Real",
+      "description": "Máximo validado por el fabricante."
+    },
+    {
+      "key": "idle_watts",
+      "label": "Consumo en reposo (Watts)",
+      "description": "Medición publicada o ausencia de una medición verificable."
     }
   ],
   "alternatives": [
@@ -54,7 +69,10 @@
         "form": "Desktop mechanical keyboard",
         "operations": "Review layout, switches, firmware tools, wireless policy, and OS mapping.",
         "fit": "Fixed desks where programmability matters. For this comparison, assess it specifically for a distributed product team prioritizing predictable maintenance.",
-        "intent": "Use when fixed desks where programmability matters best supports a distributed product team prioritizing predictable maintenance."
+        "intent": "Use when fixed desks where programmability matters best supports a distributed product team prioritizing predictable maintenance.",
+        "memory_channel": "N/A — the product does not use user-addressable system RAM",
+        "ram_limit": "N/A — the product does not use user-addressable system RAM",
+        "idle_watts": "N/A — component or peripheral; the host system determines idle draw"
       }
     },
     {
@@ -67,7 +85,10 @@
         "form": "Desktop mechanical keyboard",
         "operations": "Confirm receiver support, layout, charging, device policy, and OS support.",
         "fit": "Office and development desks using multiple devices. For this comparison, assess it specifically for a distributed product team prioritizing predictable maintenance.",
-        "intent": "Use when office and development desks using multiple devices best supports a distributed product team prioritizing predictable maintenance."
+        "intent": "Use when office and development desks using multiple devices best supports a distributed product team prioritizing predictable maintenance.",
+        "memory_channel": "N/A — the product does not use user-addressable system RAM",
+        "ram_limit": "N/A — the product does not use user-addressable system RAM",
+        "idle_watts": "N/A — component or peripheral; the host system determines idle draw"
       }
     }
   ],

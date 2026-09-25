@@ -89,6 +89,20 @@ class BuildTests(unittest.TestCase):
             self.assertIn("Consultar especificaciones y oferta en Amazon", homepage)
             self.assertIn(disclosure, homepage)
 
+            hardware_slug = "raspberry-pi-5-vs-intel-nuc-13-pro-for-bootstrapped-saas-limited-space"
+            hardware_dir = root / "dist" / "guides" / hardware_slug
+            hardware_html = (hardware_dir / "index.html").read_text(encoding="utf-8")
+            hardware_markdown = (hardware_dir / "index.md").read_text(encoding="utf-8")
+            self.assertIn("Amazon Renewed / Enterprise Usado", hardware_html)
+            self.assertIn("tag=blackboxia92-21", hardware_html)
+            self.assertRegex(
+                hardware_html,
+                r"Ganador:.*precio estimado: USD 240;.*Ver disponibilidad y precio actualizado en Amazon",
+            )
+            self.assertIn("Canal de Memoria (Single/Dual)", hardware_markdown)
+            self.assertIn("Límite de RAM Real", hardware_markdown)
+            self.assertIn("Consumo en reposo (Watts)", hardware_markdown)
+
     def test_expanded_draft_is_noindex_and_excluded_from_sitemap(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)

@@ -69,6 +69,13 @@ class Resource:
 
 
 @dataclass(frozen=True)
+class Recommendation:
+    winner: str
+    estimated_price_usd: int
+    amazon_url: str
+
+
+@dataclass(frozen=True)
 class Page:
     slug: str
     status: str
@@ -85,6 +92,7 @@ class Page:
     faq: tuple[Faq, ...]
     sources: tuple[Source, ...]
     resources: tuple[Resource, ...]
+    recommendation: Recommendation | None = None
 
     @property
     def indexable(self) -> bool:
@@ -163,6 +171,25 @@ def load_page(path: Path) -> tuple[Page, dict[str, Any]]:
             )
         )
     resources = tuple(resource_items)
+    recommendation_data = raw.get("recommendation")
+    recommendation = None
+    if recommendation_data is not None:
+        if not isinstance(recommendation_data, dict):
+            raise ContentError("recommendation must be an object")
+        price = recommendation_data.get("estimated_price_usd")
+        if not isinstance(price, int) or not 1 <= price <= 100_000:
+            raise ContentError("recommendation.estimated_price_usd must be a positive integer")
+        try:
+            recommendation_url = validate_amazon_target(
+                _https_url(recommendation_data.get("amazon_url"), "recommendation.amazon_url")
+            )
+        except ValueError as exc:
+            raise ContentError(str(exc)) from exc
+        recommendation = Recommendation(
+            winner=_text(recommendation_data.get("winner"), "recommendation.winner"),
+            estimated_price_usd=price,
+            amazon_url=recommendation_url,
+        )
 
     page = Page(
         slug=slug,
@@ -180,6 +207,7 @@ def load_page(path: Path) -> tuple[Page, dict[str, Any]]:
         faq=faq,
         sources=sources,
         resources=resources,
+        recommendation=recommendation,
     )
     _validate_page(page)
     return page, raw

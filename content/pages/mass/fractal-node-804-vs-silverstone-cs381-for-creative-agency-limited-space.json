@@ -41,6 +41,21 @@
       "key": "intent",
       "label": "Decision lens",
       "description": "How the option maps to this long-tail buying intent."
+    },
+    {
+      "key": "memory_channel",
+      "label": "Canal de Memoria (Single/Dual)",
+      "description": "Canal documentado o estado no aplicable."
+    },
+    {
+      "key": "ram_limit",
+      "label": "Límite de RAM Real",
+      "description": "Máximo validado por el fabricante."
+    },
+    {
+      "key": "idle_watts",
+      "label": "Consumo en reposo (Watts)",
+      "description": "Medición publicada o ausencia de una medición verificable."
     }
   ],
   "alternatives": [
@@ -54,7 +69,10 @@
         "form": "Cube PC enclosure",
         "operations": "Requires selecting compute, board, power, cooling, network, storage, and software.",
         "fit": "Custom NAS and home-lab builders wanting component choice. For this comparison, assess it specifically for a small creative agency with limited desk or rack space.",
-        "intent": "Use when custom nas and home-lab builders wanting component choice best supports a small creative agency with limited desk or rack space."
+        "intent": "Use when custom nas and home-lab builders wanting component choice best supports a small creative agency with limited desk or rack space.",
+        "memory_channel": "N/A — the product does not use user-addressable system RAM",
+        "ram_limit": "N/A — the product does not use user-addressable system RAM",
+        "idle_watts": "N/A — component or peripheral; the host system determines idle draw"
       }
     },
     {
@@ -67,7 +85,10 @@
         "form": "Compact server enclosure",
         "operations": "Validate backplane, HBA, board, cooling, power, cabling, drives, and software.",
         "fit": "Custom storage servers where drive access matters. For this comparison, assess it specifically for a small creative agency with limited desk or rack space.",
-        "intent": "Use when custom storage servers where drive access matters best supports a small creative agency with limited desk or rack space."
+        "intent": "Use when custom storage servers where drive access matters best supports a small creative agency with limited desk or rack space.",
+        "memory_channel": "N/A — the product does not use user-addressable system RAM",
+        "ram_limit": "N/A — the product does not use user-addressable system RAM",
+        "idle_watts": "N/A — component or peripheral; the host system determines idle draw"
       }
     }
   ],

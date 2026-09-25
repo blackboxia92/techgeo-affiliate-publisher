@@ -41,6 +41,21 @@
       "key": "intent",
       "label": "Decision lens",
       "description": "How the option maps to this long-tail buying intent."
+    },
+    {
+      "key": "memory_channel",
+      "label": "Canal de Memoria (Single/Dual)",
+      "description": "Canal documentado o estado no aplicable."
+    },
+    {
+      "key": "ram_limit",
+      "label": "Límite de RAM Real",
+      "description": "Máximo validado por el fabricante."
+    },
+    {
+      "key": "idle_watts",
+      "label": "Consumo en reposo (Watts)",
+      "description": "Medición publicada o ausencia de una medición verificable."
     }
   ],
   "alternatives": [
@@ -54,7 +69,10 @@
         "form": "Desktop wired router",
         "operations": "Validate throughput, VPN requirements, controller choice, firmware, and failover.",
         "fit": "Small networks using Omada or needing a compact wired router. For this comparison, assess it specifically for a remote-first engineering team prioritizing predictable maintenance.",
-        "intent": "Use when small networks using omada or needing a compact wired router best supports a remote-first engineering team prioritizing predictable maintenance."
+        "intent": "Use when small networks using omada or needing a compact wired router best supports a remote-first engineering team prioritizing predictable maintenance.",
+        "memory_channel": "Not user-configurable; channel topology is not published",
+        "ram_limit": "Fixed appliance memory; vendor limit is not user-upgradable",
+        "idle_watts": "No independently verified idle-watt measurement in the cited source"
       }
     },
     {
@@ -67,7 +85,10 @@
         "form": "Compact network gateway",
         "operations": "Size routing, inspection, managed devices, storage, firmware, and topology.",
         "fit": "Small UniFi deployments wanting an integrated controller and gateway. For this comparison, assess it specifically for a remote-first engineering team prioritizing predictable maintenance.",
-        "intent": "Use when small unifi deployments wanting an integrated controller and gateway best supports a remote-first engineering team prioritizing predictable maintenance."
+        "intent": "Use when small unifi deployments wanting an integrated controller and gateway best supports a remote-first engineering team prioritizing predictable maintenance.",
+        "memory_channel": "Not user-configurable; channel topology is not published",
+        "ram_limit": "Fixed appliance memory; vendor limit is not user-upgradable",
+        "idle_watts": "No independently verified idle-watt measurement in the cited source"
       }
     }
   ],

@@ -41,6 +41,21 @@
       "key": "intent",
       "label": "Decision lens",
       "description": "How the option maps to this long-tail buying intent."
+    },
+    {
+      "key": "memory_channel",
+      "label": "Canal de Memoria (Single/Dual)",
+      "description": "Canal documentado o estado no aplicable."
+    },
+    {
+      "key": "ram_limit",
+      "label": "Límite de RAM Real",
+      "description": "Máximo validado por el fabricante."
+    },
+    {
+      "key": "idle_watts",
+      "label": "Consumo en reposo (Watts)",
+      "description": "Medición publicada o ausencia de una medición verificable."
     }
   ],
   "alternatives": [
@@ -54,7 +69,10 @@
         "form": "Technical book",
         "operations": "Check edition, examples, platform changes, and team workflow maturity.",
         "fit": "Teams learning to build and maintain GitHub Actions workflows. For this comparison, assess it specifically for an IT consulting practice prioritizing predictable maintenance.",
-        "intent": "Use when teams learning to build and maintain github actions workflows best supports an IT consulting practice prioritizing predictable maintenance."
+        "intent": "Use when teams learning to build and maintain github actions workflows best supports an IT consulting practice prioritizing predictable maintenance.",
+        "memory_channel": "N/A — the product does not use user-addressable system RAM",
+        "ram_limit": "N/A — the product does not use user-addressable system RAM",
+        "idle_watts": "N/A — component or peripheral; the host system determines idle draw"
       }
     },
     {
@@ -67,7 +85,10 @@
         "form": "Technical book",
         "operations": "Confirm edition recency, cluster version, provider differences, and practice needs.",
         "fit": "Developers and operators building Kubernetes foundations. For this comparison, assess it specifically for an IT consulting practice prioritizing predictable maintenance.",
-        "intent": "Use when developers and operators building kubernetes foundations best supports an IT consulting practice prioritizing predictable maintenance."
+        "intent": "Use when developers and operators building kubernetes foundations best supports an IT consulting practice prioritizing predictable maintenance.",
+        "memory_channel": "N/A — the product does not use user-addressable system RAM",
+        "ram_limit": "N/A — the product does not use user-addressable system RAM",
+        "idle_watts": "N/A — component or peripheral; the host system determines idle draw"
       }
     }
   ],

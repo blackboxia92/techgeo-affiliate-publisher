@@ -41,6 +41,21 @@
       "key": "intent",
       "label": "Decision lens",
       "description": "How the option maps to this long-tail buying intent."
+    },
+    {
+      "key": "memory_channel",
+      "label": "Canal de Memoria (Single/Dual)",
+      "description": "Canal documentado o estado no aplicable."
+    },
+    {
+      "key": "ram_limit",
+      "label": "Límite de RAM Real",
+      "description": "Máximo validado por el fabricante."
+    },
+    {
+      "key": "idle_watts",
+      "label": "Consumo en reposo (Watts)",
+      "description": "Medición publicada o ausencia de una medición verificable."
     }
   ],
   "alternatives": [
@@ -54,7 +69,10 @@
         "form": "Desktop unmanaged switch",
         "operations": "No advanced management; verify cables, endpoint speeds, heat, power, and uplink.",
         "fit": "Small networks needing simple faster wired links. For this comparison, assess it specifically for a small creative agency with limited desk or rack space.",
-        "intent": "Use when small networks needing simple faster wired links best supports a small creative agency with limited desk or rack space."
+        "intent": "Use when small networks needing simple faster wired links best supports a small creative agency with limited desk or rack space.",
+        "memory_channel": "Not user-configurable; channel topology is not published",
+        "ram_limit": "Fixed appliance memory; vendor limit is not user-upgradable",
+        "idle_watts": "No independently verified idle-watt measurement in the cited source"
       }
     },
     {
@@ -67,7 +85,10 @@
         "form": "Desktop unmanaged switch",
         "operations": "Confirm cables, endpoint negotiation, aggregate traffic, cooling, and control needs.",
         "fit": "Home labs and small desks needing compact multi-gigabit switching. For this comparison, assess it specifically for a small creative agency with limited desk or rack space.",
-        "intent": "Use when home labs and small desks needing compact multi-gigabit switching best supports a small creative agency with limited desk or rack space."
+        "intent": "Use when home labs and small desks needing compact multi-gigabit switching best supports a small creative agency with limited desk or rack space.",
+        "memory_channel": "Not user-configurable; channel topology is not published",
+        "ram_limit": "Fixed appliance memory; vendor limit is not user-upgradable",
+        "idle_watts": "No independently verified idle-watt measurement in the cited source"
       }
     }
   ],

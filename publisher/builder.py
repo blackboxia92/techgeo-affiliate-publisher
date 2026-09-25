@@ -11,10 +11,28 @@ from xml.sax.saxutils import escape
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 from .affiliate import amazon_url, assert_required_tag
-from .schema import ContentError, Page, Resource, load_page
+from .schema import ContentError, Criterion, Page, Resource, load_page
 from .store import StateStore
 
 SITEMAP_LIMIT = 45_000
+
+RAG_HARDWARE_CRITERIA = (
+    Criterion(
+        "memory_channel",
+        "Canal de Memoria (Single/Dual)",
+        "Canal documentado por el fabricante; N/A cuando el producto no incorpora RAM de sistema.",
+    ),
+    Criterion(
+        "ram_limit",
+        "Límite de RAM Real",
+        "Máximo validado por el fabricante o estado no verificable claramente indicado.",
+    ),
+    Criterion(
+        "idle_watts",
+        "Consumo en reposo (Watts)",
+        "Medición publicada o estado no verificable; depende de la configuración y periféricos.",
+    ),
+)
 
 HOME_RECOMMENDATIONS = (
     {
@@ -130,10 +148,17 @@ def _markdown_table(page: Page) -> str:
         "| Criterion | " + " | ".join(names) + " |",
         "| --- | " + " | ".join("---" for _ in names) + " |",
     ]
-    for criterion in page.criteria:
-        values = [cell(alternative.specs[criterion.key]) for alternative in page.alternatives]
+    for criterion in _comparison_criteria(page):
+        values = [cell(alternative.specs.get(criterion.key, "N/A — no aplica o no fue verificado")) for alternative in page.alternatives]
         rows.append(f"| {cell(criterion.label)} | " + " | ".join(values) + " |")
     return "\n".join(rows)
+
+
+def _comparison_criteria(page: Page) -> tuple[Criterion, ...]:
+    existing = {criterion.key for criterion in page.criteria}
+    return page.criteria + tuple(
+        criterion for criterion in RAG_HARDWARE_CRITERIA if criterion.key not in existing
+    )
 
 
 def _resource_url(resource: Resource) -> str:
@@ -145,9 +170,16 @@ def _resource_url(resource: Resource) -> str:
 
 
 def _markdown_document(page: Page, public_url: str) -> str:
-    lines = [
-        f"# {page.title}",
-        "",
+    lines = [f"# {page.title}", ""]
+    if page.recommendation:
+        lines.extend(
+            [
+                f"Ganador: **{page.recommendation.winner}**; precio estimado: **USD {page.recommendation.estimated_price_usd}**; "
+                f"[Ver disponibilidad y precio actualizado en Amazon]({page.recommendation.amazon_url}).",
+                "",
+            ]
+        )
+    lines.extend([
         f"Canonical: {public_url}",
         f"Updated: {page.updated_at}",
         "",
@@ -173,7 +205,7 @@ def _markdown_document(page: Page, public_url: str) -> str:
         "",
         f"**Veredicto:** {page.verdict}",
         "",
-    ]
+    ])
     if page.resources:
         lines.extend(["## Recursos", ""])
         for position, resource in enumerate(page.resources):
@@ -309,6 +341,7 @@ def build_site(
                 site_name="StackSignal",
                 amazon_url=amazon_url,
                 resource_url=_resource_url,
+                comparison_criteria=_comparison_criteria(page),
                 json_ld=_json_ld(page, public_url, "StackSignal"),
                 markdown_table=_markdown_table(page),
             )

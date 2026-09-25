@@ -41,6 +41,21 @@
       "key": "intent",
       "label": "Decision lens",
       "description": "How the option maps to this long-tail buying intent."
+    },
+    {
+      "key": "memory_channel",
+      "label": "Canal de Memoria (Single/Dual)",
+      "description": "Canal documentado o estado no aplicable."
+    },
+    {
+      "key": "ram_limit",
+      "label": "Límite de RAM Real",
+      "description": "Máximo validado por el fabricante."
+    },
+    {
+      "key": "idle_watts",
+      "label": "Consumo en reposo (Watts)",
+      "description": "Medición publicada o ausencia de una medición verificable."
     }
   ],
   "alternatives": [
@@ -54,7 +69,10 @@
         "form": "Four-bay desktop NAS",
         "operations": "Plan compatible drives, RAID, backup separation, memory, networking, and service limits.",
         "fit": "Small teams and labs needing managed network storage. For this comparison, assess it specifically for a freelance developer workspace standardizing equipment across users.",
-        "intent": "Use when small teams and labs needing managed network storage best supports a freelance developer workspace standardizing equipment across users."
+        "intent": "Use when small teams and labs needing managed network storage best supports a freelance developer workspace standardizing equipment across users.",
+        "memory_channel": "Two ECC DDR4 SO-DIMM slots; channel mode not stated",
+        "ram_limit": "32 GB vendor-validated maximum",
+        "idle_watts": "About 11.5 W in HDD hibernation; installed drives affect results"
       }
     },
     {
@@ -67,7 +85,10 @@
         "form": "Four-bay desktop NAS",
         "operations": "Confirm drive support, memory, cache, backups, patching, and remote access controls.",
         "fit": "Prosumer and small-team storage deployments. For this comparison, assess it specifically for a freelance developer workspace standardizing equipment across users.",
-        "intent": "Use when prosumer and small-team storage deployments best supports a freelance developer workspace standardizing equipment across users."
+        "intent": "Use when prosumer and small-team storage deployments best supports a freelance developer workspace standardizing equipment across users.",
+        "memory_channel": "Dual-channel capable DDR4 SO-DIMM configuration",
+        "ram_limit": "16 GB vendor-stated maximum",
+        "idle_watts": "No independently verified idle-watt measurement in the cited source"
       }
     }
   ],

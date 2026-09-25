@@ -22,7 +22,16 @@ CRITERIA = (
     ("operations", "Operational trade-off", "Maintenance, compatibility, and operating considerations."),
     ("fit", "Best fit", "Workload or environment where the option is strongest."),
     ("intent", "Decision lens", "How the option maps to this long-tail buying intent."),
+    ("memory_channel", "Canal de Memoria (Single/Dual)", "Canal documentado o estado no aplicable."),
+    ("ram_limit", "Límite de RAM Real", "Máximo validado por el fabricante."),
+    ("idle_watts", "Consumo en reposo (Watts)", "Medición publicada o ausencia de una medición verificable."),
 )
+
+RENEWED_NAME = "Lenovo ThinkCentre M920q Tiny — Amazon Renewed / Enterprise Usado"
+RENEWED_ESTIMATED_PRICE_USD = 240
+RENEWED_AMAZON_QUERY = "Lenovo ThinkCentre M920q Tiny Renewed 16GB 512GB"
+RENEWED_OFFICIAL_URL = "https://psref.lenovo.com/syspool/Sys/PDF/ThinkCentre/ThinkCentre_M920_Tiny/ThinkCentre_M920_Tiny_Spec.html"
+RENEWED_IDLE_SOURCE = "https://www.servethehome.com/lenovo-thinkcentre-m920-and-m920q-tiny-guide-and-review/3/"
 
 
 @dataclass(frozen=True)
@@ -93,7 +102,12 @@ def _entry_from_existing(raw: dict[str, Any]) -> dict[str, Any]:
 
 
 def _comparison_page(
-    *, left: dict[str, Any], right: dict[str, Any], intent: dict[str, str], number: int
+    *,
+    left: dict[str, Any],
+    right: dict[str, Any],
+    intent: dict[str, str],
+    number: int,
+    include_renewed: bool,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     left_name = _text(left["name"], "product.name")
     right_name = _text(right["name"], "product.name")
@@ -119,6 +133,9 @@ def _comparison_page(
         "operations": left["operations"],
         "fit": left_fit,
         "intent": f"Use when {left['decision']} best supports {intent_name}.",
+        "memory_channel": left.get("memory_channel", "N/A — no aplica o no fue verificado"),
+        "ram_limit": left.get("ram_limit", "N/A — no aplica o no fue verificado"),
+        "idle_watts": left.get("idle_watts", "N/A — no aplica o no fue verificado"),
     }
     specs_right = {
         "model": right_name,
@@ -127,9 +144,68 @@ def _comparison_page(
         "operations": right["operations"],
         "fit": right_fit,
         "intent": f"Use when {right['decision']} best supports {intent_name}.",
+        "memory_channel": right.get("memory_channel", "N/A — no aplica o no fue verificado"),
+        "ram_limit": right.get("ram_limit", "N/A — no aplica o no fue verificado"),
+        "idle_watts": right.get("idle_watts", "N/A — no aplica o no fue verificado"),
     }
     left_target = amazon_search_url(left["amazon_query"])
     right_target = amazon_search_url(right["amazon_query"])
+    renewed_target = amazon_search_url(RENEWED_AMAZON_QUERY)
+    alternatives = [
+        {
+            "name": left_name,
+            "url": left["official_url"],
+            "summary": left["summary"],
+            "specs": specs_left,
+        },
+        {
+            "name": right_name,
+            "url": right["official_url"],
+            "summary": right["summary"],
+            "specs": specs_right,
+        },
+    ]
+    sources = [
+        {"label": f"{left_name} official documentation", "publisher": left["publisher"], "url": left["official_url"]},
+        {"label": f"{right_name} official documentation", "publisher": right["publisher"], "url": right["official_url"]},
+    ]
+    resources = [
+        {"title": left_name, "target_url": left_target, "note": f"Check current specifications and availability for {left_name}."},
+        {"title": right_name, "target_url": right_target, "note": f"Check current specifications and availability for {right_name}."},
+    ]
+    if include_renewed:
+        renewed_specs = {
+            "model": "ThinkCentre M920q Tiny; renewed listing configuration varies",
+            "interface": "Gigabit Ethernet, USB, DisplayPort/HDMI, NVMe and SATA options",
+            "form": "Enterprise 1-litre Tiny desktop",
+            "operations": "Used condition, SSD health, included adapter, warranty, exact CPU, and seller refurbishment quality require verification.",
+            "fit": f"Budget homelabs and compact x86 infrastructure for {intent_name}.",
+            "intent": f"Use when enterprise serviceability and price matter for {intent_name}.",
+            "memory_channel": "Dual-channel capable; two DDR4 SO-DIMM slots",
+            "ram_limit": "32 GB vendor-validated maximum",
+            "idle_watts": "12–15 W measured on a reviewed quad-core configuration; exact build varies",
+        }
+        alternatives.append(
+            {
+                "name": RENEWED_NAME,
+                "url": renewed_target,
+                "summary": "A compact enterprise desktop sold through renewed or used channels; exact CPU, memory, storage, warranty, and cosmetic condition vary by listing.",
+                "specs": renewed_specs,
+            }
+        )
+        sources.extend(
+            [
+                {"label": "ThinkCentre M920 Tiny platform specification", "publisher": "Lenovo PSREF", "url": RENEWED_OFFICIAL_URL},
+                {"label": "ThinkCentre M920q measured idle power", "publisher": "ServeTheHome", "url": RENEWED_IDLE_SOURCE},
+            ]
+        )
+        resources.append(
+            {"title": RENEWED_NAME, "target_url": renewed_target, "note": "Check the exact renewed configuration, seller warranty, current price, and availability before purchase."}
+        )
+        verdict += (
+            f" The renewed M920q is the value reference at an estimated USD {RENEWED_ESTIMATED_PRICE_USD}; "
+            "the live listing determines the exact configuration and final price."
+        )
     page = {
         "catalog_origin": ORIGIN,
         "catalog_entry_id": f"mass-{number:04d}",
@@ -147,20 +223,7 @@ def _comparison_page(
             {"key": key, "label": label, "description": description}
             for key, label, description in CRITERIA
         ],
-        "alternatives": [
-            {
-                "name": left_name,
-                "url": left["official_url"],
-                "summary": left["summary"],
-                "specs": specs_left,
-            },
-            {
-                "name": right_name,
-                "url": right["official_url"],
-                "summary": right["summary"],
-                "specs": specs_right,
-            },
-        ],
+        "alternatives": alternatives,
         "faq": [
             {
                 "question": f"Which option is easier to evaluate for {intent_name}?",
@@ -175,33 +238,36 @@ def _comparison_page(
                 "answer": "No buyer-review dataset is claimed. Pros, cons, and the verdict are an editorial technical synthesis of the cited manufacturer documentation.",
             },
         ],
-        "sources": [
-            {"label": f"{left_name} official documentation", "publisher": left["publisher"], "url": left["official_url"]},
-            {"label": f"{right_name} official documentation", "publisher": right["publisher"], "url": right["official_url"]},
-        ],
-        "resources": [
-            {"title": left_name, "target_url": left_target, "note": f"Check current specifications and availability for {left_name}."},
-            {"title": right_name, "target_url": right_target, "note": f"Check current specifications and availability for {right_name}."},
-        ],
+        "sources": sources,
+        "resources": resources,
         "buyer_consensus": {
             "status": BUYER_EVIDENCE_BOUNDARY,
-            "pros": [left["summary"], right["summary"]],
-            "cons": [left["operations"], right["operations"]],
+            "pros": [alternative["summary"] for alternative in alternatives],
+            "cons": [alternative["specs"]["operations"] for alternative in alternatives],
             "verdict": verdict,
         },
     }
+    if include_renewed:
+        page["recommendation"] = {
+            "winner": RENEWED_NAME,
+            "estimated_price_usd": RENEWED_ESTIMATED_PRICE_USD,
+            "amazon_url": renewed_target,
+        }
     catalog_entry = {
         "id": page["catalog_entry_id"],
         "slug": slug,
         "title": title,
         "category": left["category"],
         "intent": intent_name,
-        "specifications": {left_name: specs_left, right_name: specs_right},
+        "specifications": {alternative["name"]: alternative["specs"] for alternative in alternatives},
         "buyer_consensus": page["buyer_consensus"],
         "target_url": left_target,
         "secondary_target_url": right_target,
         "sources": [left["official_url"], right["official_url"]],
     }
+    if include_renewed:
+        catalog_entry["renewed_enterprise_target_url"] = renewed_target
+        catalog_entry["recommendation"] = page["recommendation"]
     return page, catalog_entry
 
 
@@ -263,7 +329,14 @@ def generate_mass_catalog(
             for category in sorted(grouped)
             for left, right in combinations(grouped[category], 2)
         ]
-    candidates = [(left, right, intent) for left, right in pairs for intent in intents]
+    renewed_pair_keys = {
+        tuple(sorted(pair)) for pair in source.get("renewed_enterprise_pairs", [])
+    }
+    candidates = [
+        (left, right, intent, tuple(sorted((left["slug"], right["slug"]))) in renewed_pair_keys)
+        for left, right in pairs
+        for intent in intents
+    ]
     needed = total - len(preserved_paths)
     if len(candidates) < needed:
         raise ValueError(f"Only {len(candidates)} unique comparison candidates are available; {needed} required")
@@ -274,9 +347,13 @@ def generate_mass_catalog(
     ]
     seen_slugs = {entry["slug"] for entry in catalog_entries}
     generated = 0
-    for left, right, intent in candidates:
+    for left, right, intent, include_renewed in candidates:
         page, catalog_entry = _comparison_page(
-            left=left, right=right, intent=intent, number=generated + 1
+            left=left,
+            right=right,
+            intent=intent,
+            number=generated + 1,
+            include_renewed=include_renewed,
         )
         if page["slug"] in seen_slugs:
             continue

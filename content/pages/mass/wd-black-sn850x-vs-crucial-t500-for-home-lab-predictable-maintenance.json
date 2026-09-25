@@ -41,6 +41,21 @@
       "key": "intent",
       "label": "Decision lens",
       "description": "How the option maps to this long-tail buying intent."
+    },
+    {
+      "key": "memory_channel",
+      "label": "Canal de Memoria (Single/Dual)",
+      "description": "Canal documentado o estado no aplicable."
+    },
+    {
+      "key": "ram_limit",
+      "label": "Límite de RAM Real",
+      "description": "Máximo validado por el fabricante."
+    },
+    {
+      "key": "idle_watts",
+      "label": "Consumo en reposo (Watts)",
+      "description": "Medición publicada o ausencia de una medición verificable."
     }
   ],
   "alternatives": [
@@ -54,7 +69,10 @@
         "form": "Internal M.2 SSD",
         "operations": "Check platform support, firmware, thermals, lane sharing, and backups.",
         "fit": "Performance desktops and upgradeable development systems. For this comparison, assess it specifically for a self-hosted home lab prioritizing predictable maintenance.",
-        "intent": "Use when performance desktops and upgradeable development systems best supports a self-hosted home lab prioritizing predictable maintenance."
+        "intent": "Use when performance desktops and upgradeable development systems best supports a self-hosted home lab prioritizing predictable maintenance.",
+        "memory_channel": "N/A — the product does not use user-addressable system RAM",
+        "ram_limit": "N/A — the product does not use user-addressable system RAM",
+        "idle_watts": "N/A — component or peripheral; the host system determines idle draw"
       }
     },
     {
@@ -67,7 +85,10 @@
         "form": "Internal M.2 SSD",
         "operations": "Confirm motherboard support, firmware, heat management, and backups.",
         "fit": "Modern PC storage upgrades. For this comparison, assess it specifically for a self-hosted home lab prioritizing predictable maintenance.",
-        "intent": "Use when modern pc storage upgrades best supports a self-hosted home lab prioritizing predictable maintenance."
+        "intent": "Use when modern pc storage upgrades best supports a self-hosted home lab prioritizing predictable maintenance.",
+        "memory_channel": "N/A — the product does not use user-addressable system RAM",
+        "ram_limit": "N/A — the product does not use user-addressable system RAM",
+        "idle_watts": "N/A — component or peripheral; the host system determines idle draw"
       }
     }
   ],

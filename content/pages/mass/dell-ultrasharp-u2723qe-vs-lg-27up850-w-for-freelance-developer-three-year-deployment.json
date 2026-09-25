@@ -41,6 +41,21 @@
       "key": "intent",
       "label": "Decision lens",
       "description": "How the option maps to this long-tail buying intent."
+    },
+    {
+      "key": "memory_channel",
+      "label": "Canal de Memoria (Single/Dual)",
+      "description": "Canal documentado o estado no aplicable."
+    },
+    {
+      "key": "ram_limit",
+      "label": "Límite de RAM Real",
+      "description": "Máximo validado por el fabricante."
+    },
+    {
+      "key": "idle_watts",
+      "label": "Consumo en reposo (Watts)",
+      "description": "Medición publicada o ausencia de una medición verificable."
     }
   ],
   "alternatives": [
@@ -54,7 +69,10 @@
         "form": "27-inch desktop monitor",
         "operations": "Verify host charging, cable capability, scaling, ports, and ergonomics.",
         "fit": "Single-display workstations needing integrated hub connectivity. For this comparison, assess it specifically for a freelance developer workspace planning a three-year deployment.",
-        "intent": "Use when single-display workstations needing integrated hub connectivity best supports a freelance developer workspace planning a three-year deployment."
+        "intent": "Use when single-display workstations needing integrated hub connectivity best supports a freelance developer workspace planning a three-year deployment.",
+        "memory_channel": "N/A — the product does not use user-addressable system RAM",
+        "ram_limit": "N/A — the product does not use user-addressable system RAM",
+        "idle_watts": "N/A — component or peripheral; the host system determines idle draw"
       }
     },
     {
@@ -67,7 +85,10 @@
         "form": "27-inch desktop monitor",
         "operations": "Check charging needs, color workflow, scaling, cables, and stand requirements.",
         "fit": "Productivity and creative desks using a high-resolution panel. For this comparison, assess it specifically for a freelance developer workspace planning a three-year deployment.",
-        "intent": "Use when productivity and creative desks using a high-resolution panel best supports a freelance developer workspace planning a three-year deployment."
+        "intent": "Use when productivity and creative desks using a high-resolution panel best supports a freelance developer workspace planning a three-year deployment.",
+        "memory_channel": "N/A — the product does not use user-addressable system RAM",
+        "ram_limit": "N/A — the product does not use user-addressable system RAM",
+        "idle_watts": "N/A — component or peripheral; the host system determines idle draw"
       }
     }
   ],

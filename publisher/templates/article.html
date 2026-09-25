@@ -16,7 +16,7 @@
     <header class="article-hero">
       <div class="eyebrow"><span></span> {{ page.eyebrow }}</div>
       <h1>{{ page.title }}</h1>
-      <p class="dek">{{ page.intro }}</p>
+      {% if page.recommendation %}<p class="dek"><strong>Ganador: {{ page.recommendation.winner }}; precio estimado: USD {{ page.recommendation.estimated_price_usd }}; <a href="{{ page.recommendation.amazon_url }}" rel="sponsored nofollow noopener" target="_blank">Ver disponibilidad y precio actualizado en Amazon</a>.</strong> {{ page.intro }}</p>{% else %}<p class="dek">{{ page.intro }}</p>{% endif %}
       <div class="article-meta">
         <span>Updated <time datetime="{{ page.updated_at }}">{{ page.updated_at }}</time></span>
         <span>Reviewed by {{ page.reviewed_by }}</span>
@@ -35,8 +35,8 @@
         <table>
           <thead><tr><th scope="col">Criterion</th>{% for alternative in page.alternatives %}<th scope="col"><a href="{{ alternative.url }}" rel="nofollow noopener">{{ alternative.name }}</a></th>{% endfor %}</tr></thead>
           <tbody>
-            {% for criterion in page.criteria %}
-            <tr><th scope="row"><strong>{{ criterion.label }}</strong><small>{{ criterion.description }}</small></th>{% for alternative in page.alternatives %}<td>{{ alternative.specs[criterion.key] }}</td>{% endfor %}</tr>
+            {% for criterion in comparison_criteria %}
+            <tr><th scope="row"><strong>{{ criterion.label }}</strong><small>{{ criterion.description }}</small></th>{% for alternative in page.alternatives %}<td>{{ alternative.specs.get(criterion.key, 'N/A — no aplica o no fue verificado') }}</td>{% endfor %}</tr>
             {% endfor %}
           </tbody>
         </table>

@@ -8,7 +8,7 @@
   "meta_description": "Raspberry Pi 5 vs Intel NUC 13 Pro: official specifications, compatibility, deployment fit, and operational requirements.",
   "eyebrow": "Servers comparison",
   "intro": "This source-backed comparison evaluates Raspberry Pi 5 and Intel NUC 13 Pro for an IT consulting practice balancing performance and total cost. It focuses on stable technical characteristics, deployment fit, interfaces, form factor, and operational trade-offs. It does not copy volatile prices, stock, star ratings, or unverified user claims.",
-  "verdict": "Choose Raspberry Pi 5 when learning, automation, lightweight services, and compact lab nodes is the leading requirement. Choose Intel NUC 13 Pro when compact x86 lab nodes and business desktops matters more. For an IT consulting practice balancing performance and total cost, verify compatibility, support, current availability, and workload limits in the cited manufacturer documentation before purchase.",
+  "verdict": "Choose Raspberry Pi 5 when learning, automation, lightweight services, and compact lab nodes is the leading requirement. Choose Intel NUC 13 Pro when compact x86 lab nodes and business desktops matters more. For an IT consulting practice balancing performance and total cost, verify compatibility, support, current availability, and workload limits in the cited manufacturer documentation before purchase. The renewed M920q is the value reference at an estimated USD 240; the live listing determines the exact configuration and final price.",
   "updated_at": "2026-09-25",
   "reviewed_by": "StackSignal technical editorial desk",
   "criteria": [
@@ -41,6 +41,21 @@
       "key": "intent",
       "label": "Decision lens",
       "description": "How the option maps to this long-tail buying intent."
+    },
+    {
+      "key": "memory_channel",
+      "label": "Canal de Memoria (Single/Dual)",
+      "description": "Canal documentado o estado no aplicable."
+    },
+    {
+      "key": "ram_limit",
+      "label": "Límite de RAM Real",
+      "description": "Máximo validado por el fabricante."
+    },
+    {
+      "key": "idle_watts",
+      "label": "Consumo en reposo (Watts)",
+      "description": "Medición publicada o ausencia de una medición verificable."
     }
   ],
   "alternatives": [
@@ -54,7 +69,10 @@
         "form": "Single-board computer",
         "operations": "Requires suitable power, storage, cooling, enclosure, OS, and backups.",
         "fit": "Learning, automation, lightweight services, and compact lab nodes. For this comparison, assess it specifically for an IT consulting practice balancing performance and total cost.",
-        "intent": "Use when learning, automation, lightweight services, and compact lab nodes best supports an IT consulting practice balancing performance and total cost."
+        "intent": "Use when learning, automation, lightweight services, and compact lab nodes best supports an IT consulting practice balancing performance and total cost.",
+        "memory_channel": "On-board LPDDR4X; not user-upgradable",
+        "ram_limit": "Up to 16 GB on current board variants",
+        "idle_watts": "Approximately 3–5 W at idle depending on RAM, firmware, and attached devices"
       }
     },
     {
@@ -67,7 +85,26 @@
         "form": "Compact barebone PC kit",
         "operations": "Confirm memory, storage, OS, lifecycle, thermals, and regional support.",
         "fit": "Compact x86 lab nodes and business desktops. For this comparison, assess it specifically for an IT consulting practice balancing performance and total cost.",
-        "intent": "Use when compact x86 lab nodes and business desktops best supports an IT consulting practice balancing performance and total cost."
+        "intent": "Use when compact x86 lab nodes and business desktops best supports an IT consulting practice balancing performance and total cost.",
+        "memory_channel": "Dual-channel capable; two SO-DIMM slots",
+        "ram_limit": "64 GB vendor-validated maximum",
+        "idle_watts": "No independently verified idle-watt measurement in the cited source"
+      }
+    },
+    {
+      "name": "Lenovo ThinkCentre M920q Tiny — Amazon Renewed / Enterprise Usado",
+      "url": "https://www.amazon.es/s?k=Lenovo+ThinkCentre+M920q+Tiny+Renewed+16GB+512GB&tag=blackboxia92-21",
+      "summary": "A compact enterprise desktop sold through renewed or used channels; exact CPU, memory, storage, warranty, and cosmetic condition vary by listing.",
+      "specs": {
+        "model": "ThinkCentre M920q Tiny; renewed listing configuration varies",
+        "interface": "Gigabit Ethernet, USB, DisplayPort/HDMI, NVMe and SATA options",
+        "form": "Enterprise 1-litre Tiny desktop",
+        "operations": "Used condition, SSD health, included adapter, warranty, exact CPU, and seller refurbishment quality require verification.",
+        "fit": "Budget homelabs and compact x86 infrastructure for an IT consulting practice balancing performance and total cost.",
+        "intent": "Use when enterprise serviceability and price matter for an IT consulting practice balancing performance and total cost.",
+        "memory_channel": "Dual-channel capable; two DDR4 SO-DIMM slots",
+        "ram_limit": "32 GB vendor-validated maximum",
+        "idle_watts": "12–15 W measured on a reviewed quad-core configuration; exact build varies"
       }
     }
   ],
@@ -95,6 +132,16 @@
       "label": "Intel NUC 13 Pro official documentation",
       "publisher": "Intel",
       "url": "https://www.intel.com/content/www/us/en/products/sku/233098/intel-nuc-13-pro-kit-nuc13anki7/specifications.html"
+    },
+    {
+      "label": "ThinkCentre M920 Tiny platform specification",
+      "publisher": "Lenovo PSREF",
+      "url": "https://psref.lenovo.com/syspool/Sys/PDF/ThinkCentre/ThinkCentre_M920_Tiny/ThinkCentre_M920_Tiny_Spec.html"
+    },
+    {
+      "label": "ThinkCentre M920q measured idle power",
+      "publisher": "ServeTheHome",
+      "url": "https://www.servethehome.com/lenovo-thinkcentre-m920-and-m920q-tiny-guide-and-review/3/"
     }
   ],
   "resources": [
@@ -107,18 +154,30 @@
       "title": "Intel NUC 13 Pro",
       "target_url": "https://www.amazon.es/s?k=Intel+NUC+13+Pro+kit&tag=blackboxia92-21",
       "note": "Check current specifications and availability for Intel NUC 13 Pro."
+    },
+    {
+      "title": "Lenovo ThinkCentre M920q Tiny — Amazon Renewed / Enterprise Usado",
+      "target_url": "https://www.amazon.es/s?k=Lenovo+ThinkCentre+M920q+Tiny+Renewed+16GB+512GB&tag=blackboxia92-21",
+      "note": "Check the exact renewed configuration, seller warranty, current price, and availability before purchase."
     }
   ],
   "buyer_consensus": {
     "status": "No independently verified buyer-review dataset is available; technical synthesis only.",
     "pros": [
       "A compact single-board computer in the Raspberry Pi ecosystem.",
-      "A compact x86 PC kit from Intel's NUC 13 Pro generation."
+      "A compact x86 PC kit from Intel's NUC 13 Pro generation.",
+      "A compact enterprise desktop sold through renewed or used channels; exact CPU, memory, storage, warranty, and cosmetic condition vary by listing."
     ],
     "cons": [
       "Requires suitable power, storage, cooling, enclosure, OS, and backups.",
-      "Confirm memory, storage, OS, lifecycle, thermals, and regional support."
+      "Confirm memory, storage, OS, lifecycle, thermals, and regional support.",
+      "Used condition, SSD health, included adapter, warranty, exact CPU, and seller refurbishment quality require verification."
     ],
-    "verdict": "Choose Raspberry Pi 5 when learning, automation, lightweight services, and compact lab nodes is the leading requirement. Choose Intel NUC 13 Pro when compact x86 lab nodes and business desktops matters more. For an IT consulting practice balancing performance and total cost, verify compatibility, support, current availability, and workload limits in the cited manufacturer documentation before purchase."
+    "verdict": "Choose Raspberry Pi 5 when learning, automation, lightweight services, and compact lab nodes is the leading requirement. Choose Intel NUC 13 Pro when compact x86 lab nodes and business desktops matters more. For an IT consulting practice balancing performance and total cost, verify compatibility, support, current availability, and workload limits in the cited manufacturer documentation before purchase. The renewed M920q is the value reference at an estimated USD 240; the live listing determines the exact configuration and final price."
+  },
+  "recommendation": {
+    "winner": "Lenovo ThinkCentre M920q Tiny — Amazon Renewed / Enterprise Usado",
+    "estimated_price_usd": 240,
+    "amazon_url": "https://www.amazon.es/s?k=Lenovo+ThinkCentre+M920q+Tiny+Renewed+16GB+512GB&tag=blackboxia92-21"
   }
 }
