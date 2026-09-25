@@ -7,6 +7,7 @@ import secrets
 from pathlib import Path
 
 from .builder import build_site, expand_catalog
+from .consumer_catalog import generate_consumer_catalog
 from .indexnow import notify_indexnow
 from .mass_catalog import generate_mass_catalog
 from .weekly import generate_weekly_pages
@@ -39,6 +40,12 @@ def parser() -> argparse.ArgumentParser:
     mass.add_argument("--catalog", type=Path, default=Path("content/products_catalog.json"))
     mass.add_argument("--output", type=Path, default=Path("content/pages"))
     mass.add_argument("--total", type=int, default=1000)
+
+    consumer = commands.add_parser("consumer-mass", help="Build a reviewed evergreen consumer-product catalog")
+    consumer.add_argument("--source", type=Path, default=Path("content/consumer_products_source.json"))
+    consumer.add_argument("--catalog", type=Path, default=Path("content/products_catalog.json"))
+    consumer.add_argument("--output", type=Path, default=Path("content/pages"))
+    consumer.add_argument("--total", type=int, default=4000)
 
     notify = commands.add_parser("notify", help="Submit changed reviewed URLs to IndexNow")
     notify.add_argument("--state", type=Path, default=Path(os.getenv("DATABASE_PATH", "data/state.sqlite3")))
@@ -73,6 +80,16 @@ def main() -> int:
             source_path=args.source,
             pages_root=args.output,
             catalog_path=args.catalog,
+            total=args.total,
+        )
+        print(json.dumps(report.__dict__ | {"catalog": str(report.catalog), "output": str(report.output)}, indent=2))
+        return 0
+
+    if args.command == "consumer-mass":
+        report = generate_consumer_catalog(
+            pages_root=args.output,
+            catalog_path=args.catalog,
+            source_path=args.source,
             total=args.total,
         )
         print(json.dumps(report.__dict__ | {"catalog": str(report.catalog), "output": str(report.output)}, indent=2))

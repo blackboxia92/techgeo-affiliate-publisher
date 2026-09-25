@@ -108,6 +108,7 @@ def _comparison_page(
     intent: dict[str, str],
     number: int,
     include_renewed: bool,
+    origin: str = ORIGIN,
 ) -> tuple[dict[str, Any], dict[str, Any]]:
     left_name = _text(left["name"], "product.name")
     right_name = _text(right["name"], "product.name")
@@ -207,8 +208,8 @@ def _comparison_page(
             "the live listing determines the exact configuration and final price."
         )
     page = {
-        "catalog_origin": ORIGIN,
-        "catalog_entry_id": f"mass-{number:04d}",
+        "catalog_origin": origin,
+        "catalog_entry_id": f"{'mass' if origin == ORIGIN else origin}-{number:04d}",
         "slug": slug,
         "status": "reviewed",
         "locale": "en",
@@ -272,7 +273,13 @@ def _comparison_page(
 
 
 def generate_mass_catalog(
-    *, source_path: Path, pages_root: Path, catalog_path: Path, total: int = 1000
+    *,
+    source_path: Path,
+    pages_root: Path,
+    catalog_path: Path,
+    total: int = 1000,
+    origin: str = ORIGIN,
+    output_subdir: str = "mass",
 ) -> MassReport:
     if total < 1:
         raise ValueError("total must be positive")
@@ -282,7 +289,7 @@ def generate_mass_catalog(
     if len(products) < 2 or not intents:
         raise ValueError("product source requires at least two products and one intent")
 
-    mass_dir = (pages_root / "mass").resolve()
+    mass_dir = (pages_root / output_subdir).resolve()
     pages_root = pages_root.resolve()
     if pages_root not in mass_dir.parents:
         raise ValueError("mass output must remain inside the page root")
@@ -291,7 +298,7 @@ def generate_mass_catalog(
     preserved_paths: list[Path] = []
     for path in sorted(pages_root.rglob("*.json")):
         raw = json.loads(path.read_text(encoding="utf-8"))
-        if raw.get("catalog_origin") != ORIGIN:
+        if raw.get("catalog_origin") != origin:
             if raw.get("status") != "reviewed":
                 raise ValueError(f"Preserved page is not reviewed: {path}")
             preserved_paths.append(path)
@@ -354,6 +361,7 @@ def generate_mass_catalog(
             intent=intent,
             number=generated + 1,
             include_renewed=include_renewed,
+            origin=origin,
         )
         if page["slug"] in seen_slugs:
             continue
