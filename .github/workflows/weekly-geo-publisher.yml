@@ -22,6 +22,8 @@ jobs:
       BATCH_SIZE: "20"
       TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
       TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+      NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
 
     steps:
       - name: Check out main
@@ -82,16 +84,31 @@ jobs:
           git push origin HEAD:main
           echo "pushed=true" >> "$GITHUB_OUTPUT"
 
+      - name: Deploy the generated site to Netlify
+        id: deploy
+        if: steps.commit.outputs.pushed == 'true' && env.NETLIFY_AUTH_TOKEN != '' && env.NETLIFY_SITE_ID != ''
+        shell: bash
+        run: |
+          set -euo pipefail
+          npx --yes netlify-cli@27.10.0 deploy \
+            --prod \
+            --dir dist \
+            --site "$NETLIFY_SITE_ID" \
+            --auth "$NETLIFY_AUTH_TOKEN" \
+            --message "Weekly GEO batch ${GITHUB_SHA}"
+          echo "deployed=true" >> "$GITHUB_OUTPUT"
+
       - name: Send Telegram summary
         if: always() && env.TELEGRAM_BOT_TOKEN != '' && env.TELEGRAM_CHAT_ID != ''
         env:
           JOB_STATUS: ${{ job.status }}
           CREATED: ${{ steps.generate.outputs.created }}
           PUSHED: ${{ steps.commit.outputs.pushed }}
+          DEPLOYED: ${{ steps.deploy.outputs.deployed }}
         shell: bash
         run: |
           set -euo pipefail
-          message="StackSignal weekly publisher: status=${JOB_STATUS}; generated=${CREATED:-0}; pushed=${PUSHED:-false}; run=${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          message="StackSignal weekly publisher: status=${JOB_STATUS}; generated=${CREATED:-0}; pushed=${PUSHED:-false}; deployed=${DEPLOYED:-false}; run=${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
           curl --fail --silent --show-error \
             --request POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
             --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
