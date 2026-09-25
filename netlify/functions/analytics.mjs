@@ -70,7 +70,9 @@ async function recordVisit(path, referrer) {
   const today = now.toISOString().slice(0, 10);
 
   for (let attempt = 0; attempt < 6; attempt += 1) {
-    const current = await store.getWithMetadata(SUMMARY_KEY, { type: "json" });
+    const current =
+      (await store.getWithMetadata(SUMMARY_KEY, { type: "json" })) ||
+      { data: null, etag: null };
     const summary = current.data || emptySummary();
 
     summary.total = Number(summary.total || 0) + 1;
