@@ -8,6 +8,7 @@ from pathlib import Path
 
 from .builder import build_site, expand_catalog
 from .indexnow import notify_indexnow
+from .weekly import generate_weekly_pages
 
 
 def parser() -> argparse.ArgumentParser:
@@ -26,6 +27,11 @@ def parser() -> argparse.ArgumentParser:
     expand.add_argument("--catalog", type=Path, default=Path("content/catalog.json"))
     expand.add_argument("--output", type=Path, default=Path("content/pages/drafts"))
     expand.add_argument("--limit", type=int)
+
+    weekly = commands.add_parser("weekly", help="Create the next batch of catalog-backed long-tail comparisons")
+    weekly.add_argument("--catalog", type=Path, default=Path("content/catalog.json"))
+    weekly.add_argument("--output", type=Path, default=Path("content/pages"))
+    weekly.add_argument("--limit", type=int, default=20)
 
     notify = commands.add_parser("notify", help="Submit changed reviewed URLs to IndexNow")
     notify.add_argument("--state", type=Path, default=Path(os.getenv("DATABASE_PATH", "data/state.sqlite3")))
@@ -46,6 +52,14 @@ def main() -> int:
     if args.command == "expand":
         count = expand_catalog(args.catalog, args.output, args.limit)
         print(json.dumps({"created_drafts": count, "output": str(args.output)}, indent=2))
+        return 0
+    if args.command == "weekly":
+        report = generate_weekly_pages(args.catalog, args.output, args.limit)
+        print(json.dumps(report.__dict__ | {"output": str(report.output), "slugs": list(report.slugs)}, indent=2))
+        if report.created != args.limit:
+            raise SystemExit(
+                f"Only {report.created} unused catalog comparisons remain; {args.limit} were required. Extend the catalog."
+            )
         return 0
     if args.command == "build":
         report = build_site(
@@ -76,4 +90,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

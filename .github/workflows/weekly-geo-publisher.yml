@@ -1,0 +1,98 @@
+name: Weekly GEO publisher
+
+on:
+  schedule:
+    - cron: "0 8 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: weekly-geo-publisher
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      BASE_URL: https://stacksignal-tech.netlify.app
+      AMAZON_ASSOCIATE_TAG: blackboxia92-21
+      BATCH_SIZE: "20"
+      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+
+    steps:
+      - name: Check out main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: python -m pip install --requirement requirements.txt
+
+      - name: Generate the next 20 comparisons
+        id: generate
+        shell: bash
+        run: |
+          set -euo pipefail
+          report="$(python -m publisher weekly --catalog content/catalog.json --output content/pages --limit "$BATCH_SIZE")"
+          printf '%s\n' "$report"
+          created="$(python -c 'import json,sys; print(json.load(sys.stdin)["created"])' <<< "$report")"
+          echo "created=$created" >> "$GITHUB_OUTPUT"
+
+      - name: Build sitemap, JSON-LD pages, and llms.txt
+        run: >-
+          python -m publisher build
+          --content content/pages
+          --output dist
+          --state /tmp/techgeo-state.sqlite3
+          --base-url "$BASE_URL"
+
+      - name: Verify generated site
+        run: |
+          python -m unittest discover -s tests -v
+          test -s dist/sitemap.xml
+          test -s dist/llms.txt
+          grep -R --quiet 'application/ld+json' dist/guides
+          grep -R --quiet 'tag=blackboxia92-21' dist/guides
+
+      - name: Commit and push the new source pages
+        id: commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "stacksignal-publisher[bot]"
+          git config user.email "stacksignal-publisher[bot]@users.noreply.github.com"
+          git add content/pages
+          if git diff --cached --quiet; then
+            echo "pushed=false" >> "$GITHUB_OUTPUT"
+            echo "No new pages to commit."
+            exit 0
+          fi
+          git commit -m "Publish weekly GEO comparison batch"
+          git push origin HEAD:main
+          echo "pushed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Send Telegram summary
+        if: always() && env.TELEGRAM_BOT_TOKEN != '' && env.TELEGRAM_CHAT_ID != ''
+        env:
+          JOB_STATUS: ${{ job.status }}
+          CREATED: ${{ steps.generate.outputs.created }}
+          PUSHED: ${{ steps.commit.outputs.pushed }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          message="StackSignal weekly publisher: status=${JOB_STATUS}; generated=${CREATED:-0}; pushed=${PUSHED:-false}; run=${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          curl --fail --silent --show-error \
+            --request POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
+            --data-urlencode "text=${message}"

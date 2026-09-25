@@ -11,6 +11,7 @@ from urllib.parse import parse_qs, urlparse
 from publisher.affiliate import AMAZON_ASSOCIATE_TAG, amazon_url, assert_required_tag
 from publisher.builder import build_site, expand_catalog
 from publisher.indexnow import notify_indexnow
+from publisher.weekly import generate_weekly_pages
 
 
 PROJECT = Path(__file__).parents[1]
@@ -54,6 +55,8 @@ class BuildTests(unittest.TestCase):
             structured_data = json.loads(payload.group(1))
             self.assertEqual(structured_data["@context"], "https://schema.org")
             self.assertTrue((root / "dist" / "library" / "page" / "1" / "index.html").exists())
+            llms = (root / "dist" / "llms.txt").read_text(encoding="utf-8")
+            self.assertIn("postgresql-vs-sqlite-backend", llms)
 
     def test_expanded_draft_is_noindex_and_excluded_from_sitemap(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
@@ -110,6 +113,27 @@ class BuildTests(unittest.TestCase):
             created = expand_catalog(catalog_path, root / "drafts")
             self.assertEqual(created, 1125)
             self.assertEqual(len(list((root / "drafts").glob("*.json"))), 1125)
+
+    def test_weekly_generation_creates_distinct_batches_with_affiliate_links(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            first = generate_weekly_pages(PROJECT / "content" / "catalog.json", root / "pages", limit=20)
+            second = generate_weekly_pages(PROJECT / "content" / "catalog.json", root / "pages", limit=20)
+            self.assertEqual(first.created, 20)
+            self.assertEqual(second.created, 20)
+            self.assertTrue(set(first.slugs).isdisjoint(second.slugs))
+            report = build_site(
+                content_dir=root / "pages",
+                output_dir=root / "dist",
+                state_path=root / "state.sqlite3",
+                base_url="https://guides.example",
+                configured_tag="blackboxia92-21",
+            )
+            self.assertEqual(report.reviewed, 40)
+            pages = list((root / "dist" / "guides").rglob("index.html"))
+            self.assertEqual(len(pages), 40)
+            self.assertTrue(all("tag=blackboxia92-21" in page.read_text(encoding="utf-8") for page in pages))
+            self.assertEqual((root / "dist" / "llms.txt").read_text(encoding="utf-8").count("/guides/"), 40)
 
 
 if __name__ == "__main__":

@@ -103,6 +103,33 @@ def _write_sitemaps(output: Path, rows: list[object], base_url: str) -> None:
     (output / "sitemap.xml").write_text(root, encoding="utf-8")
 
 
+def _write_llms(output: Path, pages: list[Page], base_url: str) -> None:
+    lines = [
+        "# StackSignal",
+        "",
+        "> Source-backed technical comparisons for software and infrastructure decisions.",
+        "",
+        "## Technical comparisons",
+        "",
+    ]
+    for page in pages:
+        title = " ".join(page.title.split())
+        description = " ".join(page.meta_description.split())
+        lines.append(f"- [{title}]({base_url}/guides/{page.slug}/): {description}")
+    lines.extend(
+        [
+            "",
+            "## Policies",
+            "",
+            "- Comparisons cite official documentation and identify their review method.",
+            "- Amazon links are marked as paid links and use sponsored/nofollow attributes.",
+            "- Verify time-sensitive product limits in the linked primary sources.",
+            "",
+        ]
+    )
+    (output / "llms.txt").write_text("\n".join(lines), encoding="utf-8")
+
+
 def build_site(
     *,
     content_dir: Path,
@@ -211,6 +238,7 @@ def build_site(
             *store.indexable_pages(),
         ]
         _write_sitemaps(output_dir, sitemap_rows, base_url)
+        _write_llms(output_dir, reviewed_pages, base_url)
 
     (output_dir / "robots.txt").write_text(
         f"User-agent: *\nAllow: /\nDisallow: /drafts/\nSitemap: {base_url}/sitemap.xml\n",
