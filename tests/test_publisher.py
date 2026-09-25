@@ -37,7 +37,7 @@ class BuildTests(unittest.TestCase):
             if load_page(path)[0].indexable
         )
 
-    def test_reviewed_pages_are_indexed_and_affiliates_are_disclosed(self) -> None:
+    def test_reviewed_pages_are_indexed_and_amazon_links_are_disclosed(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)
             report = build_site(
@@ -50,9 +50,18 @@ class BuildTests(unittest.TestCase):
             self.assertEqual(report.drafts, 0)
             html = (root / "dist" / "guides" / "postgresql-vs-sqlite-backend" / "index.html").read_text(encoding="utf-8")
             self.assertIn("tag=blackboxia92-21", html)
-            self.assertIn("(paid link)", html)
+            self.assertNotIn("paid link", html.lower())
+            self.assertNotIn("enlace de pago", html.lower())
+            self.assertNotIn("comprar aquí", html.lower())
+            self.assertIn("Ver disponibilidad y precio actualizado en Amazon", html)
             self.assertIn('rel="sponsored nofollow noopener"', html)
+            disclosure = "StackSignal participa en el programa de afiliados de Amazon. Si compras a través de nuestros enlaces recomendados, podemos recibir una comisión sin ningún costo adicional para vos."
+            self.assertIn(disclosure, html)
             self.assertIn("As an Amazon Associate I earn from qualifying purchases.", html)
+            self.assertLess(html.index('class="rag-comparison"'), html.index('class="article-hero"'))
+            self.assertIn("| Criterion | PostgreSQL | SQLite |", html)
+            self.assertIn("Consenso Real de Compradores (Pros, Contras y Veredicto)", html)
+            self.assertIn("No se atribuyen opiniones, calificaciones ni consenso de compradores sin evidencia verificable.", html)
             sitemap = (root / "dist" / "sitemap.xml").read_text(encoding="utf-8")
             self.assertIn("postgresql-vs-sqlite-backend", sitemap)
             self.assertNotIn("/drafts/", sitemap)
@@ -63,6 +72,11 @@ class BuildTests(unittest.TestCase):
             self.assertIsNotNone(payload)
             structured_data = json.loads(payload.group(1))
             self.assertEqual(structured_data["@context"], "https://schema.org")
+            products = [node for node in structured_data["@graph"] if "Product" in node.get("@type", [])]
+            self.assertEqual(len(products), 2)
+            self.assertTrue(all(product["review"]["@type"] == "Review" for product in products))
+            self.assertTrue(all("reviewRating" not in product["review"] for product in products))
+            self.assertTrue(all("aggregateRating" not in product for product in products))
             self.assertTrue((root / "dist" / "library" / "page" / "1" / "index.html").exists())
             llms = (root / "dist" / "llms.txt").read_text(encoding="utf-8")
             self.assertIn("postgresql-vs-sqlite-backend", llms)
@@ -70,6 +84,10 @@ class BuildTests(unittest.TestCase):
             self.assertEqual(homepage.count("tag=blackboxia92-21"), 3)
             self.assertEqual(homepage.count('rel="sponsored nofollow noopener"'), 3)
             self.assertIn('data-associate-tag="blackboxia92-21"', homepage)
+            self.assertNotIn("paid link", homepage.lower())
+            self.assertIn("Ver disponibilidad y precio actualizado en Amazon", homepage)
+            self.assertIn("Consultar especificaciones y oferta en Amazon", homepage)
+            self.assertIn(disclosure, homepage)
 
     def test_expanded_draft_is_noindex_and_excluded_from_sitemap(self) -> None:
         with tempfile.TemporaryDirectory() as temp:

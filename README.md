@@ -9,7 +9,7 @@ Generador estático independiente para comparativas técnicas, recursos para des
 - Puerta de calidad obligatoria para títulos, descripción, criterios, FAQs, fuentes y revisión.
 - Hash de contenido y restricción única en SQLite para evitar duplicados.
 - Inyección fija del tag `blackboxia92-21` en enlaces Amazon válidos.
-- Aviso general de Amazon, aviso junto a la sección y etiqueta `(paid link)` en cada enlace.
+- Aviso de comisión general y contextual junto a cada bloque de enlaces de Amazon.
 - Atributos `rel="sponsored nofollow noopener"` en enlaces afiliados.
 - `TechArticle`, `ItemList` y `FAQPage` en JSON-LD, sin inventar precios, ratings ni disponibilidad.
 - Sitemap XML automático, fragmentado cada 45.000 URLs.
@@ -145,4 +145,3 @@ Las pruebas verifican el tag, las declaraciones de afiliación, `noindex` para b
 - [Amazon: divulgación de afiliación](https://affiliate-program.amazon.com/help/node/topic/GHQNZAU6669EZS98)
 - [IndexNow: documentación](https://www.indexnow.org/documentation)
 - [IndexNow: preguntas frecuentes](https://www.indexnow.org/faq)
-

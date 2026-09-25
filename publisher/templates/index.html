@@ -21,14 +21,14 @@
       <div><span class="kicker">Recommended reading</span><h2 id="recommended-reading">Go deeper on the trade-offs</h2></div>
       <p>Selected technical references that complement the decision guides.</p>
     </div>
-    <p class="affiliate-notice">As an Amazon Associate, StackSignal earns from qualifying purchases. These are paid links; the recommendation is editorial and prices or availability are not displayed.</p>
+    <p class="affiliate-notice">StackSignal participa en el programa de afiliados de Amazon. Si compras a través de nuestros enlaces recomendados, podemos recibir una comisión sin ningún costo adicional para vos.</p>
     <div class="recommendation-grid">
       {% for item in recommendations %}
       <article class="recommendation-card">
         <span class="recommendation-label">Reference {{ loop.index }}</span>
         <h3>{{ item.title }}</h3>
         <p>{{ item.note }}</p>
-        <a class="button-link" href="{{ item.url }}" rel="sponsored nofollow noopener" target="_blank">View on Amazon.es <small>(paid link)</small></a>
+        <a class="button-link" href="{{ item.url }}" rel="sponsored nofollow noopener" target="_blank">{% if loop.index is odd %}Ver disponibilidad y precio actualizado en Amazon{% else %}Consultar especificaciones y oferta en Amazon{% endif %}</a>
       </article>
       {% endfor %}
     </div>

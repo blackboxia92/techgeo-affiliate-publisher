@@ -55,6 +55,30 @@ def _canonical_base(value: str) -> str:
 
 
 def _json_ld(page: Page, public_url: str, site_name: str) -> str:
+    products = []
+    for position, alternative in enumerate(page.alternatives, 1):
+        operational_note = alternative.specs.get(
+            "operations",
+            "Verify deployment, maintenance, security, and support requirements in the official documentation.",
+        )
+        products.append(
+            {
+                "@type": ["Product", "SoftwareApplication"],
+                "@id": f"{public_url}#product-{position}",
+                "name": alternative.name,
+                "url": alternative.url,
+                "description": alternative.summary,
+                "review": {
+                    "@type": "Review",
+                    "author": {"@type": "Organization", "name": f"{site_name} technical editorial desk"},
+                    "datePublished": page.updated_at,
+                    "reviewBody": (
+                        f"Editorial technical synthesis: {alternative.summary} "
+                        f"Operational consideration: {operational_note}"
+                    ),
+                },
+            }
+        )
     payload = {
         "@context": "https://schema.org",
         "@graph": [
@@ -91,9 +115,25 @@ def _json_ld(page: Page, public_url: str, site_name: str) -> str:
                     for item in page.faq
                 ],
             },
+            *products,
         ],
     }
     return json.dumps(payload, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
+
+
+def _markdown_table(page: Page) -> str:
+    def cell(value: str) -> str:
+        return " ".join(value.split()).replace("|", "\\|")
+
+    names = [cell(alternative.name) for alternative in page.alternatives]
+    rows = [
+        "| Criterion | " + " | ".join(names) + " |",
+        "| --- | " + " | ".join("---" for _ in names) + " |",
+    ]
+    for criterion in page.criteria:
+        values = [cell(alternative.specs[criterion.key]) for alternative in page.alternatives]
+        rows.append(f"| {cell(criterion.label)} | " + " | ".join(values) + " |")
+    return "\n".join(rows)
 
 
 def _write_sitemaps(output: Path, rows: list[object], base_url: str) -> None:
@@ -140,7 +180,7 @@ def _write_llms(output: Path, pages: list[Page], base_url: str) -> None:
             "## Policies",
             "",
             "- Comparisons cite official documentation and identify their review method.",
-            "- Amazon links are marked as paid links and use sponsored/nofollow attributes.",
+            "- Amazon references use sponsored/nofollow attributes and a clear commission disclosure.",
             "- Verify time-sensitive product limits in the linked primary sources.",
             "",
         ]
@@ -208,6 +248,7 @@ def build_site(
                 site_name="StackSignal",
                 amazon_url=amazon_url,
                 json_ld=_json_ld(page, public_url, "StackSignal"),
+                markdown_table=_markdown_table(page),
             )
             destination.write_text(html, encoding="utf-8")
             if store.upsert_page(

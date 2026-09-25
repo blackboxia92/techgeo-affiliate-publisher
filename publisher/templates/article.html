@@ -8,6 +8,11 @@
 <main>
   {% if not page.indexable %}<div class="draft-banner">Editorial draft · excluded from search and sitemaps</div>{% endif %}
   <article class="article-shell">
+    <section class="rag-comparison" aria-labelledby="rag-comparison-heading">
+      <span class="kicker">RAG-ready summary</span>
+      <h2 id="rag-comparison-heading">Markdown comparison table</h2>
+      <pre class="markdown-comparison">{{ markdown_table }}</pre>
+    </section>
     <header class="article-hero">
       <div class="eyebrow"><span></span> {{ page.eyebrow }}</div>
       <h1>{{ page.title }}</h1>
@@ -47,13 +52,23 @@
       </div>
     </section>
 
+    <section class="content-section consensus-section" aria-labelledby="buyer-consensus-heading">
+      <div class="section-heading compact"><div><span class="kicker">Evidence boundary</span><h2 id="buyer-consensus-heading">Consenso Real de Compradores (Pros, Contras y Veredicto)</h2></div></div>
+      <p class="consensus-note">No se atribuyen opiniones, calificaciones ni consenso de compradores sin evidencia verificable. Los siguientes puntos son una síntesis editorial de la documentación oficial citada.</p>
+      <div class="consensus-grid">
+        <div><h3>Pros</h3><ul>{% for alternative in page.alternatives %}<li><strong>{{ alternative.name }}:</strong> {{ alternative.summary }}</li>{% endfor %}</ul></div>
+        <div><h3>Contras</h3><ul>{% for alternative in page.alternatives %}<li><strong>{{ alternative.name }}:</strong> {{ alternative.specs.get('operations', 'Requiere validar implementación, mantenimiento y soporte antes de adoptarlo.') }}</li>{% endfor %}</ul></div>
+      </div>
+      <div class="consensus-verdict"><strong>Veredicto:</strong> {{ page.verdict }}</div>
+    </section>
+
     {% if page.resources %}
     <section class="content-section resource-section" aria-labelledby="resources-heading">
-      <div class="affiliate-notice"><strong>Affiliate disclosure:</strong> As an Amazon Associate I earn from qualifying purchases. Recommendations are selected editorially; availability and prices can change.</div>
+      <div class="affiliate-notice">StackSignal participa en el programa de afiliados de Amazon. Si compras a través de nuestros enlaces recomendados, podemos recibir una comisión sin ningún costo adicional para vos.</div>
       <div class="section-heading compact"><div><span class="kicker">Further reading</span><h2 id="resources-heading">Technical books</h2></div></div>
       <div class="resource-grid">
         {% for resource in page.resources %}
-        <div class="resource-card"><div><h3>{{ resource.title }}</h3><p>{{ resource.note }}</p></div><a class="button-link" href="{{ amazon_url(resource.asin) }}" rel="sponsored nofollow noopener">View on Amazon <small>(paid link)</small></a></div>
+        <div class="resource-card"><div><h3>{{ resource.title }}</h3><p>{{ resource.note }}</p></div><a class="button-link" href="{{ amazon_url(resource.asin) }}" rel="sponsored nofollow noopener" target="_blank">{% if loop.index is odd %}Ver disponibilidad y precio actualizado en Amazon{% else %}Consultar especificaciones y oferta en Amazon{% endif %}</a></div>
         {% endfor %}
       </div>
     </section>
@@ -75,4 +90,3 @@
   </article>
 </main>
 {% endblock %}
-
