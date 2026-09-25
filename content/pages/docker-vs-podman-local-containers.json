@@ -1,0 +1,59 @@
+{
+  "slug": "docker-vs-podman-local-containers",
+  "status": "reviewed",
+  "locale": "en",
+  "title": "Docker vs Podman for local container development",
+  "meta_description": "Compare Docker and Podman for local container workflows across engine architecture, rootless use, Compose compatibility, desktop tooling, and team fit.",
+  "eyebrow": "Container tooling brief",
+  "intro": "Docker and Podman both build and run OCI-compatible containers, and many everyday commands look similar. Their engine architecture and surrounding desktop, orchestration, and compatibility workflows differ. The strongest choice is the one that matches the team's supported operating systems, development tooling, security model, and production path.",
+  "verdict": "Choose Docker when the team prioritizes a widely documented Docker Desktop and Compose workflow across laptops. Choose Podman when daemonless operation, rootless-first workflows, pods, or alignment with a Red Hat container stack are concrete requirements. Validate the actual Compose and IDE workflow before standardizing.",
+  "updated_at": "2026-09-25",
+  "reviewed_by": "Technical editorial desk",
+  "criteria": [
+    {"key": "architecture", "label": "Engine architecture", "description": "How container lifecycle commands reach the runtime."},
+    {"key": "rootless", "label": "Unprivileged use", "description": "Documented rootless operation model."},
+    {"key": "compose", "label": "Multi-container workflow", "description": "How Compose-style projects are supported."},
+    {"key": "desktop", "label": "Desktop experience", "description": "Packaged local developer interface."},
+    {"key": "fit", "label": "Strongest fit", "description": "The workflow each option naturally supports."}
+  ],
+  "alternatives": [
+    {
+      "name": "Docker",
+      "url": "https://docs.docker.com/",
+      "summary": "A container platform with Docker Engine, Docker Desktop, Compose, BuildKit, registries, and a broad ecosystem of development integrations.",
+      "specs": {
+        "architecture": "Docker CLI commonly communicates with a long-running daemon",
+        "rootless": "Documented rootless mode is available for Docker Engine",
+        "compose": "Docker Compose is a first-party component",
+        "desktop": "Docker Desktop packages engine, CLI, UI and integrations",
+        "fit": "Cross-platform teams standardized on Dockerfiles and Compose"
+      }
+    },
+    {
+      "name": "Podman",
+      "url": "https://docs.podman.io/en/latest/",
+      "summary": "A daemonless container engine with a Docker-like CLI, rootless operation, pod concepts, and companion desktop and Compose tooling.",
+      "specs": {
+        "architecture": "Daemonless CLI with containers launched as child processes",
+        "rootless": "Rootless operation is a central documented workflow",
+        "compose": "podman compose delegates to an installed Compose provider",
+        "desktop": "Podman Desktop provides a graphical cross-platform workflow",
+        "fit": "Teams prioritizing daemonless, rootless or Red Hat-aligned workflows"
+      }
+    }
+  ],
+  "faq": [
+    {"question": "Can Podman run a Dockerfile?", "answer": "Podman documents building container images from Containerfiles or Dockerfiles. Compatibility should still be tested for the specific build features, registries, plugins, and surrounding scripts the project uses."},
+    {"question": "Is Podman a drop-in Docker replacement for every project?", "answer": "No. Command similarity helps, but Compose behavior, socket-based integrations, networking, desktop virtualization, build features, and third-party tools can expose differences."},
+    {"question": "Does Docker support rootless containers?", "answer": "Docker Engine documents a rootless mode. Teams should compare setup, host operating system support, networking, storage drivers, and integration constraints for their environment."},
+    {"question": "Which tool should a mixed Windows and macOS team standardize on?", "answer": "Test the packaged desktop experience, file sharing, networking, IDE integration and multi-container workflow on both systems. The smallest operational difference across the team's laptops often decides the result."}
+  ],
+  "sources": [
+    {"label": "Docker documentation", "publisher": "Docker", "url": "https://docs.docker.com/"},
+    {"label": "Docker Engine rootless mode", "publisher": "Docker", "url": "https://docs.docker.com/engine/security/rootless/"},
+    {"label": "Podman documentation", "publisher": "Podman", "url": "https://docs.podman.io/en/latest/"},
+    {"label": "Podman Compose documentation", "publisher": "Podman", "url": "https://docs.podman.io/en/latest/markdown/podman-compose.1.html"}
+  ],
+  "resources": []
+}
+

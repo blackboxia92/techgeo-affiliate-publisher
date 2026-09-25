@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block title %}{{ page.title }} | {{ site_name }}{% endblock %}
+{% block description %}{{ page.meta_description }}{% endblock %}
+{% block og_title %}{{ page.title }}{% endblock %}
+{% block og_description %}{{ page.meta_description }}{% endblock %}
+{% block structured_data %}<script type="application/ld+json">{{ json_ld|safe }}</script>{% endblock %}
+{% block content %}
+<main>
+  {% if not page.indexable %}<div class="draft-banner">Editorial draft · excluded from search and sitemaps</div>{% endif %}
+  <article class="article-shell">
+    <header class="article-hero">
+      <div class="eyebrow"><span></span> {{ page.eyebrow }}</div>
+      <h1>{{ page.title }}</h1>
+      <p class="dek">{{ page.intro }}</p>
+      <div class="article-meta">
+        <span>Updated <time datetime="{{ page.updated_at }}">{{ page.updated_at }}</time></span>
+        <span>Reviewed by {{ page.reviewed_by }}</span>
+        <span>{{ page.sources|length }} primary sources</span>
+      </div>
+    </header>
+
+    <aside class="verdict">
+      <span class="kicker">Decision summary</span>
+      <p>{{ page.verdict }}</p>
+    </aside>
+
+    <section class="content-section" aria-labelledby="comparison-heading">
+      <div class="section-heading compact"><div><span class="kicker">At a glance</span><h2 id="comparison-heading">Comparison matrix</h2></div></div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th scope="col">Criterion</th>{% for alternative in page.alternatives %}<th scope="col"><a href="{{ alternative.url }}" rel="nofollow noopener">{{ alternative.name }}</a></th>{% endfor %}</tr></thead>
+          <tbody>
+            {% for criterion in page.criteria %}
+            <tr><th scope="row"><strong>{{ criterion.label }}</strong><small>{{ criterion.description }}</small></th>{% for alternative in page.alternatives %}<td>{{ alternative.specs[criterion.key] }}</td>{% endfor %}</tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="content-section" aria-labelledby="options-heading">
+      <div class="section-heading compact"><div><span class="kicker">Context</span><h2 id="options-heading">What each option is for</h2></div></div>
+      <div class="option-grid">
+        {% for alternative in page.alternatives %}
+        <div class="option-card"><h3>{{ alternative.name }}</h3><p>{{ alternative.summary }}</p><a class="text-link" href="{{ alternative.url }}" rel="nofollow noopener">Official documentation <span aria-hidden="true">↗</span></a></div>
+        {% endfor %}
+      </div>
+    </section>
+
+    {% if page.resources %}
+    <section class="content-section resource-section" aria-labelledby="resources-heading">
+      <div class="affiliate-notice"><strong>Affiliate disclosure:</strong> As an Amazon Associate I earn from qualifying purchases. Recommendations are selected editorially; availability and prices can change.</div>
+      <div class="section-heading compact"><div><span class="kicker">Further reading</span><h2 id="resources-heading">Technical books</h2></div></div>
+      <div class="resource-grid">
+        {% for resource in page.resources %}
+        <div class="resource-card"><div><h3>{{ resource.title }}</h3><p>{{ resource.note }}</p></div><a class="button-link" href="{{ amazon_url(resource.asin) }}" rel="sponsored nofollow noopener">View on Amazon <small>(paid link)</small></a></div>
+        {% endfor %}
+      </div>
+    </section>
+    {% endif %}
+
+    <section class="content-section" aria-labelledby="faq-heading">
+      <div class="section-heading compact"><div><span class="kicker">Common questions</span><h2 id="faq-heading">FAQ</h2></div></div>
+      <div class="faq-list">
+        {% for item in page.faq %}<details><summary>{{ item.question }}</summary><p>{{ item.answer }}</p></details>{% endfor %}
+      </div>
+    </section>
+
+    <section class="methodology" aria-labelledby="sources-heading">
+      <div><span class="kicker">Methodology</span><h2 id="sources-heading">Evidence and review</h2><p>We compare documented capabilities against the stated use case. We do not copy vendor pricing, ratings or availability into static pages because those facts change quickly.</p></div>
+      <ol>
+        {% for source in page.sources %}<li><a href="{{ source.url }}" rel="nofollow noopener">{{ source.label }}</a><span>{{ source.publisher }}</span></li>{% endfor %}
+      </ol>
+    </section>
+  </article>
+</main>
+{% endblock %}
+

@@ -1,0 +1,10 @@
+[project]
+name = "techgeo-affiliate-publisher"
+version = "1.0.0"
+description = "Quality-gated static publishing engine for technical comparison pages"
+requires-python = ">=3.11"
+dependencies = ["Jinja2>=3.1,<4"]
+
+[tool.setuptools]
+packages = ["publisher"]
+

@@ -1,0 +1,19 @@
+{
+  "items": [
+    {"name": "PostgreSQL", "slug": "postgresql", "category": "database", "url": "https://www.postgresql.org/docs/current/"},
+    {"name": "SQLite", "slug": "sqlite", "category": "database", "url": "https://www.sqlite.org/docs.html"},
+    {"name": "MariaDB", "slug": "mariadb", "category": "database", "url": "https://mariadb.com/docs/"},
+    {"name": "GitHub Actions", "slug": "github-actions", "category": "ci", "url": "https://docs.github.com/actions"},
+    {"name": "GitLab CI/CD", "slug": "gitlab-ci", "category": "ci", "url": "https://docs.gitlab.com/ci/"},
+    {"name": "CircleCI", "slug": "circleci", "category": "ci", "url": "https://circleci.com/docs/"},
+    {"name": "Docker", "slug": "docker", "category": "containers", "url": "https://docs.docker.com/"},
+    {"name": "Podman", "slug": "podman", "category": "containers", "url": "https://docs.podman.io/en/latest/"},
+    {"name": "containerd", "slug": "containerd", "category": "containers", "url": "https://containerd.io/docs/"}
+  ],
+  "audiences": [
+    {"name": "solo developers", "slug": "solo-developers"},
+    {"name": "small SaaS teams", "slug": "small-saas-teams"},
+    {"name": "self-hosted infrastructure", "slug": "self-hosted-infrastructure"}
+  ]
+}
+

@@ -1,0 +1,60 @@
+{
+  "slug": "postgresql-vs-sqlite-backend",
+  "status": "reviewed",
+  "locale": "en",
+  "title": "PostgreSQL vs SQLite for a production application backend",
+  "meta_description": "Compare PostgreSQL and SQLite for production backends across deployment, concurrent writes, operations, data types, and practical workload fit.",
+  "eyebrow": "Database decision brief",
+  "intro": "PostgreSQL and SQLite both provide transactional SQL databases, but they place the database in different parts of the system. PostgreSQL runs as a separate server designed for networked, multi-user workloads. SQLite is an embedded library that reads and writes a local database file. That architectural difference should drive the choice.",
+  "verdict": "Choose SQLite when one application instance owns the data, deployment simplicity matters, and write concurrency is modest. Choose PostgreSQL when several processes or services write concurrently, clients connect over a network, or the team needs server-side access control and broader operational tooling.",
+  "updated_at": "2026-09-25",
+  "reviewed_by": "Technical editorial desk",
+  "criteria": [
+    {"key": "architecture", "label": "Architecture", "description": "Where the database engine runs."},
+    {"key": "concurrency", "label": "Concurrent writes", "description": "How write contention is handled."},
+    {"key": "operations", "label": "Operations", "description": "What must be deployed and maintained."},
+    {"key": "access", "label": "Remote access", "description": "How applications connect."},
+    {"key": "fit", "label": "Strongest fit", "description": "Workloads that match the architecture."}
+  ],
+  "alternatives": [
+    {
+      "name": "PostgreSQL",
+      "url": "https://www.postgresql.org/docs/current/",
+      "summary": "A client-server relational database with network connections, server-managed concurrency, roles, extensions, and operational controls for multi-user applications.",
+      "specs": {
+        "architecture": "Separate database server process",
+        "concurrency": "Multiple concurrent readers and writers through MVCC",
+        "operations": "Server deployment, upgrades, backups and monitoring",
+        "access": "Native client connections over local or network transports",
+        "fit": "Shared production systems and write-heavy multi-user services"
+      }
+    },
+    {
+      "name": "SQLite",
+      "url": "https://www.sqlite.org/docs.html",
+      "summary": "An embedded SQL database delivered as a library, with a portable single-file format and no separate database server to operate.",
+      "specs": {
+        "architecture": "Embedded library operating on a local file",
+        "concurrency": "Many readers; write transactions are serialized",
+        "operations": "No server process; application owns file lifecycle and backups",
+        "access": "In-process API rather than a built-in network service",
+        "fit": "Local application state, edge workloads, prototypes and read-heavy services"
+      }
+    }
+  ],
+  "faq": [
+    {"question": "Can SQLite run a real production application?", "answer": "Yes. SQLite can be a strong production choice when the database is local to the application and the workload does not require many simultaneous writers or a built-in network database service."},
+    {"question": "Does PostgreSQL automatically make an application more scalable?", "answer": "No. PostgreSQL provides server-side concurrency and operational features, but application design, indexes, query patterns, connection management, and infrastructure still determine practical scale."},
+    {"question": "When should a project migrate from SQLite to PostgreSQL?", "answer": "Consider migration when write contention, multiple application instances, remote access, role-based controls, or database operations become persistent requirements rather than hypothetical future needs."},
+    {"question": "Can both databases preserve transactional integrity?", "answer": "Yes. Both support transactions and durability controls. Their concurrency models, deployment boundaries, and operational responsibilities differ, which changes how teams use those guarantees."}
+  ],
+  "sources": [
+    {"label": "PostgreSQL current documentation", "publisher": "PostgreSQL Global Development Group", "url": "https://www.postgresql.org/docs/current/"},
+    {"label": "Appropriate Uses For SQLite", "publisher": "SQLite", "url": "https://www.sqlite.org/whentouse.html"},
+    {"label": "Isolation In SQLite", "publisher": "SQLite", "url": "https://www.sqlite.org/isolation.html"}
+  ],
+  "resources": [
+    {"title": "Designing Data-Intensive Applications", "asin": "1449373321", "note": "A deeper framework for reasoning about storage, consistency, replication, and data system trade-offs."}
+  ]
+}
+

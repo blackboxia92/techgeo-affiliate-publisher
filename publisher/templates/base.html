@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="{{ page.locale if page else 'en' }}" class="scroll-smooth">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{{ site_name }}{% endblock %}</title>
+  <meta name="description" content="{% block description %}Source-backed technical comparisons for practical software decisions.{% endblock %}">
+  <link rel="canonical" href="{{ canonical_url }}">
+  {% if page and not page.indexable %}<meta name="robots" content="noindex,nofollow">{% else %}<meta name="robots" content="index,follow,max-image-preview:large">{% endif %}
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="{% block og_title %}{{ site_name }}{% endblock %}">
+  <meta property="og:description" content="{% block og_description %}Source-backed technical comparisons for practical software decisions.{% endblock %}">
+  <meta property="og:url" content="{{ canonical_url }}">
+  <meta name="theme-color" content="#020617">
+  <link rel="stylesheet" href="/assets/styles.css">
+  <link rel="stylesheet" href="/assets/library.css">
+  {% block structured_data %}{% endblock %}
+</head>
+<body>
+  <header class="site-header">
+    <div class="nav-shell">
+      <a class="brand" href="/" aria-label="StackSignal home">
+        <span class="brand-mark">S</span>
+        <span><strong>Stack<span>Signal</span></strong><small>Technical decision briefs</small></span>
+      </a>
+      <span class="locale-chip">Global · EN</span>
+    </div>
+  </header>
+  {% block content %}{% endblock %}
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div>
+        <strong>StackSignal</strong>
+        <p>Technical comparisons built from primary documentation and explicit editorial review.</p>
+      </div>
+      <p class="legal">As an Amazon Associate I earn from qualifying purchases.</p>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}StackSignal | Evidence-led technical comparisons{% endblock %}
+{% block description %}Practical, source-backed comparisons of developer tools, infrastructure and technical resources.{% endblock %}
+{% block og_title %}StackSignal | Evidence-led technical comparisons{% endblock %}
+{% block og_description %}Practical, source-backed comparisons of developer tools, infrastructure and technical resources.{% endblock %}
+{% block content %}
+<main>
+  <section class="hero shell">
+    <div class="eyebrow"><span></span> Evidence before recommendation</div>
+    <h1>Technical decisions,<br><em>made inspectable.</em></h1>
+    <p>Compact comparison briefs for builders. Every published page shows its criteria, source trail, review status and update date.</p>
+    <div class="hero-stats" aria-label="Publishing principles">
+      <span><strong>{{ total_pages }}</strong> reviewed guides</span>
+      <span><strong>Primary</strong> documentation cited</span>
+      <span><strong>Zero</strong> hidden sponsored links</span>
+    </div>
+  </section>
+
+  <section class="shell guide-section">
+    <div class="section-heading">
+      <div><span class="kicker">Decision library</span><h2>Recently reviewed</h2></div>
+      <p>Updated only when the underlying evidence or recommendation changes.</p>
+    </div>
+    <div class="guide-grid">
+      {% for item in pages %}
+      <article class="guide-card">
+        <div class="card-top"><span>{{ item.eyebrow }}</span><time datetime="{{ item.updated_at }}">{{ item.updated_at }}</time></div>
+        <h3><a href="/guides/{{ item.slug }}/">{{ item.title }}</a></h3>
+        <p>{{ item.meta_description }}</p>
+        <a class="text-link" href="/guides/{{ item.slug }}/">Read the evidence <span aria-hidden="true">→</span></a>
+      </article>
+      {% else %}
+      <article class="guide-card"><h3>No reviewed guides yet</h3><p>Drafts remain private until they satisfy the publishing gate.</p></article>
+      {% endfor %}
+    </div>
+    {% if total_pages %}<div class="library-cta"><a class="button-link" href="/library/page/1/">Browse the full decision library</a></div>{% endif %}
+  </section>
+</main>
+{% endblock %}
+

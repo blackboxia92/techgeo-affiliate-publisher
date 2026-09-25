@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Technical decision library, page {{ page_number }} | {{ site_name }}{% endblock %}
+{% block description %}Browse source-backed technical comparisons of software, infrastructure and developer resources.{% endblock %}
+{% block og_title %}Technical decision library | {{ site_name }}{% endblock %}
+{% block og_description %}Browse source-backed technical comparisons of software, infrastructure and developer resources.{% endblock %}
+{% block content %}
+<main class="shell guide-section library-page">
+  <div class="section-heading">
+    <div><span class="kicker">Decision library</span><h1>Technical comparisons</h1></div>
+    <p>Page {{ page_number }} of {{ page_count }}. Every listed guide has passed the editorial publishing gate.</p>
+  </div>
+  <div class="guide-grid">
+    {% for item in pages %}
+    <article class="guide-card">
+      <div class="card-top"><span>{{ item.eyebrow }}</span><time datetime="{{ item.updated_at }}">{{ item.updated_at }}</time></div>
+      <h3><a href="/guides/{{ item.slug }}/">{{ item.title }}</a></h3>
+      <p>{{ item.meta_description }}</p>
+      <a class="text-link" href="/guides/{{ item.slug }}/">Read the evidence <span aria-hidden="true">→</span></a>
+    </article>
+    {% endfor %}
+  </div>
+  <nav class="pagination" aria-label="Library pages">
+    {% if page_number > 1 %}<a href="/library/page/{{ page_number - 1 }}/">← Previous</a>{% endif %}
+    <span>Page {{ page_number }} / {{ page_count }}</span>
+    {% if page_number < page_count %}<a href="/library/page/{{ page_number + 1 }}/">Next →</a>{% endif %}
+  </nav>
+</main>
+{% endblock %}

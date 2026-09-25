@@ -1,0 +1,40 @@
+.library-cta {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.library-cta .button-link {
+  padding: .9rem 1.2rem;
+}
+
+.library-page {
+  padding-top: 5rem;
+  min-height: 70vh;
+}
+
+.library-page h1 {
+  margin: .15rem 0 0;
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  letter-spacing: -.05em;
+  line-height: 1.05;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2.5rem;
+  color: var(--muted);
+  font-size: .78rem;
+}
+
+.pagination a {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: .55rem .8rem;
+  text-decoration: none;
+  color: #c7d2fe;
+  background: #0b1120;
+}

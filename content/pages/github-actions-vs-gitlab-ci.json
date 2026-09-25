@@ -1,0 +1,61 @@
+{
+  "slug": "github-actions-vs-gitlab-ci",
+  "status": "reviewed",
+  "locale": "en",
+  "title": "GitHub Actions vs GitLab CI/CD for software delivery pipelines",
+  "meta_description": "Compare GitHub Actions and GitLab CI/CD across repository integration, configuration, runners, reuse, and the operational fit of each platform.",
+  "eyebrow": "CI/CD decision brief",
+  "intro": "GitHub Actions and GitLab CI/CD both automate build, test, and deployment work from repository events. The practical decision is usually shaped less by syntax than by where the source code already lives, how runners are operated, which controls the organization needs, and how much platform consolidation the team values.",
+  "verdict": "Prefer the CI system native to the repository host unless a documented requirement justifies cross-platform complexity. GitHub Actions fits GitHub-centered teams and its marketplace workflow model. GitLab CI/CD fits teams using GitLab as an integrated DevSecOps platform and organizing pipelines through its project configuration model.",
+  "updated_at": "2026-09-25",
+  "reviewed_by": "Technical editorial desk",
+  "criteria": [
+    {"key": "configuration", "label": "Pipeline definition", "description": "Primary workflow configuration model."},
+    {"key": "runners", "label": "Execution", "description": "Hosted and self-managed runner options."},
+    {"key": "reuse", "label": "Reuse model", "description": "How teams share automation units."},
+    {"key": "integration", "label": "Native context", "description": "Where the workflow experience is most direct."},
+    {"key": "fit", "label": "Strongest fit", "description": "Organizational scenario that reduces friction."}
+  ],
+  "alternatives": [
+    {
+      "name": "GitHub Actions",
+      "url": "https://docs.github.com/actions",
+      "summary": "Repository-native automation for GitHub, configured as YAML workflows and composed from jobs, steps, reusable workflows, and actions.",
+      "specs": {
+        "configuration": "YAML workflow files under .github/workflows",
+        "runners": "GitHub-hosted and self-hosted runners",
+        "reuse": "Actions, reusable workflows and marketplace components",
+        "integration": "GitHub repositories, pull requests and organization controls",
+        "fit": "Teams whose code review and repository operations already live in GitHub"
+      }
+    },
+    {
+      "name": "GitLab CI/CD",
+      "url": "https://docs.gitlab.com/ci/",
+      "summary": "GitLab's integrated pipeline system, centered on project configuration, stages and jobs with GitLab-hosted or self-managed runners.",
+      "specs": {
+        "configuration": "YAML pipeline configuration, commonly .gitlab-ci.yml",
+        "runners": "Instance, group, project and hosted runner options",
+        "reuse": "Includes, components, templates and parent-child pipelines",
+        "integration": "GitLab projects, merge requests and platform security features",
+        "fit": "Teams consolidating source, delivery and governance inside GitLab"
+      }
+    }
+  ],
+  "faq": [
+    {"question": "Should a team move repositories just to change CI systems?", "answer": "Usually not without a clear constraint. Native repository integration reduces credentials, event plumbing, permissions work, and context switching, so quantify the missing capability before adding or moving platforms."},
+    {"question": "Can both platforms use self-managed runners?", "answer": "Yes. Both document self-managed execution options. Security boundaries, patching, secrets, network access, capacity, and lifecycle management remain the operator's responsibility."},
+    {"question": "Which platform has the simpler YAML format?", "answer": "Simplicity depends on the pipeline. Compare a representative build, cache, matrix, approval, deployment, and reuse pattern instead of judging only a minimal example."},
+    {"question": "Is marketplace size enough to choose a CI platform?", "answer": "No. Third-party components can save time, but repository location, permissions, runner operations, governance, debugging, and maintainability usually have a larger long-term effect."}
+  ],
+  "sources": [
+    {"label": "GitHub Actions documentation", "publisher": "GitHub", "url": "https://docs.github.com/actions"},
+    {"label": "GitHub Actions: Reusing automations", "publisher": "GitHub", "url": "https://docs.github.com/actions/using-workflows/reusing-workflows"},
+    {"label": "GitLab CI/CD documentation", "publisher": "GitLab", "url": "https://docs.gitlab.com/ci/"},
+    {"label": "GitLab Runner documentation", "publisher": "GitLab", "url": "https://docs.gitlab.com/runner/"}
+  ],
+  "resources": [
+    {"title": "Accelerate", "asin": "1942788339", "note": "Research-oriented context for delivery performance, organizational capabilities, and sustainable software operations."}
+  ]
+}
+

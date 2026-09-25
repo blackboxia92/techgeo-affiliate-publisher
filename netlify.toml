@@ -1,0 +1,19 @@
+[build]
+  command = "python -m publisher build --content content/pages --output dist --state /tmp/techgeo-state.sqlite3 --base-url \"$URL\" --indexnow-key \"${INDEXNOW_KEY:-}\""
+  publish = "dist"
+
+[build.environment]
+  PYTHON_VERSION = "3.12"
+  PIP_DISABLE_PIP_VERSION_CHECK = "1"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Frame-Options = "SAMEORIGIN"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000, immutable"
