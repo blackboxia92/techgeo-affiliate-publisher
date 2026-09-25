@@ -16,6 +16,24 @@
     </div>
   </section>
 
+  <section class="shell recommendation-section" aria-labelledby="recommended-reading" data-associate-tag="blackboxia92-21">
+    <div class="section-heading">
+      <div><span class="kicker">Recommended reading</span><h2 id="recommended-reading">Go deeper on the trade-offs</h2></div>
+      <p>Selected technical references that complement the decision guides.</p>
+    </div>
+    <p class="affiliate-notice">As an Amazon Associate, StackSignal earns from qualifying purchases. These are paid links; the recommendation is editorial and prices or availability are not displayed.</p>
+    <div class="recommendation-grid">
+      {% for item in recommendations %}
+      <article class="recommendation-card">
+        <span class="recommendation-label">Reference {{ loop.index }}</span>
+        <h3>{{ item.title }}</h3>
+        <p>{{ item.note }}</p>
+        <a class="button-link" href="{{ item.url }}" rel="sponsored nofollow noopener" target="_blank">View on Amazon.es <small>(paid link)</small></a>
+      </article>
+      {% endfor %}
+    </div>
+  </section>
+
   <section class="shell guide-section">
     <div class="section-heading">
       <div><span class="kicker">Decision library</span><h2>Recently reviewed</h2></div>
@@ -37,4 +55,3 @@
   </section>
 </main>
 {% endblock %}
-

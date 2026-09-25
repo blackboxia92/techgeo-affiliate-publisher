@@ -16,6 +16,24 @@ from .store import StateStore
 
 SITEMAP_LIMIT = 45_000
 
+HOME_RECOMMENDATIONS = (
+    {
+        "title": "Designing Data-Intensive Applications",
+        "asin": "1449373321",
+        "note": "A rigorous reference for evaluating storage, consistency, and distributed-system trade-offs.",
+    },
+    {
+        "title": "Accelerate",
+        "asin": "1942788339",
+        "note": "Research-backed guidance for comparing delivery workflows and engineering performance.",
+    },
+    {
+        "title": "Docker Deep Dive",
+        "asin": "B01LXWQUFF",
+        "note": "Practical background for container images, runtimes, networking, and operations.",
+    },
+)
+
 
 @dataclass(frozen=True)
 class BuildReport:
@@ -207,6 +225,10 @@ def build_site(
         homepage = index_template.render(
             pages=reviewed_pages[:24],
             total_pages=len(reviewed_pages),
+            recommendations=[
+                recommendation | {"url": amazon_url(recommendation["asin"])}
+                for recommendation in HOME_RECOMMENDATIONS
+            ],
             canonical_url=f"{base_url}/",
             site_name="StackSignal",
         )

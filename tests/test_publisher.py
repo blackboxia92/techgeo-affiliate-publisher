@@ -66,6 +66,10 @@ class BuildTests(unittest.TestCase):
             self.assertTrue((root / "dist" / "library" / "page" / "1" / "index.html").exists())
             llms = (root / "dist" / "llms.txt").read_text(encoding="utf-8")
             self.assertIn("postgresql-vs-sqlite-backend", llms)
+            homepage = (root / "dist" / "index.html").read_text(encoding="utf-8")
+            self.assertEqual(homepage.count("tag=blackboxia92-21"), 3)
+            self.assertEqual(homepage.count('rel="sponsored nofollow noopener"'), 3)
+            self.assertIn('data-associate-tag="blackboxia92-21"', homepage)
 
     def test_expanded_draft_is_noindex_and_excluded_from_sitemap(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
