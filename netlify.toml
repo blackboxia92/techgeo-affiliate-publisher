@@ -6,6 +6,10 @@
   PYTHON_VERSION = "3.12"
   PIP_DISABLE_PIP_VERSION_CHECK = "1"
 
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
 [[headers]]
   for = "/*"
   [headers.values]
@@ -17,3 +21,9 @@
   for = "/assets/*"
   [headers.values]
     Cache-Control = "public, max-age=2592000, immutable"
+
+[[headers]]
+  for = "/.netlify/functions/analytics"
+  [headers.values]
+    Cache-Control = "no-store, max-age=0"
+    X-Robots-Tag = "noindex, nofollow"

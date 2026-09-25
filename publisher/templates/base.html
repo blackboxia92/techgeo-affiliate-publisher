@@ -14,6 +14,7 @@
   <meta name="theme-color" content="#020617">
   <link rel="stylesheet" href="/assets/styles.css">
   <link rel="stylesheet" href="/assets/library.css">
+  <script defer src="/assets/analytics.js" data-privacy="no-cookies"></script>
   {% block structured_data %}{% endblock %}
 </head>
 <body>
@@ -36,5 +37,27 @@
       <p class="legal">StackSignal participa en el programa de afiliados de Amazon. Si compras a través de nuestros enlaces recomendados, podemos recibir una comisión sin ningún costo adicional para vos. As an Amazon Associate I earn from qualifying purchases.</p>
     </div>
   </footer>
+  <script>
+    (() => {
+      const endpoint = "https://kiosco3-b2b-alert-monitor.blackboxia92.workers.dev/track/click";
+      document.addEventListener("click", (event) => {
+        const link = event.target.closest("a[href]");
+        if (!link) return;
+        try {
+          const target = new URL(link.href);
+          if (!["amazon.es", "www.amazon.es"].includes(target.hostname)) return;
+          if (target.searchParams.get("tag") !== "blackboxia92-21") return;
+          const payload = JSON.stringify({ target_url: target.href, title: link.textContent.trim() });
+          if (navigator.sendBeacon) {
+            navigator.sendBeacon(endpoint, new Blob([payload], { type: "text/plain;charset=UTF-8" }));
+          } else {
+            fetch(endpoint, { method: "POST", body: payload, keepalive: true });
+          }
+        } catch (_) {
+          // Navigation must never be blocked by analytics.
+        }
+      }, { capture: true });
+    })();
+  </script>
 </body>
 </html>
