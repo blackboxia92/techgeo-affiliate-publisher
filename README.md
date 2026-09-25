@@ -125,19 +125,12 @@ El comando verifica primero que `https://tu-dominio.com/TU_CLAVE.txt` devuelva l
 
 Todas las páginas cargan `/assets/analytics.js` con `defer`. El script espera a que el navegador quede inactivo, respeta `Do Not Track` y envía solamente la ruta visitada y el dominio de referencia. No usa cookies, `localStorage`, fingerprinting, IP almacenada ni identificadores persistentes.
 
-La función `netlify/functions/analytics.mjs` conserva un contador agregado en Netlify Blobs: visitas totales, últimos 31 días, páginas más vistas y dominios de referencia. El reporte no es público y exige un token configurado únicamente en Netlify:
+La función `netlify/functions/analytics.mjs` conserva un contador agregado en Netlify Blobs: visitas totales, últimos 31 días, páginas más vistas y dominios de referencia. No existe un endpoint público de lectura: cualquier petición `GET` responde `404`.
+
+El propietario puede consultar el resumen desde una sesión autenticada de Netlify:
 
 ```powershell
-npx netlify env:set ANALYTICS_READ_TOKEN "una-clave-larga-y-aleatoria"
-```
-
-Consultar el reporte privado:
-
-```powershell
-$token = npx netlify env:get ANALYTICS_READ_TOKEN
-Invoke-RestMethod `
-  -Uri "https://stacksignal-tech.netlify.app/.netlify/functions/analytics" `
-  -Headers @{ Authorization = "Bearer $token" }
+npx netlify blobs:get stacksignal-private-analytics summary-v1
 ```
 
 El plan Free de Netlify tiene límite rígido de uso: no genera cargos automáticos, aunque el proyecto puede pausarse si agota la cuota mensual.

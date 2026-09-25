@@ -96,40 +96,9 @@ async function recordVisit(path, referrer) {
   throw new Error("Analytics counter was busy after all retries");
 }
 
-function topEntries(values, limit = 20) {
-  return Object.entries(values || {})
-    .sort((left, right) => right[1] - left[1])
-    .slice(0, limit)
-    .map(([name, views]) => ({ name, views }));
-}
-
-async function privateReport(request) {
-  const configuredToken = process.env.ANALYTICS_READ_TOKEN;
-  const suppliedToken = request.headers.get("authorization") || "";
-  if (!configuredToken || suppliedToken !== `Bearer ${configuredToken}`) {
-    return jsonResponse({ status: "not_found" }, 404);
-  }
-
-  const store = getStore({ name: STORE_NAME, consistency: "strong" });
-  const summary = (await store.get(SUMMARY_KEY, { type: "json" })) || emptySummary();
-  const today = new Date().toISOString().slice(0, 10);
-
-  return jsonResponse({
-    status: "ok",
-    total_views: Number(summary.total || 0),
-    views_today: Number(summary.days?.[today] || 0),
-    daily_views: summary.days || {},
-    top_pages: topEntries(summary.pages),
-    top_referrers: topEntries(summary.referrers),
-    updated_at: summary.updated_at,
-    privacy: "No cookies, fingerprinting, IP storage, or user identifiers.",
-  });
-}
-
 export default async (request) => {
-  if (request.method === "GET") return privateReport(request);
   if (request.method !== "POST") {
-    return jsonResponse({ status: "method_not_allowed" }, 405);
+    return jsonResponse({ status: "not_found" }, 404);
   }
 
   const contentLength = Number(request.headers.get("content-length") || 0);
