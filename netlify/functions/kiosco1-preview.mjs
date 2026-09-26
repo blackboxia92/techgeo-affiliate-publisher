@@ -9,9 +9,9 @@ function whatsapp(phone, explicit) { if (explicit) return cleanUrl(explicit); co
 const normalize = (value) => text(value).normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 async function resolveLocation(zone) {
   try {
-    const endpoint = `https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&addressdetails=1&q=${encodeURIComponent(zone)}`;
+    const endpoint = `https://nominatim.openstreetmap.org/search?format=jsonv2&limit=5&addressdetails=1&q=${encodeURIComponent(zone)}`;
     const response = await fetch(endpoint, { headers: { "User-Agent": "StackSignal-Leads/1.0 (support@stacksignal.tech)", Accept: "application/json" } });
-    const result = await response.json(); const match = Array.isArray(result) ? result[0] : null;
+    const result = await response.json(); const exact = (Array.isArray(result) ? result : []).filter((item) => normalize(item.name) === normalize(zone)); const match = exact.sort((left, right) => Number(right.importance || 0) - Number(left.importance || 0))[0] || null;
     const address = match?.address || {}; const locality = text(address.city || address.town || address.village || address.municipality || text(match?.display_name).split(",")[0]);
     return locality || zone;
   } catch { return zone; }
@@ -48,4 +48,4 @@ export default async (request) => {
   } catch { return json({ status: "source_unavailable" }, 502); }
 };
 
-export { json, text, record, signJob, MAX_PREVIEW, normalize };
+export { json, text, record, signJob, MAX_PREVIEW, normalize, resolveLocation };
