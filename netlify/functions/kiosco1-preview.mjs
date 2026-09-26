@@ -6,6 +6,16 @@ const json = (body, status = 200) => new Response(JSON.stringify(body), { status
 const text = (value) => String(value || "").replace(/\s+/g, " ").trim();
 function cleanUrl(value) { try { const url = new URL(/^https?:\/\//i.test(text(value)) ? text(value) : `https://${text(value)}`); for (const key of [...url.searchParams.keys()]) if (TRACKING.test(key)) url.searchParams.delete(key); url.hash = ""; return url.toString(); } catch { return ""; } }
 function whatsapp(phone, explicit) { if (explicit) return cleanUrl(explicit); const raw = text(phone); if (!/^\+54\s?9/.test(raw)) return ""; const digits = raw.replace(/\D/g, ""); return digits ? `https://wa.me/${digits}` : ""; }
+const normalize = (value) => text(value).normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+async function resolveLocation(zone) {
+  try {
+    const endpoint = `https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&addressdetails=1&q=${encodeURIComponent(zone)}`;
+    const response = await fetch(endpoint, { headers: { "User-Agent": "StackSignal-Leads/1.0 (support@stacksignal.tech)", Accept: "application/json" } });
+    const result = await response.json(); const match = Array.isArray(result) ? result[0] : null;
+    const address = match?.address || {}; const locality = text(address.city || address.town || address.village || address.municipality || text(match?.display_name).split(",")[0]);
+    return locality || zone;
+  } catch { return zone; }
+}
 function record(raw) {
   const company = text(raw.title || raw.name);
   const phone = text(raw.phone || raw.phoneUnformatted);
@@ -28,13 +38,14 @@ export default async (request) => {
   if (!rubro || !zona) return json({ status: "missing_search" }, 400);
   if (!process.env.APIFY_TOKEN) return json({ status: "preview_unavailable" }, 503);
   try {
+    const location = await resolveLocation(zona);
     const endpoint = `https://api.apify.com/v2/acts/compass~crawler-google-places/runs?token=${encodeURIComponent(process.env.APIFY_TOKEN)}`;
-    const response = await fetch(endpoint, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ searchStringsArray: [rubro], locationQuery: zona, language: "es", skipClosedPlaces: false, scrapePlaceDetailPage: true, includeWebResults: false }) });
+    const response = await fetch(endpoint, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ searchStringsArray: [rubro], locationQuery: location, language: "es", skipClosedPlaces: false, scrapePlaceDetailPage: true, includeWebResults: false }) });
     if (!response.ok) return json({ status: "source_unavailable" }, 502);
     const run = await response.json(); const jobId = text(run?.data?.id);
     if (!jobId) return json({ status: "source_unavailable" }, 502);
-    return json({ status: "pending", job_id: jobId, job_sig: await signJob(jobId) });
+    return json({ status: "pending", job_id: jobId, location, job_sig: await signJob(`${jobId}|${location}`) });
   } catch { return json({ status: "source_unavailable" }, 502); }
 };
 
-export { json, text, record, signJob, MAX_PREVIEW };
+export { json, text, record, signJob, MAX_PREVIEW, normalize };
