@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Servicios de automatización | StackSignal{% endblock %}
+{% block description %}Herramientas de StackSignal para auditar y preparar flujos de crecimiento y operaciones.{% endblock %}
+{% block content %}
+<main class="services-page shell">
+  <section class="services-hero">
+    <span class="eyebrow"><span></span> Herramientas operativas</span>
+    <h1>Servicios concretos.<br><em>Resultados inspeccionables.</em></h1>
+    <p>Herramientas enfocadas en una tarea. Antes de ejecutar acciones externas, muestran qué es compatible y qué no.</p>
+  </section>
+  <section class="services-grid" aria-label="Servicios disponibles">
+    <article class="service-card service-card-featured">
+      <span class="service-number">Kiosco #2</span>
+      <h2>Directorio de IA</h2>
+      <p>Auditá si tu herramienta de IA encaja en directorios seleccionados antes de iniciar una simulación o un envío.</p>
+      <ul><li>Control de campos y categorías actuales</li><li>Sin crear fichas durante la auditoría</li><li>Resultado explicable por directorio</li></ul>
+      <a class="button-link" href="/servicios/directorios-ia/">Auditar mi herramienta <span aria-hidden="true">→</span></a>
+    </article>
+    {% if kiosco1_checkout_url %}
+    <article class="service-card">
+      <span class="service-number">Kiosco #1</span>
+      <h2>Prospectos B2B</h2>
+      <p>Buscá empresas por rubro y zona y revisá una muestra antes de desbloquear la lista completa.</p>
+      <a class="text-link" href="/servicios/leads-b2b/">Ver extracción B2B <span aria-hidden="true">→</span></a>
+    </article>
+    {% endif %}
+  </section>
+</main>
+{% endblock %}

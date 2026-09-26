@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Auditoría de directorios de IA | StackSignal{% endblock %}
+{% block description %}Comprobá si tu herramienta de IA encaja en directorios seleccionados antes de enviar nada.{% endblock %}
+{% block structured_data %}<script type="application/ld+json">{{ service_json_ld | safe }}</script>{% endblock %}
+{% block content %}
+<main class="directory-app">
+  <section class="directory-hero shell">
+    <div>
+      <span class="eyebrow"><span></span> Kiosco #2 · auditoría previa</span>
+      <h1>Antes de enviar,<br><em>verificá el encaje.</em></h1>
+      <p>Comprobamos los formularios actuales de directorios de IA y te decimos con claridad qué destinos son compatibles con tu ficha.</p>
+      <div class="directory-claims"><span>✓ Sin alta externa</span><span>✓ Sin CAPTCHA automático</span><span>✓ Resultado por directorio</span></div>
+    </div>
+    <aside class="directory-panel" aria-label="Qué incluye la auditoría">
+      <span class="service-number">Antes de ejecutar</span>
+      <h2>La auditoría revisa</h2>
+      <ol><li>Campos requeridos y límites de texto</li><li>Categoría disponible hoy</li><li>Botón y flujo del formulario</li><li>Bloqueos que requieren revisión manual</li></ol>
+      <p>La publicación depende de cada directorio. No se garantiza aceptación, tráfico ni posicionamiento.</p>
+    </aside>
+  </section>
+  <section class="directory-workspace shell" aria-labelledby="audit-title">
+    <div class="workspace-heading"><div><span class="kicker">Tu herramienta</span><h2 id="audit-title">Auditá compatibilidad</h2></div><p>Usá datos reales de una herramienta pública de IA. Esta etapa no crea fichas ni envía formularios.</p></div>
+    <form class="directory-form" id="directory-audit-form">
+      <label><span>Nombre de la herramienta</span><input name="product_name" required minlength="2" maxlength="120" placeholder="Ej. Acme AI"></label>
+      <label><span>Web pública</span><input name="website_url" required type="url" placeholder="https://tu-herramienta.com"></label>
+      <label class="full"><span>Qué hace, en una línea</span><input name="tagline" required minlength="5" maxlength="160" placeholder="Ej. Resume llamadas y prepara próximos pasos"></label>
+      <label class="full"><span>Descripción factual</span><textarea name="description" required minlength="20" maxlength="5000" placeholder="Contá qué problema resuelve, para quién y cómo funciona."></textarea></label>
+      <label><span>Categoría principal</span><input name="category" required minlength="2" maxlength="200" placeholder="Ej. Sales & Marketing"></label>
+      <label><span>Modelo de precio</span><select name="pricing_model"><option>Freemium</option><option>Free</option><option>Paid</option><option>Open Source</option></select></label>
+      <label class="full"><span>Email para el reporte</span><input name="contact_email" required type="email" placeholder="vos@empresa.com"></label>
+      <button class="audit-submit" type="submit"><span>Auditar compatibilidad</span><b>→</b></button>
+    </form>
+  </section>
+  <section class="directory-results shell" id="audit-result" aria-live="polite">
+    <div class="audit-empty"><strong>El resultado aparece acá.</strong><p>La auditoría no abre una campaña, no llena campos y no envía la ficha a ningún directorio.</p></div>
+  </section>
+  <section class="shell directory-disclosure"><p><strong>Alcance actual:</strong> sólo herramientas de IA públicas. Servicios, agencias y SaaS sin una función de IA definida no son compatibles con este flujo.</p></section>
+</main>
+{% endblock %}
+{% block scripts %}
+<script>
+const form=document.querySelector('#directory-audit-form');const result=document.querySelector('#audit-result');
+const make=(tag,attrs={},text='')=>{const node=document.createElement(tag);Object.entries(attrs).forEach(([key,value])=>node.setAttribute(key,value));node.textContent=text;return node;};
+const renderAudit=data=>{result.replaceChildren();const header=document.createElement('div');header.className='audit-result-heading';header.append(make('div',{},''));header.firstChild.append(make('span',{class:'kicker'},'Resultado'),make('h2',{},data.ready_to_queue?'Compatible con el lote actual':'Revisión requerida'));header.append(make('p',{},data.ready_to_queue?'Los destinos están listos para una simulación. La simulación sigue sin enviar nada mientras esté en modo seguro.':'No se creó ningún lote. Corregí o quitá los destinos bloqueados antes de avanzar.'));result.append(header);const list=document.createElement('div');list.className='audit-list';data.directories.forEach(item=>{const card=document.createElement('article');card.className=`audit-item ${item.status}`;const top=document.createElement('div');top.append(make('h3',{},item.directory),make('span',{class:'audit-status'},item.status==='ready'?'Compatible':'Bloqueado'));card.append(top,make('p',{},item.detail));if(item.checks?.length){const checks=document.createElement('ul');item.checks.forEach(check=>checks.append(make('li',{},check)));card.append(checks);}const link=make('a',{href:item.form_url,target:'_blank',rel:'noopener noreferrer'},'Ver formulario');card.append(link);list.append(card);});result.append(list);};
+form?.addEventListener('submit',async event=>{event.preventDefault();const button=form.querySelector('button');button.disabled=true;button.querySelector('span').textContent='Auditando formularios…';result.innerHTML='<div class="audit-loading"><strong>Comprobando los formularios actuales.</strong><p>No se está enviando tu ficha.</p></div>';const body=Object.fromEntries(new FormData(form));body.product_type='ai_tool';try{const response=await fetch('/.netlify/functions/kiosco2-audit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});const data=await response.json();if(!response.ok)throw new Error(data.message||'No pudimos completar la auditoría.');renderAudit(data);}catch(error){result.innerHTML='';const box=document.createElement('div');box.className='audit-error';box.append(make('strong',{},'La auditoría no está disponible ahora.'),make('p',{},error.message||'No se envió ningún dato a directorios. Probá nuevamente más tarde.'));result.append(box);}finally{button.disabled=false;button.querySelector('span').textContent='Auditar compatibilidad';}});
+</script>
+{% endblock %}

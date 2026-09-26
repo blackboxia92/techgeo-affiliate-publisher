@@ -125,6 +125,26 @@ def _kiosco1_json_ld(public_url: str, checkout_url: str, site_name: str) -> str:
     return json.dumps(payload, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
 
 
+def _kiosco2_json_ld(public_url: str, site_name: str) -> str:
+    payload = {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "name": "Auditoría de compatibilidad para directorios de IA",
+        "description": (
+            "Comprobación previa de campos, categorías y bloqueos en directorios de "
+            "herramientas de IA antes de iniciar una simulación o un envío."
+        ),
+        "url": public_url,
+        "provider": {"@type": "Organization", "name": site_name},
+        "areaServed": "Worldwide",
+        "audience": {
+            "@type": "BusinessAudience",
+            "audienceType": "Makers of public AI tools",
+        },
+    }
+    return json.dumps(payload, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
+
+
 def _json_ld(page: Page, public_url: str, site_name: str) -> str:
     products = []
     for position, alternative in enumerate(page.alternatives, 1):
@@ -359,6 +379,8 @@ def build_site(
     article_template = environment.get_template("article.html")
     index_template = environment.get_template("index.html")
     kiosco1_template = environment.get_template("kiosco1.html")
+    kiosco2_template = environment.get_template("kiosco2.html")
+    services_template = environment.get_template("services.html")
     if output_dir.exists():
         shutil.rmtree(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -429,6 +451,30 @@ def build_site(
             kiosco1_checkout_url=checkout_url,
         )
         (output_dir / "index.html").write_text(homepage, encoding="utf-8")
+        services_public_url = f"{base_url}/servicios/"
+        services_destination = output_dir / "servicios" / "index.html"
+        services_destination.parent.mkdir(parents=True, exist_ok=True)
+        services_destination.write_text(
+            services_template.render(
+                canonical_url=services_public_url,
+                site_name="StackSignal",
+                locale="es",
+                kiosco1_checkout_url=checkout_url,
+            ),
+            encoding="utf-8",
+        )
+        kiosco2_public_url = f"{base_url}/servicios/directorios-ia/"
+        kiosco2_destination = output_dir / "servicios" / "directorios-ia" / "index.html"
+        kiosco2_destination.parent.mkdir(parents=True, exist_ok=True)
+        kiosco2_destination.write_text(
+            kiosco2_template.render(
+                canonical_url=kiosco2_public_url,
+                service_json_ld=_kiosco2_json_ld(kiosco2_public_url, "StackSignal"),
+                site_name="StackSignal",
+                locale="es",
+            ),
+            encoding="utf-8",
+        )
         if checkout_url:
             kiosco1_public_url = f"{base_url}/servicios/leads-b2b/"
             kiosco1_destination = output_dir / "servicios" / "leads-b2b" / "index.html"
@@ -462,7 +508,11 @@ def build_site(
                 encoding="utf-8",
             )
         latest = reviewed_pages[0].updated_at if reviewed_pages else date_today()
-        sitemap_rows: list[object] = [*store.indexable_pages()]
+        sitemap_rows: list[object] = [
+            *store.indexable_pages(),
+            {"public_url": services_public_url, "lastmod": date_today()},
+            {"public_url": kiosco2_public_url, "lastmod": date_today()},
+        ]
         if checkout_url:
             sitemap_rows.append({"public_url": kiosco1_public_url, "lastmod": date_today()})
         _write_sitemaps(output_dir, sitemap_rows, base_url)
