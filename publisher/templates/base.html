@@ -28,7 +28,7 @@
     </div>
   </header>
   {% block content %}{% endblock %}
-  <footer class="site-footer">
+  {% block footer %}<footer class="site-footer">
     <div class="footer-inner">
       <div>
         <strong>StackSignal</strong>
@@ -36,7 +36,8 @@
       </div>
       <p class="legal">StackSignal participa en el programa de afiliados de Amazon. Si compras a través de nuestros enlaces recomendados, podemos recibir una comisión sin ningún costo adicional para vos. As an Amazon Associate I earn from qualifying purchases.</p>
     </div>
-  </footer>
+  </footer>{% endblock %}
+  {% block scripts %}{% endblock %}
   <script>
     (() => {
       const endpoint = "https://kiosco3-b2b-alert-monitor.blackboxia92.workers.dev/track/click";

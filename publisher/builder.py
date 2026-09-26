@@ -53,7 +53,7 @@ HOME_RECOMMENDATIONS = (
     },
 )
 
-KIOSCO1_PRICE_USD = "9.00"
+KIOSCO1_PRICE_USD = "3.00"
 
 
 @dataclass(frozen=True)
