@@ -23,11 +23,6 @@ def parser() -> argparse.ArgumentParser:
     build.add_argument("--state", type=Path, default=Path(os.getenv("DATABASE_PATH", "data/state.sqlite3")))
     build.add_argument("--base-url", default=os.getenv("BASE_URL", "https://example.com"))
     build.add_argument("--indexnow-key", default=os.getenv("INDEXNOW_KEY") or None)
-    build.add_argument(
-        "--lemon-checkout-url",
-        default=os.getenv("LEMON_SQUEEZY_CHECKOUT_URL") or None,
-        help="Reusable Lemon Squeezy /checkout/buy/ URL that enables the Kiosco 1 sales page",
-    )
     build.add_argument("--include-drafts", action="store_true")
 
     expand = commands.add_parser("expand", help="Generate noindex editorial drafts from a catalog")
@@ -107,7 +102,6 @@ def main() -> int:
             base_url=args.base_url,
             indexnow_key=args.indexnow_key,
             configured_tag=os.getenv("AMAZON_ASSOCIATE_TAG"),
-            lemon_checkout_url=args.lemon_checkout_url,
             include_drafts=args.include_drafts,
         )
         print(json.dumps(report.__dict__ | {"output": str(report.output)}, indent=2))

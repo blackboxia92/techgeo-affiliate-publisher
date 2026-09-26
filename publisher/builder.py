@@ -53,9 +53,6 @@ HOME_RECOMMENDATIONS = (
     },
 )
 
-KIOSCO1_PRICE_USD = "3.00"
-
-
 @dataclass(frozen=True)
 class BuildReport:
     reviewed: int
@@ -73,56 +70,6 @@ def _canonical_base(value: str) -> str:
     if parsed.path:
         raise ValueError("base URL must not contain a path")
     return value
-
-
-def _lemon_checkout_url(value: str | None) -> str | None:
-    """Accept only a reusable, hosted Lemon Squeezy checkout URL."""
-    if value is None or not value.strip():
-        return None
-    value = value.strip()
-    parsed = urlparse(value)
-    hostname = (parsed.hostname or "").lower()
-    if (
-        parsed.scheme != "https"
-        or not hostname.endswith(".lemonsqueezy.com")
-        or parsed.username
-        or parsed.password
-        or parsed.port
-        or parsed.fragment
-        or not re.fullmatch(r"/checkout/buy/[A-Za-z0-9-]{8,}/?", parsed.path)
-    ):
-        raise ValueError(
-            "LEMON_SQUEEZY_CHECKOUT_URL must be a reusable HTTPS Lemon Squeezy "
-            "share URL containing /checkout/buy/<variant-id>"
-        )
-    return value
-
-
-def _kiosco1_json_ld(public_url: str, checkout_url: str, site_name: str) -> str:
-    payload = {
-        "@context": "https://schema.org",
-        "@type": "Service",
-        "name": "Extraccion de leads B2B bajo demanda",
-        "description": (
-            "Busqueda de empresas por categoria y ubicacion, normalizada y entregada "
-            "como archivo CSV. Los emails se incluyen solo cuando la fuente los publica."
-        ),
-        "url": public_url,
-        "provider": {"@type": "Organization", "name": site_name},
-        "areaServed": "Worldwide",
-        "audience": {
-            "@type": "BusinessAudience",
-            "audienceType": "Agencies and independent professionals",
-        },
-        "offers": {
-            "@type": "Offer",
-            "price": KIOSCO1_PRICE_USD,
-            "priceCurrency": "USD",
-            "url": checkout_url,
-            "availability": "https://schema.org/InStock",
-        },
-    }
-    return json.dumps(payload, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
 
 
 def _kiosco2_json_ld(public_url: str, site_name: str) -> str:
@@ -362,12 +309,10 @@ def build_site(
     base_url: str,
     indexnow_key: str | None = None,
     configured_tag: str | None = None,
-    lemon_checkout_url: str | None = None,
     include_drafts: bool = False,
 ) -> BuildReport:
     assert_required_tag(configured_tag)
     base_url = _canonical_base(base_url)
-    checkout_url = _lemon_checkout_url(lemon_checkout_url)
     template_dir = Path(__file__).parent / "templates"
     asset_dir = Path(__file__).parent / "assets"
     environment = Environment(
@@ -378,7 +323,6 @@ def build_site(
     )
     article_template = environment.get_template("article.html")
     index_template = environment.get_template("index.html")
-    kiosco1_template = environment.get_template("kiosco1.html")
     kiosco2_template = environment.get_template("kiosco2.html")
     services_template = environment.get_template("services.html")
     if output_dir.exists():
@@ -448,7 +392,6 @@ def build_site(
             ],
             canonical_url=f"{base_url}/",
             site_name="StackSignal",
-            kiosco1_checkout_url=checkout_url,
         )
         (output_dir / "index.html").write_text(homepage, encoding="utf-8")
         services_public_url = f"{base_url}/servicios/"
@@ -459,7 +402,6 @@ def build_site(
                 canonical_url=services_public_url,
                 site_name="StackSignal",
                 locale="es",
-                kiosco1_checkout_url=checkout_url,
             ),
             encoding="utf-8",
         )
@@ -475,21 +417,6 @@ def build_site(
             ),
             encoding="utf-8",
         )
-        if checkout_url:
-            kiosco1_public_url = f"{base_url}/servicios/leads-b2b/"
-            kiosco1_destination = output_dir / "servicios" / "leads-b2b" / "index.html"
-            kiosco1_destination.parent.mkdir(parents=True, exist_ok=True)
-            kiosco1_destination.write_text(
-                kiosco1_template.render(
-                    canonical_url=kiosco1_public_url,
-                    checkout_url=checkout_url,
-                    price_usd=KIOSCO1_PRICE_USD,
-                    service_json_ld=_kiosco1_json_ld(kiosco1_public_url, checkout_url, "StackSignal"),
-                    site_name="StackSignal",
-                    locale="es",
-                ),
-                encoding="utf-8",
-            )
         library_template = environment.get_template("library.html")
         page_size = 100
         library_page_count = max(1, (len(reviewed_pages) + page_size - 1) // page_size)
@@ -513,8 +440,6 @@ def build_site(
             {"public_url": services_public_url, "lastmod": date_today()},
             {"public_url": kiosco2_public_url, "lastmod": date_today()},
         ]
-        if checkout_url:
-            sitemap_rows.append({"public_url": kiosco1_public_url, "lastmod": date_today()})
         _write_sitemaps(output_dir, sitemap_rows, base_url)
         _write_llms(output_dir, reviewed_pages, base_url)
 
