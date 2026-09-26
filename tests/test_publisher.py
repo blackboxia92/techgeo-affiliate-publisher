@@ -149,7 +149,7 @@ class BuildTests(unittest.TestCase):
             html = landing.read_text(encoding="utf-8")
             self.assertIn(checkout_url, html)
             self.assertIn("Qué buscás", html)
-            self.assertIn("/.netlify/functions/kiosco1-checkout", html)
+            self.assertIn("/.netlify/functions/business-checkout", html)
             self.assertIn("Ver todos por USD 3.00", html)
             homepage = (root / "dist" / "index.html").read_text(encoding="utf-8")
             self.assertIn('/servicios/leads-b2b/', homepage)

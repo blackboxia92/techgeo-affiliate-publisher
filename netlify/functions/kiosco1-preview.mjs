@@ -40,11 +40,9 @@ export default async (request) => {
   if (!process.env.APIFY_TOKEN) return json({ status: "preview_unavailable" }, 503);
   try {
     const endpoint = `https://api.apify.com/v2/acts/compass~crawler-google-places/runs?token=${encodeURIComponent(process.env.APIFY_TOKEN)}`;
-    const response = await fetch(endpoint, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ searchStringsArray: terms, locationQuery: locationQuery, language: "es", skipClosedPlaces: false, scrapePlaceDetailPage: true, includeWebResults: false }) });
-    if (!response.ok) return json({ status: "source_unavailable" }, 502);
-    const run = await response.json(); const jobId = text(run?.data?.id);
-    if (!jobId) return json({ status: "source_unavailable" }, 502);
-    return json({ status: "pending", job_id: jobId, location, job_sig: await signJob(`${jobId}|${location}`) });
+    const started = await Promise.all(terms.map(async (term) => { const response = await fetch(endpoint, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ searchStringsArray: [term], locationQuery: locationQuery, language: "es", skipClosedPlaces: false, scrapePlaceDetailPage: true, includeWebResults: false }) }); if (!response.ok) return ""; const run = await response.json(); return text(run?.data?.id); }));
+    const jobIds = started.filter(Boolean); if (!jobIds.length) return json({ status: "source_unavailable" }, 502);
+    return json({ status: "pending", job_ids: jobIds, location, job_sig: await signJob(`${jobIds.join("|")}|${location}`) });
   } catch { return json({ status: "source_unavailable" }, 502); }
 };
 
