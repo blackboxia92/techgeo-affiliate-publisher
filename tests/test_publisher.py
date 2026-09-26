@@ -150,7 +150,7 @@ class BuildTests(unittest.TestCase):
             self.assertIn(checkout_url, html)
             self.assertIn("Qué buscás", html)
             self.assertIn("/.netlify/functions/kiosco1-checkout", html)
-            self.assertIn("Desbloquear por USD 3.00", html)
+            self.assertIn("Ver todos por USD 3.00", html)
             homepage = (root / "dist" / "index.html").read_text(encoding="utf-8")
             self.assertIn('/servicios/leads-b2b/', homepage)
             sitemap = (root / "dist" / "sitemap.xml").read_text(encoding="utf-8")

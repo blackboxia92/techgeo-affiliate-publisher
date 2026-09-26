@@ -1,4 +1,16 @@
 /* Curated search vocabulary. Labels are intentionally specific enough for Maps, but easy to discover by typing. */
+const SEARCH_FAMILIES = {
+  "Clínicas": ["clínica", "centro médico", "consultorio médico", "policlínico", "centro de salud", "CAPS"],
+  "Clínicas privadas": ["clínica privada", "centro médico privado", "consultorio médico", "policlínico"],
+  "Clínicas públicas": ["centro de salud", "CAPS", "hospital público", "unidad sanitaria"],
+  "Clínicas dentales": ["clínica dental", "odontología", "centro odontológico", "dentista"],
+  "Clínicas veterinarias": ["clínica veterinaria", "veterinaria", "hospital veterinario"],
+  "Logística y transporte": ["logística", "transporte de carga", "fletes", "depósito"],
+  "Inmobiliarias": ["inmobiliaria", "bienes raíces", "administración de propiedades"],
+  "Agencias de marketing": ["agencia de marketing", "marketing digital", "agencia de publicidad"],
+  "Talleres mecánicos": ["taller mecánico", "mecánica automotor", "servicio automotor"],
+  "Restaurantes": ["restaurante", "comida", "parrilla", "bistró"]
+};
 window.LEADS_CATEGORY_OPTIONS = `
 Clínicas|Clínicas privadas|Clínicas públicas|Clínicas dentales|Clínicas médicas|Clínicas veterinarias|Clínicas de estética|Centros médicos|Centros de diagnóstico|Laboratorios de análisis|Laboratorios clínicos|Médicos clínicos|Pediatras|Cardiólogos|Dermatólogos|Ginecólogos|Oftalmólogos|Traumatólogos|Kinesiólogos|Fisioterapeutas|Psicólogos|Psiquiatras|Nutricionistas|Odontólogos|Ortodoncistas|Implantes dentales|Farmacias|Ópticas|Residencias geriátricas|Salud ocupacional|
 Abogados|Estudios jurídicos|Contadores|Estudios contables|Escribanos|Consultores empresariales|Agencias de marketing|Agencias de publicidad|Diseñadores gráficos|Desarrollo web|Desarrollo de software|Consultores IT|Ciberseguridad|Soporte técnico|Reparación de computadoras|Imprentas|Traductores|Inmobiliarias|Administradores de propiedades|Seguros|Productores de seguros|Asesores financieros|Bancos|Cooperativas de crédito|Recursos humanos|Agencias de empleo|Coworking|Capacitación empresarial|Academias de idiomas|
@@ -8,4 +20,4 @@ Concesionarias de autos|Autos usados|Talleres mecánicos|Talleres de chapa y pin
 Supermercados|Autoservicios|Mayoristas|Dietéticas|Carnicerías|Pescaderías|Verdulerías|Kioscos|Tiendas de ropa|Zapaterías|Joyerías|Regalerías|Librerías|Jugueterías|Pet shops|Veterinarias|Viveros|Florerías|Tiendas de informática|Electrodomésticos|Telefonía celular|Muebles de oficina|Colchonerías|Iluminación|Bazar|Artículos deportivos|Casa de música|Tiendas de bebés|Tiendas de mascotas|Distribuidores mayoristas|
 Escuelas privadas|Jardines de infantes|Guarderías|Institutos terciarios|Universidades|Cursos de programación|Academias de música|Clases de apoyo|Escuelas de manejo|Clubes deportivos|Canchas de fútbol|Canchas de pádel|Natatorios|Centros culturales|Bibliotecas|Teatros|Museos|Iglesias|Fundaciones|ONG|Asociaciones civiles|Cámaras empresariales|Sindicatos|Municipalidades|Servicios públicos|Reciclaje|Gestión de residuos|Seguridad privada|Investigación privada|Bomberos|
 Fábricas|Metalúrgicas|Tornerías|Soldaduras|Plásticos industriales|Textiles|Alimentos y bebidas|Embalajes|Imprentas industriales|Maderas|Marmolerías|Químicas|Laboratorios industriales|Maquinaria industrial|Automatización industrial|Distribuidores industriales|Proveedores eléctricos|Refrigeración industrial|Maquinaria agrícola|Agroinsumos|Veterinaria agropecuaria|Semillerías|Fertilizantes|Riego agrícola|Acopios de cereales|Frigoríficos|Panificadoras industriales|Bodegas|Cervecerías artesanales|Exportadores
-`.trim().split('|').map((label) => ({ label, query: label }));
+`.trim().split('|').map((label) => ({ label, query: label, queries: SEARCH_FAMILIES[label] || [label] }));

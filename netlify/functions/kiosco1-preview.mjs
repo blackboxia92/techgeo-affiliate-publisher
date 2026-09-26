@@ -7,6 +7,7 @@ const text = (value) => String(value || "").replace(/\s+/g, " ").trim();
 function cleanUrl(value) { try { const url = new URL(/^https?:\/\//i.test(text(value)) ? text(value) : `https://${text(value)}`); for (const key of [...url.searchParams.keys()]) if (TRACKING.test(key)) url.searchParams.delete(key); url.hash = ""; return url.toString(); } catch { return ""; } }
 function whatsapp(phone, explicit) { if (explicit) return cleanUrl(explicit); const raw = text(phone); if (!/^\+54\s?9/.test(raw)) return ""; const digits = raw.replace(/\D/g, ""); return digits ? `https://wa.me/${digits}` : ""; }
 const normalize = (value) => text(value).normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+const searchTerms = (value, fallback) => { try { const parsed = JSON.parse(value); const terms = Array.isArray(parsed) ? parsed.map((item) => text(item).slice(0, 80)).filter((item) => item.length >= 2) : []; const unique = [...new Set(terms)].slice(0, 8); return unique.length ? unique : [fallback]; } catch { return [fallback]; } };
 async function resolveLocation(zone) {
   try {
     const endpoint = `https://nominatim.openstreetmap.org/search?format=jsonv2&limit=5&addressdetails=1&q=${encodeURIComponent(zone)}`;
@@ -34,12 +35,12 @@ export default async (request) => {
   if (request.method !== "POST") return json({ status: "not_found" }, 404);
   if (Number(request.headers.get("content-length") || 0) > MAX_BODY) return json({ status: "payload_too_large" }, 413);
   let payload; try { payload = await request.json(); } catch { return json({ status: "invalid_json" }, 400); }
-  const rubro = text(payload.rubro).slice(0, 80); const zona = text(payload.zona).slice(0, 120); const locationQuery = text(payload.location_query).slice(0, 240); const location = text(payload.location_name).slice(0, 120);
+  const rubro = text(payload.rubro).slice(0, 80); const zona = text(payload.zona).slice(0, 120); const locationQuery = text(payload.location_query).slice(0, 240); const location = text(payload.location_name).slice(0, 120); const terms = searchTerms(payload.search_terms, rubro);
   if (!rubro || !zona || !locationQuery || !location) return json({ status: "selection_required", message: "Seleccioná una categoría y una ciudad de las sugerencias." }, 400);
   if (!process.env.APIFY_TOKEN) return json({ status: "preview_unavailable" }, 503);
   try {
     const endpoint = `https://api.apify.com/v2/acts/compass~crawler-google-places/runs?token=${encodeURIComponent(process.env.APIFY_TOKEN)}`;
-    const response = await fetch(endpoint, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ searchStringsArray: [rubro], locationQuery: locationQuery, language: "es", skipClosedPlaces: false, scrapePlaceDetailPage: true, includeWebResults: false }) });
+    const response = await fetch(endpoint, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ searchStringsArray: terms, locationQuery: locationQuery, language: "es", skipClosedPlaces: false, scrapePlaceDetailPage: true, includeWebResults: false }) });
     if (!response.ok) return json({ status: "source_unavailable" }, 502);
     const run = await response.json(); const jobId = text(run?.data?.id);
     if (!jobId) return json({ status: "source_unavailable" }, 502);
