@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="{{ page.locale if page else 'en' }}" class="scroll-smooth">
+<html lang="{{ page.locale if page else (locale|default('en')) }}" class="scroll-smooth">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,7 +24,7 @@
         <span class="brand-mark">S</span>
         <span><strong>Stack<span>Signal</span></strong><small>Technical decision briefs</small></span>
       </a>
-      <span class="locale-chip">Global · EN</span>
+      <span class="locale-chip">{% if locale|default('en') == 'es' %}Español{% else %}Global · EN{% endif %}</span>
     </div>
   </header>
   {% block content %}{% endblock %}

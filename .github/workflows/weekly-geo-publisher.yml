@@ -24,6 +24,7 @@ jobs:
       TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
       NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
       NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+      LEMON_SQUEEZY_CHECKOUT_URL: ${{ secrets.LEMON_SQUEEZY_CHECKOUT_URL }}
 
     steps:
       - name: Check out main

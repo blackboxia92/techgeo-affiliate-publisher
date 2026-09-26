@@ -135,6 +135,19 @@ npx netlify blobs:get stacksignal-private-analytics summary-v1
 
 El plan Free de Netlify tiene límite rígido de uso: no genera cargos automáticos, aunque el proyecto puede pausarse si agota la cuota mensual.
 
+## Kiosco 1: extracción de leads B2B
+
+La página comercial vive en `/servicios/leads-b2b/`, pero el generador sólo la publica cuando recibe una URL de checkout reutilizable y segura:
+
+```powershell
+$env:LEMON_SQUEEZY_CHECKOUT_URL = "https://TU-TIENDA.lemonsqueezy.com/checkout/buy/ID-DE-VARIANTE"
+python -m publisher build --base-url https://stacksignal-tech.netlify.app
+```
+
+El valor debe usar HTTPS, pertenecer a un subdominio de `lemonsqueezy.com` y contener `/checkout/buy/`. El build rechaza URLs de carrito (`/checkout/?cart=...`) porque son personales y de un solo uso. Si la variable no existe, ni la landing ni el bloque comercial de portada se generan: esto evita enviar tráfico a un producto en borrador, a test mode o a un checkout inexistente.
+
+Para CI, guardar el mismo valor como `LEMON_SQUEEZY_CHECKOUT_URL` en GitHub Actions y Netlify. Antes de activarlo, publicar el producto en Live mode y configurar en Lemon Squeezy el enlace del botón de confirmación posterior al pago.
+
 ## Docker
 
 ```powershell

@@ -130,6 +130,42 @@ class BuildTests(unittest.TestCase):
             sitemap = (root / "dist" / "sitemap.xml").read_text(encoding="utf-8")
             self.assertNotIn("/drafts/", sitemap)
 
+    def test_kiosco1_sales_page_requires_reusable_checkout_url(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            checkout_url = (
+                "https://blackboxia.lemonsqueezy.com/checkout/buy/"
+                "d1f120fd-5adc-4fff-8915-cce713d29427"
+            )
+            build_site(
+                content_dir=PROJECT / "content" / "pages",
+                output_dir=root / "dist",
+                state_path=root / "data" / "state.sqlite3",
+                base_url="https://guides.example",
+                lemon_checkout_url=checkout_url,
+            )
+            landing = root / "dist" / "servicios" / "leads-b2b" / "index.html"
+            self.assertTrue(landing.exists())
+            html = landing.read_text(encoding="utf-8")
+            self.assertIn(checkout_url, html)
+            self.assertIn("Comprar extracción por USD 9.00", html)
+            self.assertIn("Email, únicamente cuando la fuente lo publica", html)
+            homepage = (root / "dist" / "index.html").read_text(encoding="utf-8")
+            self.assertIn('/servicios/leads-b2b/', homepage)
+            sitemap = (root / "dist" / "sitemap.xml").read_text(encoding="utf-8")
+            self.assertIn("https://guides.example/servicios/leads-b2b/", sitemap)
+
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            with self.assertRaises(ValueError):
+                build_site(
+                    content_dir=PROJECT / "content" / "pages",
+                    output_dir=root / "dist",
+                    state_path=root / "data" / "state.sqlite3",
+                    base_url="https://guides.example",
+                    lemon_checkout_url="https://blackboxia.lemonsqueezy.com/checkout/?cart=single-use",
+                )
+
     def test_indexnow_dry_run_lists_only_changed_reviewed_urls(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)
