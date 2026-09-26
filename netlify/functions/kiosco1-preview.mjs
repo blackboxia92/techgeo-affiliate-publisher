@@ -14,6 +14,11 @@ function record(raw) {
   if (!company || (!phone && !website && !address)) return null;
   return { company, category: text(raw.categoryName || raw.category), address, phone, website, rating: raw.totalScore ?? raw.rating ?? null, reviews: raw.reviewsCount ?? raw.reviews ?? null, maps_url: cleanUrl(raw.url || raw.googleMapsUrl), email: text(raw.email), instagram: cleanUrl(raw.instagram || raw.instagramUrl), facebook: cleanUrl(raw.facebook || raw.facebookUrl), linkedin: cleanUrl(raw.linkedin || raw.linkedinUrl), whatsapp_url: whatsapp(phone, raw.whatsapp || raw.whatsappUrl), source: "Google Maps / datos públicos" };
 }
+async function signJob(jobId) {
+  const key = await crypto.subtle.importKey("raw", new TextEncoder().encode(process.env.APIFY_TOKEN), { name: "HMAC", hash: "SHA-256" }, false, ["sign"]);
+  const signature = await crypto.subtle.sign("HMAC", key, new TextEncoder().encode(jobId));
+  return [...new Uint8Array(signature)].map((byte) => byte.toString(16).padStart(2, "0")).join("");
+}
 
 export default async (request) => {
   if (request.method !== "POST") return json({ status: "not_found" }, 404);
@@ -23,11 +28,13 @@ export default async (request) => {
   if (!rubro || !zona) return json({ status: "missing_search" }, 400);
   if (!process.env.APIFY_TOKEN) return json({ status: "preview_unavailable" }, 503);
   try {
-    const endpoint = `https://api.apify.com/v2/acts/compass~crawler-google-places/run-sync-get-dataset-items?token=${encodeURIComponent(process.env.APIFY_TOKEN)}`;
+    const endpoint = `https://api.apify.com/v2/acts/compass~crawler-google-places/runs?token=${encodeURIComponent(process.env.APIFY_TOKEN)}`;
     const response = await fetch(endpoint, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ searchStringsArray: [rubro], locationQuery: zona, language: "es", skipClosedPlaces: false, scrapePlaceDetailPage: true, includeWebResults: false }) });
     if (!response.ok) return json({ status: "source_unavailable" }, 502);
-    const rows = await response.json(); const seen = new Set(); const records = [];
-    for (const raw of Array.isArray(rows) ? rows : []) { const item = record(raw); if (!item) continue; const key = text(raw.placeId) || item.maps_url || `${item.company}|${item.address}`; if (seen.has(key)) continue; seen.add(key); records.push(item); }
-    return json({ status: "ok", query: { rubro, zona }, total_found: records.length, preview: records.slice(0, MAX_PREVIEW), disclosure: "La vista previa muestra datos públicos observados. La disponibilidad de email, redes y WhatsApp depende de cada ficha." });
+    const run = await response.json(); const jobId = text(run?.data?.id);
+    if (!jobId) return json({ status: "source_unavailable" }, 502);
+    return json({ status: "pending", job_id: jobId, job_sig: await signJob(jobId) });
   } catch { return json({ status: "source_unavailable" }, 502); }
 };
+
+export { json, text, record, signJob, MAX_PREVIEW };
