@@ -3,27 +3,32 @@
 {% block description %}Herramientas de StackSignal para auditar y preparar flujos de crecimiento y operaciones.{% endblock %}
 {% block content %}
 <main class="services-page shell">
-  <section class="services-hero">
-    <span class="eyebrow"><span></span> Herramientas operativas</span>
-    <h1>Servicios concretos.<br><em>Resultados inspeccionables.</em></h1>
-    <p>Herramientas enfocadas en una tarea. Antes de ejecutar acciones externas, muestran qué es compatible y qué no.</p>
+  <section class="services-hero services-hero-redesign">
+    <div class="services-copy">
+      <span class="eyebrow"><span></span> StackSignal · productos operativos</span>
+      <h1>Herramientas que hacen<br><em>una cosa bien.</em></h1>
+      <p>Elegí un flujo, cargá tu caso y revisá el resultado antes de pasar a cualquier acción externa.</p>
+      <div class="services-principles"><span><b>01</b> Datos claros</span><span><b>02</b> Control previo</span><span><b>03</b> Evidencia</span></div>
+    </div>
+    <div class="services-orbit" aria-hidden="true"><div class="orbit-core">S</div><span class="orbit-dot dot-one"></span><span class="orbit-dot dot-two"></span><span class="orbit-dot dot-three"></span><p>STACK<br>SIGNAL</p></div>
   </section>
-  <section class="services-grid" aria-label="Servicios disponibles">
-    <article class="service-card service-card-featured">
-      <span class="service-number">Kiosco #2</span>
-      <h2>Directorio de IA</h2>
-      <p>Auditá si tu herramienta de IA encaja en directorios seleccionados antes de iniciar una simulación o un envío.</p>
-      <ul><li>Control de campos y categorías actuales</li><li>Sin crear fichas durante la auditoría</li><li>Resultado explicable por directorio</li></ul>
-      <a class="button-link" href="/servicios/directorios-ia/">Auditar mi herramienta <span aria-hidden="true">→</span></a>
+  <section class="services-catalog" aria-labelledby="catalog-title">
+    <div class="catalog-heading"><div><span class="kicker">Catálogo</span><h2 id="catalog-title">Productos disponibles</h2></div><p>Cada Kiosco tiene un alcance explícito. No usamos acciones automáticas cuando no hay condiciones claras.</p></div>
+    <article class="service-card service-card-featured service-k2">
+      <div class="service-card-top"><span class="service-number">Kiosco #2</span><span class="service-state"><i></i> Disponible</span></div>
+      <div class="service-card-body"><div><h2>Directorio<br>de IA<span>.</span></h2><p>Comprobá si una herramienta de IA encaja en directorios seleccionados antes de abrir una simulación.</p></div><div class="service-mark">02</div></div>
+      <div class="service-features"><span>Campos actuales</span><span>Categorías verificadas</span><span>Bloqueos visibles</span></div>
+      <div class="service-card-footer"><small>Auditoría sin publicar fichas</small><a class="service-action" href="/servicios/directorios-ia/">Abrir auditoría <b>→</b></a></div>
     </article>
     {% if kiosco1_checkout_url %}
-    <article class="service-card">
-      <span class="service-number">Kiosco #1</span>
-      <h2>Prospectos B2B</h2>
-      <p>Buscá empresas por rubro y zona y revisá una muestra antes de desbloquear la lista completa.</p>
-      <a class="text-link" href="/servicios/leads-b2b/">Ver extracción B2B <span aria-hidden="true">→</span></a>
+    <article class="service-card service-k1">
+      <div class="service-card-top"><span class="service-number">Kiosco #1</span><span class="service-state"><i></i> Disponible</span></div>
+      <div class="service-card-body"><div><h2>Prospectos<br>B2B<span>.</span></h2><p>Buscá empresas por rubro y zona, revisá una muestra y decidí antes de desbloquear una lista.</p></div><div class="service-mark">01</div></div>
+      <div class="service-features"><span>Búsqueda por zona</span><span>Muestra previa</span><span>Datos públicos</span></div>
+      <div class="service-card-footer"><small>Extracción bajo demanda</small><a class="service-action" href="/servicios/leads-b2b/">Abrir buscador <b>→</b></a></div>
     </article>
     {% endif %}
   </section>
+  <section class="services-footnote"><span>STACKSIGNAL / KIOSCOS</span><p>Herramientas pequeñas, controles antes de ejecutar y resultados que se pueden revisar.</p></section>
 </main>
 {% endblock %}
