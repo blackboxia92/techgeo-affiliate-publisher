@@ -23,7 +23,8 @@ export default async (request) => {
   if (!rubro || !zona) return json({ status: "missing_search" }, 400);
   if (!process.env.APIFY_TOKEN) return json({ status: "preview_unavailable" }, 503);
   try {
-    const response = await fetch("https://api.apify.com/v2/acts/compass~crawler-google-places/run-sync-get-dataset-items", { method: "POST", headers: { Authorization: `Bearer ${process.env.APIFY_TOKEN}`, "Content-Type": "application/json" }, body: JSON.stringify({ searchStringsArray: [rubro], locationQuery: zona, language: "es", skipClosedPlaces: false, scrapePlaceDetailPage: true, includeWebResults: false }) });
+    const endpoint = `https://api.apify.com/v2/acts/compass~crawler-google-places/run-sync-get-dataset-items?token=${encodeURIComponent(process.env.APIFY_TOKEN)}`;
+    const response = await fetch(endpoint, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ searchStringsArray: [rubro], locationQuery: zona, language: "es", skipClosedPlaces: false, scrapePlaceDetailPage: true, includeWebResults: false }) });
     if (!response.ok) return json({ status: "source_unavailable" }, 502);
     const rows = await response.json(); const seen = new Set(); const records = [];
     for (const raw of Array.isArray(rows) ? rows : []) { const item = record(raw); if (!item) continue; const key = text(raw.placeId) || item.maps_url || `${item.company}|${item.address}`; if (seen.has(key)) continue; seen.add(key); records.push(item); }
