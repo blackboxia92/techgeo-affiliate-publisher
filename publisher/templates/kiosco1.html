@@ -1,72 +1,26 @@
 {% extends "base.html" %}
-{% block title %}Leads B2B bajo demanda para agencias y freelancers | StackSignal{% endblock %}
-{% block description %}Solicitá una lista B2B por categoría y ubicación y recibí un CSV limpio con datos públicos listos para revisar y prospectar.{% endblock %}
-{% block og_title %}Leads B2B bajo demanda para agencias y freelancers{% endblock %}
-{% block og_description %}Una extracción concreta por categoría y ubicación, entregada como CSV sin suscripciones ni bases genéricas.{% endblock %}
+{% block title %}Buscador de empresas por rubro y zona | StackSignal{% endblock %}
+{% block description %}Encontrá empresas locales por rubro y zona con datos públicos de contacto disponibles.{% endblock %}
 {% block structured_data %}<script type="application/ld+json">{{ service_json_ld | safe }}</script>{% endblock %}
 {% block content %}
-<main class="sales-page">
-  <section class="sales-hero shell">
-    <div class="eyebrow"><span></span> Kiosco 1 · Extracción on-demand</div>
-    <h1>Una lista B2B concreta para tu próxima campaña.</h1>
-    <p class="sales-dek">Indicá la categoría y la ubicación. Procesamos la búsqueda, limpiamos los campos útiles y entregamos un CSV listo para revisar desde Telegram.</p>
-    <div class="sales-actions">
-      <a class="button-link sales-buy" href="{{ checkout_url }}" rel="noopener">Comprar extracción por USD {{ price_usd }}</a>
-      <span>Pago único · Sin suscripción</span>
-    </div>
-    <ul class="sales-proof" aria-label="Resumen del servicio">
-      <li><strong>Filtro preciso</strong><span>Categoría + ciudad, región o país</span></li>
-      <li><strong>CSV limpio</strong><span>Campos consistentes y UTF-8</span></li>
-      <li><strong>Entrega directa</strong><span>Archivo enviado a tu Telegram</span></li>
-    </ul>
+<main class="sales-page prospect-page">
+  <section class="sales-hero shell"><div class="eyebrow"><span></span> Kiosco 1 · Buscador de empresas</div><h1>Empresas de tu rubro, en tu zona, listas para revisar.</h1><p class="sales-dek">Elegí qué negocios buscás y dónde. Recibí un informe claro; el CSV queda como descarga opcional.</p></section>
+  <section class="shell prospect-builder" aria-labelledby="search-title">
+    <div class="prospect-form-intro"><span class="kicker">Tu búsqueda</span><h2 id="search-title">Dos datos para empezar.</h2><p>No necesitás saber de scraping ni de filtros complejos.</p></div>
+    <form class="prospect-form" id="prospect-search" action="/.netlify/functions/kiosco1-checkout" method="post">
+      <label>¿Qué rubro buscás?<input name="rubro" required maxlength="80" placeholder="Ej. inmobiliarias, clínicas dentales"></label>
+      <label>¿En qué zona?<input name="zona" required maxlength="120" placeholder="Ej. Luján, Buenos Aires"></label>
+      <button class="button-link sales-buy" type="submit">Ver 5 empresas gratis</button><p class="form-note">Después confirmás el pago seguro y recibís la lista completa.</p><div id="prospect-preview" aria-live="polite"></div>
+    </form>
   </section>
-
-  <section class="shell sales-section" aria-labelledby="fit-title">
-    <div class="section-heading">
-      <div><span class="kicker">Para quién sirve</span><h2 id="fit-title">Prospección con una intención clara</h2></div>
-      <p>Diseñado para equipos que ya saben a qué mercado quieren llegar y necesitan una lista inicial verificable.</p>
-    </div>
-    <div class="sales-grid">
-      <article><h3>Agencias</h3><p>Armá listas locales para campañas outbound, alianzas o validación de nichos de clientes.</p></article>
-      <article><h3>Freelancers B2B</h3><p>Encontrá negocios de un sector concreto antes de invertir horas en búsquedas manuales.</p></article>
-      <article><h3>Consultores</h3><p>Explorá proveedores, competidores o cuentas objetivo por zona geográfica.</p></article>
-    </div>
-  </section>
-
-  <section class="shell sales-section" aria-labelledby="deliverable-title">
-    <div class="section-heading">
-      <div><span class="kicker">Entregable</span><h2 id="deliverable-title">Sólo los campos útiles</h2></div>
-      <p>La disponibilidad depende de los datos públicos de cada ficha. No inventamos ni completamos información ausente.</p>
-    </div>
-    <div class="deliverable-panel">
-      <ul>
-        <li>Nombre del negocio</li>
-        <li>Dirección</li>
-        <li>Teléfono</li>
-        <li>Sitio web</li>
-        <li>Rating y número de reseñas</li>
-        <li>Email, únicamente cuando la fuente lo publica</li>
-      </ul>
-      <div class="delivery-note"><strong>Formato de entrega</strong><span>CSV UTF-8 compatible con Excel y Google Sheets.</span></div>
-    </div>
-  </section>
-
-  <section class="shell sales-section" aria-labelledby="process-title">
-    <div class="section-heading compact"><div><span class="kicker">Proceso</span><h2 id="process-title">De la compra al archivo</h2></div></div>
-    <ol class="process-list">
-      <li><span>1</span><div><strong>Comprás una extracción</strong><p>El checkout seguro se procesa en Lemon Squeezy.</p></div></li>
-      <li><span>2</span><div><strong>Definís la búsqueda</strong><p>Categoría, ubicación, cantidad y chat de Telegram de entrega.</p></div></li>
-      <li><span>3</span><div><strong>Recibís el CSV</strong><p>El sistema consulta la fuente, normaliza los registros y adjunta el archivo.</p></div></li>
-    </ol>
-  </section>
-
-  <section class="shell closing-cta" aria-labelledby="closing-title">
-    <div><span class="kicker">Pago único</span><h2 id="closing-title">Convertí una hipótesis de nicho en una lista accionable.</h2><p>Comprá una extracción por USD {{ price_usd }}. Revisá siempre los datos antes de contactar y respetá las normas aplicables a tu campaña.</p></div>
-    <a class="button-link sales-buy" href="{{ checkout_url }}" rel="noopener">Ir al checkout seguro</a>
-  </section>
-
-  <section class="shell service-terms" aria-label="Alcance del servicio">
-    <p><strong>Alcance:</strong> el servicio recopila y normaliza datos empresariales que la fuente consultada devuelve públicamente. No garantiza que cada registro incluya teléfono, web o email, ni sustituye la verificación humana previa al contacto.</p>
-  </section>
+  <section class="shell sales-section"><div class="section-heading"><div><span class="kicker">Lo que recibís</span><h2>Un informe para decidir a quién contactar primero.</h2></div><p>Mostramos sólo datos públicos disponibles; no inventamos emails, redes ni uso de WhatsApp.</p></div><div class="result-preview"><article><span class="priority">Empresa encontrada</span><h3>Nombre de la empresa</h3><p>Rubro · Zona</p><dl><div><dt>Teléfono</dt><dd>Cuando sea público</dd></div><div><dt>Sitio y redes</dt><dd>Cuando estén publicados</dd></div><div><dt>Email</dt><dd>Cuando la fuente lo publique</dd></div></dl><div class="preview-actions"><span>Sitio web</span><span>Maps</span><span>WhatsApp*</span></div></article><aside><strong>También podés descargar</strong><p>CSV compatible con Excel, Google Sheets o tu CRM.</p><small>* El enlace de WhatsApp se genera desde un móvil público; no confirma que la empresa use ese canal.</small></aside></div></section>
+  <section class="shell sales-section"><div class="section-heading compact"><div><span class="kicker">Cómo funciona</span><h2>Simple de principio a fin.</h2></div></div><ol class="process-list"><li><span>1</span><div><strong>Elegís rubro y zona</strong><p>Agregá filtros opcionales si los necesitás.</p></div></li><li><span>2</span><div><strong>Confirmás el pago</strong><p>Pago único y checkout seguro.</p></div></li><li><span>3</span><div><strong>Recibís el informe</strong><p>Vista clara de resultados y CSV opcional.</p></div></li></ol></section>
+  <section class="shell service-terms"><p><strong>Datos públicos:</strong> teléfono, sitio, email, redes y enlaces de contacto dependen de lo que cada empresa publique. Revisá los datos antes de iniciar contacto comercial.</p></section>
 </main>
+<script>
+const form=document.querySelector('#prospect-search');const target=document.querySelector('#prospect-preview');
+const addText=(parent,tag,value)=>{const element=document.createElement(tag);element.textContent=value;parent.append(element);};
+const renderPreview=data=>{target.replaceChildren();const count=document.createElement('p');count.className='preview-count';count.textContent=`Encontramos ${data.total_found} empresas. Estas son las primeras ${data.preview.length}:`;target.append(count);data.preview.forEach(item=>{const card=document.createElement('article');card.className='preview-card';addText(card,'strong',item.company);addText(card,'span',item.category||'Empresa local');addText(card,'small',item.phone||item.website||item.address||'Datos públicos disponibles');target.append(card);});const lock=document.createElement('p');lock.className='preview-lock';lock.textContent='Desbloqueá el informe completo y la descarga.';target.append(lock);};
+form?.addEventListener('submit',async(event)=>{if(form.dataset.previewed==='true')return;event.preventDefault();const button=form.querySelector('button');button.disabled=true;button.textContent='Buscando…';target.textContent='';try{const response=await fetch('/.netlify/functions/kiosco1-preview',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({rubro:form.rubro.value,zona:form.zona.value})});const data=await response.json();if(!response.ok)throw new Error();renderPreview(data);form.dataset.previewed='true';button.disabled=false;button.textContent='Desbloquear lista completa por USD {{ price_usd }}';}catch{target.textContent='No pudimos generar la vista previa ahora. Intentá de nuevo.';button.disabled=false;button.textContent='Ver 5 empresas gratis';}});
+</script>
 {% endblock %}
