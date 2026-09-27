@@ -1,9 +1,11 @@
 from __future__ import annotations
 
 import json
+import os
 import re
 import tempfile
 import unittest
+from dataclasses import replace
 import xml.etree.ElementTree as ET
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
@@ -24,7 +26,11 @@ from publisher.commerce import (
 )
 from publisher.graph import validate_site_graph
 from publisher.indexnow import notify_indexnow
-from publisher.ingest import RawExternalItem, deduplicate, normalize_openfoodfacts, publication_count, valid_gtin
+from publisher.ingest import (
+    AwinAccessError, RawExternalItem, _awin_llm_payload, compare_normalized_snapshots, deduplicate,
+    deduplicate_awin, fetch_awin_enhanced_feed, normalize_awin_product, normalize_openfoodfacts,
+    publication_count, valid_gtin,
+)
 from publisher.lifecycle import LifecycleHistory, advance_history, compare_offer_snapshots, evaluate_lifecycle, update_history_ledger
 from publisher.regression import validate_product_invariants
 from publisher.metrics import catalog_metrics, intentional_hub_paths
@@ -307,6 +313,86 @@ class IngestLifecycleTests(unittest.TestCase):
         after = Offer("offer:test", "entity:test", "merchant", "https://merchant.example/b", TemporalState(price=90, availability="temporarily_unavailable"))
         kinds = {change.kind for change in compare_offer_snapshots((before,), (after,))}
         self.assertEqual(kinds, {"price_changed", "availability_changed", "destination_changed"})
+
+
+class AwinIngestTests(unittest.TestCase):
+    @staticmethod
+    def raw_item(*, merchant_id: str = "42", price: object = "249.99", in_stock: object = True) -> RawExternalItem:
+        return RawExternalItem(
+            source="awin-enhanced-feed", source_url="https://api.awin.com/publishers/3107154/awinfeeds/download/42-retail-es_ES.jsonl",
+            retrieved_at="2026-09-27T00:00:00+00:00", batch_id="awin-test",
+            raw={
+                "aw_product_id": "sku-123", "product_name": "Example Robot Vacuum", "merchant_id": merchant_id,
+                "merchant_name": "Example ES", "brand_name": "Example", "model_number": "RV-1",
+                "product_type": "Robot vacuum", "ean": "4006381333931", "search_price": price,
+                "currency": "eur", "in_stock": in_stock,
+                "merchant_deep_link": "https://merchant.example/products/sku-123",
+                "aw_deep_link": "https://www.awin1.com/cread.php?awinmid=42&awinaffid=3107154",
+            },
+        )
+
+    def test_awin_market_money_provenance_health_and_route_are_preserved(self) -> None:
+        candidate = normalize_awin_product(self.raw_item(), context=QueryContext(market="ES", currency="EUR"))
+        self.assertIsNotNone(candidate)
+        assert candidate is not None
+        offer = candidate.offers[0]
+        self.assertEqual(offer.temporal_state.market, "ES")
+        self.assertEqual(offer.temporal_state.currency, "EUR")
+        self.assertEqual(offer.temporal_state.price, 249.99)
+        self.assertEqual(offer.temporal_state.availability, "active")
+        self.assertEqual(candidate.identifiers["GTIN"], "4006381333931")
+        self.assertEqual(candidate.source.source_type, "authorized-product-feed")
+        self.assertTrue(offer.health and offer.health.destination_valid)
+        self.assertTrue(offer.health and offer.health.affiliate_valid)
+        self.assertEqual(candidate.routes[0].network, "awin")
+        self.assertEqual(candidate.routes[0].affiliate_url, self.raw_item().raw["aw_deep_link"])
+        self.assertNotIn("price", {fact.key for fact in candidate.entity.facts})
+        self.assertEqual(publication_count((candidate,)), 0)
+        self.assertIn("price_original", _awin_llm_payload(candidate)["offers"][0])
+
+    def test_awin_missing_or_invalid_commercial_fields_remain_missing(self) -> None:
+        candidate = normalize_awin_product(
+            self.raw_item(price="1.299,99", in_stock="unknown"), context=QueryContext(market="ES", currency="EUR")
+        )
+        self.assertIsNotNone(candidate)
+        assert candidate is not None
+        offer = candidate.offers[0]
+        self.assertIsNone(offer.temporal_state.price)
+        self.assertIsNone(offer.temporal_state.availability)
+        self.assertFalse(normalize_awin_product(
+            replace(self.raw_item(), raw={"aw_product_id": "x", "merchant_id": "42"}),
+            context=QueryContext(market="ES", currency="EUR"),
+        ))
+
+    def test_awin_gtin_merges_entity_but_preserves_offers_per_merchant(self) -> None:
+        first = normalize_awin_product(self.raw_item(merchant_id="42"), context=QueryContext(market="ES", currency="EUR"))
+        second = normalize_awin_product(self.raw_item(merchant_id="43"), context=QueryContext(market="ES", currency="EUR"))
+        assert first is not None and second is not None
+        accepted, duplicates, variants = deduplicate_awin((first, second))
+        self.assertEqual((len(accepted), duplicates, variants), (1, 1, 0))
+        self.assertEqual(len(accepted[0].offers), 2)
+        self.assertEqual({offer.merchant_id for offer in accepted[0].offers}, {"awin:42", "awin:43"})
+
+    def test_awin_snapshot_diff_and_lifecycle_keep_single_absence(self) -> None:
+        before = normalize_awin_product(self.raw_item(), context=QueryContext(market="ES", currency="EUR"))
+        after = normalize_awin_product(self.raw_item(price="199.99", in_stock=False), context=QueryContext(market="ES", currency="EUR"))
+        assert before is not None and after is not None
+        kinds = {change.kind for change in compare_offer_snapshots(before.offers, after.offers)}
+        self.assertEqual(kinds, {"price_changed", "availability_changed"})
+        missing_once = evaluate_lifecycle(before.entity, (), LifecycleHistory(consecutive_missing_count=1))
+        self.assertTrue(missing_once.indexable)
+        self.assertFalse(missing_once.requires_retirement)
+
+    def test_awin_fetch_requires_environment_token_without_fallback(self) -> None:
+        previous = os.environ.pop("AWIN_API_TOKEN", None)
+        try:
+            with self.assertRaises(AwinAccessError):
+                fetch_awin_enhanced_feed(
+                    publisher_id="3107154", advertiser_id="42", locale="es_ES", limit=1, batch_id="test"
+                )
+        finally:
+            if previous is not None:
+                os.environ["AWIN_API_TOKEN"] = previous
 
 
 class BuildTests(unittest.TestCase):

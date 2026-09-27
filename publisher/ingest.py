@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import html
 import json
+import os
 import re
 import shutil
 import subprocess
@@ -28,6 +29,7 @@ from .v2 import (
     Fact,
     Intent,
     Offer,
+    OfferHealth,
     Source,
     TemporalState,
     _identifier,
@@ -35,9 +37,11 @@ from .v2 import (
     is_publishable,
 )
 from .lifecycle import update_history_ledger
+from .commerce import QueryContext, offer_payload
 
 GOOGLE_BOOKS_ENDPOINT = "https://www.googleapis.com/books/v1/volumes"
 OPEN_FOOD_FACTS_ENDPOINT = "https://us.openfoodfacts.org/api/v2/search"
+AWIN_ENHANCED_FEED_ENDPOINT = "https://api.awin.com/publishers/{publisher_id}/awinfeeds/download/{advertiser_id}-retail-{locale}.jsonl"
 _TAGS = re.compile(r"<[^>]+>")
 _SPACE = re.compile(r"\s+")
 
@@ -85,6 +89,10 @@ class IngestReport:
     quality: dict[str, float]
     lifecycle_records: int
     seconds: float
+
+
+class AwinAccessError(RuntimeError):
+    """Raised when Awin has not authorized the requested feed surface."""
 
 
 def _now() -> str:
@@ -160,6 +168,79 @@ def _availability(saleability: str | None) -> str | None:
     if saleability in {"NOT_FOR_SALE", "FOR_PREORDER"}:
         return "temporarily_unavailable"
     return None
+
+
+def _field(raw: dict[str, Any], *names: str) -> Any:
+    """Read documented feed columns without making their spelling semantic."""
+    normalized = {str(key).casefold(): value for key, value in raw.items()}
+    for name in names:
+        if name.casefold() in normalized:
+            return normalized[name.casefold()]
+    return None
+
+
+def _boolean(value: Any) -> bool | None:
+    if isinstance(value, bool):
+        return value
+    if isinstance(value, int) and value in (0, 1):
+        return bool(value)
+    text = _clean_text(value)
+    if text is None:
+        return None
+    if text.casefold() in {"1", "true", "yes", "y", "in stock", "available"}:
+        return True
+    if text.casefold() in {"0", "false", "no", "n", "out of stock", "unavailable"}:
+        return False
+    return None
+
+
+def _feed_price(value: Any) -> int | float | None:
+    """Accept only unambiguous single-value money from an authorized feed."""
+    if isinstance(value, (int, float)) and not isinstance(value, bool):
+        return value if value >= 0 else None
+    text = _clean_text(value)
+    if not text or not re.fullmatch(r"\d+(?:[.,]\d{1,2})?", text):
+        return None
+    amount = float(text.replace(",", "."))
+    return int(amount) if amount.is_integer() else amount
+
+
+def _awin_availability(raw: dict[str, Any]) -> str | None:
+    for key in ("in_stock", "is_for_sale", "availability"):
+        value = _boolean(_field(raw, key))
+        if value is not None:
+            return "active" if value else "temporarily_unavailable"
+    stock = _field(raw, "stock_quantity")
+    if isinstance(stock, (int, float)) and not isinstance(stock, bool):
+        return "active" if stock > 0 else "temporarily_unavailable"
+    return None
+
+
+def _candidate_eligibility(candidate: NormalizedCandidate):
+    intent = Intent(
+        "entity", (candidate.entity.id,), None,
+        canonical_intent_key(category=candidate.category, intent_type="entity", entity_ids=(candidate.entity.id,)),
+    )
+    return is_publishable(
+        intent=intent, category_schema=CATEGORY_SCHEMAS[candidate.category],
+        entities=(candidate.entity,), sources=(candidate.source,), offers=candidate.offers,
+    )
+
+
+def _awin_llm_payload(candidate: NormalizedCandidate) -> dict[str, Any]:
+    """A transparent artifact for eligible records; it never manufactures facts."""
+    return {
+        "canonical_intent": _candidate_eligibility(candidate).canonical_intent,
+        "entity": {"id": candidate.entity.id, "title": candidate.title, "category": candidate.category},
+        "identifiers": candidate.identifiers,
+        "facts": [{"key": fact.key, "value": fact.value} for fact in candidate.entity.facts],
+        "offers": [
+            offer_payload(offer, next((route.affiliate_url for route in candidate.routes if route.offer_id == offer.id), None))
+            | {"network": "Awin", "raw_destination_url": offer.raw_destination_url,
+               "provenance": {"source": candidate.source.url, "retrieved_at": candidate.raw.retrieved_at}}
+            for offer in candidate.offers
+        ],
+    }
 
 
 def normalize_google_book(item: RawExternalItem) -> NormalizedCandidate | None:
@@ -370,6 +451,166 @@ def ingest_openfoodfacts(*, limit: int, output_dir: Path, batch_id: str | None =
         source="openfoodfacts-api", batch_id=batch_id, raw_items=len(raw_rows), parsed=len(parsed), rejected=len(raw_rows) - len(parsed),
         normalized=len(accepted), duplicate_groups=duplicate_groups, variants=variants, publishable=publication_count(accepted),
         active_offers=0, entities=len(accepted), errors=(), quality=quality_metrics(accepted), lifecycle_records=len(ledger),
+        seconds=round(time.perf_counter() - started, 3),
+    )
+    (output_dir / "report.json").write_text(json.dumps(asdict(report), ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    return report
+
+
+def fetch_awin_enhanced_feed(
+    *, publisher_id: str, advertiser_id: str, locale: str, limit: int, batch_id: str
+) -> list[RawExternalItem]:
+    """Read at most one authorized Awin Enhanced retail feed.
+
+    The bearer token is deliberately read only from the process environment.
+    It is never placed in the source URL, artifacts, report, or exception text.
+    """
+    if not 1 <= limit <= 100:
+        raise ValueError("limit must be between 1 and 100")
+    if not publisher_id.isdigit() or not advertiser_id.isdigit() or not re.fullmatch(r"[a-z]{2}_[A-Z]{2}", locale):
+        raise ValueError("publisher_id/advertiser_id must be numeric and locale must look like es_ES")
+    token = os.getenv("AWIN_API_TOKEN")
+    if not token:
+        raise AwinAccessError("AWIN_API_TOKEN is required for the Awin Enhanced Feed")
+    endpoint = AWIN_ENHANCED_FEED_ENDPOINT.format(
+        publisher_id=publisher_id, advertiser_id=advertiser_id, locale=locale
+    )
+    request = Request(
+        endpoint,
+        headers={
+            "Accept": "application/x-ndjson, application/json",
+            "Authorization": f"Bearer {token}",
+            "User-Agent": "StackSignal/2.4 (https://stacksignal-tech.netlify.app)",
+        },
+    )
+    retrieved_at = _now()
+    rows: list[RawExternalItem] = []
+    try:
+        with urlopen(request, timeout=45) as response:  # nosec B310 - fixed official HTTPS endpoint
+            for line in response:
+                if len(rows) >= limit:
+                    break
+                try:
+                    raw = json.loads(line.decode("utf-8"))
+                except (UnicodeDecodeError, json.JSONDecodeError):
+                    continue
+                if isinstance(raw, dict):
+                    rows.append(RawExternalItem("awin-enhanced-feed", endpoint, retrieved_at, batch_id, raw))
+    except HTTPError as exc:
+        raise AwinAccessError(f"Awin Enhanced Feed request was not authorized or available (HTTP {exc.code})") from None
+    except (URLError, TimeoutError) as exc:
+        raise AwinAccessError(f"Awin Enhanced Feed request failed: {type(exc).__name__}") from None
+    return rows
+
+
+def normalize_awin_product(item: RawExternalItem, *, context: QueryContext) -> NormalizedCandidate | None:
+    """Map Awin fields to V2 without treating a product listing as editorial facts."""
+    raw = item.raw
+    raw_id = _clean_text(_field(raw, "aw_product_id", "merchant_product_id", "product_id"))
+    title = _clean_text(_field(raw, "product_name", "name", "title"))
+    merchant_id = _clean_text(_field(raw, "merchant_id", "advertiser_id"))
+    merchant_name = _clean_text(_field(raw, "merchant_name", "advertiser_name"))
+    if not raw_id or not title or not merchant_id:
+        return None
+    brand = _clean_text(_field(raw, "brand_name", "brand"))
+    model = _clean_text(_field(raw, "model_number", "product_model", "model", "mpn"))
+    product_type = _clean_text(_field(raw, "product_type", "merchant_category", "category_name"))
+    identifiers: dict[str, str] = {"merchant_product_id": raw_id}
+    for key in ("product_gtin", "gtin", "ean", "upc"):
+        identifier = _clean_text(_field(raw, key))
+        if identifier and valid_gtin(identifier):
+            identifiers["GTIN"] = identifier
+            break
+    identity = identifiers.get("GTIN") or f"awin:{merchant_id}:{raw_id}"
+    entity_id = f"entity:{_identifier(identity)}"
+    source_id = f"awin:{merchant_id}:{raw_id}"
+    source = Source(
+        id=source_id, publisher=merchant_name or f"Awin advertiser {merchant_id}", url=item.source_url,
+        source_type="authorized-product-feed", retrieved_at=item.retrieved_at, verified_at=item.retrieved_at,
+    )
+    facts: list[Fact] = []
+    if model:
+        facts.append(Fact("model", model, source.id, item.retrieved_at))
+    if product_type:
+        facts.append(Fact("form", product_type, source.id, item.retrieved_at))
+    entity = Entity(entity_id, "physical-product", title, "consumer-product", tuple(facts))
+    raw_destination = _valid_url(_field(raw, "merchant_deep_link", "merchant_url", "product_url"))
+    affiliate_url = _valid_url(_field(raw, "aw_deep_link", "affiliate_deep_link"))
+    price = _feed_price(_field(raw, "search_price", "store_price", "price"))
+    currency = _clean_text(_field(raw, "currency", "currency_code"))
+    currency = currency.upper() if currency and re.fullmatch(r"[A-Za-z]{3}", currency) else None
+    offer_id = f"offer:awin:{merchant_id}:{raw_id}"
+    health = OfferHealth(
+        last_checked_at=item.retrieved_at, last_seen_at=item.retrieved_at,
+        destination_valid=bool(raw_destination), affiliate_valid=bool(affiliate_url),
+        merchant_present=bool(merchant_name or merchant_id), feed_present=True,
+    )
+    offer = Offer(
+        offer_id, entity_id, f"awin:{merchant_id}", raw_destination,
+        TemporalState(market=context.market, currency=currency, price=price,
+                      availability=_awin_availability(raw), last_verified_at=item.retrieved_at),
+        health=health,
+    )
+    route = AffiliateRoute(offer_id, "awin", f"awin:{merchant_id}", "feed-deep-link", affiliate_url)
+    return NormalizedCandidate(
+        raw_id=raw_id, title=title, brand=brand, model=model, category="consumer-product",
+        identifiers=identifiers, entity=entity, offers=(offer,), routes=(route,), source=source, raw=item,
+        variant_key=identifiers.get("GTIN") or f"{_identifier(title)}:{_identifier(brand or '')}",
+    )
+
+
+def deduplicate_awin(candidates: Iterable[NormalizedCandidate]) -> tuple[list[NormalizedCandidate], int, int]:
+    """Merge exact GTIN entities while preserving each merchant's separate offer."""
+    accepted: dict[str, NormalizedCandidate] = {}
+    variants: dict[str, int] = {}
+    duplicate_groups = duplicate_variants = 0
+    for candidate in candidates:
+        current = accepted.get(candidate.entity.id)
+        if current is None:
+            if candidate.variant_key:
+                variants[candidate.variant_key] = variants.get(candidate.variant_key, 0) + 1
+                if variants[candidate.variant_key] > 1:
+                    duplicate_variants += 1
+                    candidate = replace(candidate, possible_duplicate=True)
+            accepted[candidate.entity.id] = candidate
+            continue
+        duplicate_groups += 1
+        offers = {offer.id: offer for offer in current.offers}
+        offers.update({offer.id: offer for offer in candidate.offers})
+        routes = {route.offer_id: route for route in current.routes}
+        routes.update({route.offer_id: route for route in candidate.routes})
+        accepted[candidate.entity.id] = replace(current, offers=tuple(offers.values()), routes=tuple(routes.values()))
+    return list(accepted.values()), duplicate_groups, duplicate_variants
+
+
+def ingest_awin_enhanced(
+    *, publisher_id: str, advertiser_id: str, locale: str, market: str, currency: str,
+    limit: int, output_dir: Path, batch_id: str | None = None, history_path: Path | None = None,
+) -> IngestReport:
+    """Ingest one small Awin feed batch; public publishing remains separately gated."""
+    started = time.perf_counter()
+    context = QueryContext(market=market, currency=currency)
+    batch_id = batch_id or f"awin-{datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')}"
+    raw_rows = fetch_awin_enhanced_feed(
+        publisher_id=publisher_id, advertiser_id=advertiser_id, locale=locale, limit=limit, batch_id=batch_id
+    )
+    parsed = [candidate for row in raw_rows if (candidate := normalize_awin_product(row, context=context)) is not None]
+    accepted, duplicate_groups, variants = deduplicate_awin(parsed)
+    output_dir.mkdir(parents=True, exist_ok=True)
+    (output_dir / "raw.json").write_text(json.dumps([asdict(row) for row in raw_rows], ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    (output_dir / "normalized.json").write_text(json.dumps([asdict(row) for row in accepted], ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    eligible = [candidate for candidate in accepted if _candidate_eligibility(candidate).publishable]
+    (output_dir / "llm.json").write_text(json.dumps([_awin_llm_payload(row) for row in eligible], ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    ledger = update_history_ledger(
+        history_path, entity_ids=(row.entity.id for row in accepted), offers=(offer for row in accepted for offer in row.offers),
+        observed_at=raw_rows[0].retrieved_at,
+    ) if history_path and raw_rows else {}
+    report = IngestReport(
+        source="awin-enhanced-feed", batch_id=batch_id, raw_items=len(raw_rows), parsed=len(parsed),
+        rejected=len(raw_rows) - len(parsed), normalized=len(accepted), duplicate_groups=duplicate_groups,
+        variants=variants, publishable=len(eligible),
+        active_offers=sum(offer.temporal_state.availability == "active" for row in accepted for offer in row.offers),
+        entities=len(accepted), errors=(), quality=quality_metrics(accepted), lifecycle_records=len(ledger),
         seconds=round(time.perf_counter() - started, 3),
     )
     (output_dir / "report.json").write_text(json.dumps(asdict(report), ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

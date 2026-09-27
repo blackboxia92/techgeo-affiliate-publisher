@@ -9,7 +9,7 @@ from pathlib import Path
 from .builder import build_site, expand_catalog
 from .consumer_catalog import generate_consumer_catalog
 from .indexnow import notify_indexnow
-from .ingest import compare_normalized_snapshots, ingest_google_books, ingest_openfoodfacts
+from .ingest import compare_normalized_snapshots, ingest_awin_enhanced, ingest_google_books, ingest_openfoodfacts
 from .mass_catalog import generate_mass_catalog
 from .weekly import generate_weekly_pages
 
@@ -69,6 +69,17 @@ def parser() -> argparse.ArgumentParser:
     off.add_argument("--output", type=Path, default=Path("data/ingest/openfoodfacts"))
     off.add_argument("--batch-id")
     off.add_argument("--history", type=Path)
+
+    awin = commands.add_parser("ingest-awin-enhanced", help="Ingest a small authorized Awin Enhanced retail feed")
+    awin.add_argument("--publisher-id", default=os.getenv("AWIN_PUBLISHER_ID", "3107154"))
+    awin.add_argument("--advertiser-id", required=True, help="A joined Awin advertiser with an enabled Enhanced Feed")
+    awin.add_argument("--locale", default="es_ES")
+    awin.add_argument("--market", default="ES")
+    awin.add_argument("--currency", default="EUR")
+    awin.add_argument("--limit", type=int, default=100)
+    awin.add_argument("--output", type=Path, default=Path("data/ingest/awin"))
+    awin.add_argument("--batch-id")
+    awin.add_argument("--history", type=Path)
 
     compare = commands.add_parser("compare-ingest-snapshots", help="Compare two preserved normalized ingest snapshots")
     compare.add_argument("previous", type=Path)
@@ -151,6 +162,14 @@ def main() -> int:
         return 0
     if args.command == "ingest-openfoodfacts":
         report = ingest_openfoodfacts(limit=args.limit, output_dir=args.output, batch_id=args.batch_id, history_path=args.history)
+        print(json.dumps(report.__dict__, ensure_ascii=False, indent=2))
+        return 0
+    if args.command == "ingest-awin-enhanced":
+        report = ingest_awin_enhanced(
+            publisher_id=args.publisher_id, advertiser_id=args.advertiser_id, locale=args.locale,
+            market=args.market, currency=args.currency, limit=args.limit, output_dir=args.output,
+            batch_id=args.batch_id, history_path=args.history,
+        )
         print(json.dumps(report.__dict__, ensure_ascii=False, indent=2))
         return 0
     if args.command == "compare-ingest-snapshots":
