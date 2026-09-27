@@ -9,7 +9,7 @@ from pathlib import Path
 from urllib.parse import parse_qs, urlparse
 
 from publisher.affiliate import AMAZON_ASSOCIATE_TAG, amazon_url, assert_required_tag
-from publisher.builder import build_site, expand_catalog
+from publisher.builder import EXCLUDED_CATALOG_ORIGINS, build_site, expand_catalog
 from publisher.indexnow import notify_indexnow
 from publisher.schema import load_page
 from publisher.weekly import generate_weekly_pages
@@ -35,6 +35,7 @@ class BuildTests(unittest.TestCase):
             1
             for path in (PROJECT / "content" / "pages").rglob("*.json")
             if load_page(path)[0].indexable
+            and json.loads(path.read_text(encoding="utf-8")).get("catalog_origin") not in EXCLUDED_CATALOG_ORIGINS
         )
 
     def test_reviewed_pages_are_indexed_and_amazon_links_are_disclosed(self) -> None:
@@ -48,6 +49,7 @@ class BuildTests(unittest.TestCase):
             )
             self.assertEqual(report.reviewed, self.reviewed_fixture_count())
             self.assertEqual(report.drafts, 0)
+            self.assertEqual(report.excluded_archived, 3957)
             html = (root / "dist" / "guides" / "postgresql-vs-sqlite-backend" / "index.html").read_text(encoding="utf-8")
             self.assertIn("tag=blackboxia92-21", html)
             self.assertNotIn("paid link", html.lower())
@@ -60,11 +62,12 @@ class BuildTests(unittest.TestCase):
             self.assertIn("As an Amazon Associate I earn from qualifying purchases.", html)
             self.assertLess(html.index('class="rag-comparison"'), html.index('class="article-hero"'))
             self.assertIn("| Criterion | PostgreSQL | SQLite |", html)
-            self.assertIn("Consenso Real de Compradores (Pros, Contras y Veredicto)", html)
-            self.assertIn("No se atribuyen opiniones, calificaciones ni consenso de compradores sin evidencia verificable.", html)
+            self.assertIn("Editorial assessment", html)
+            self.assertIn("does not claim buyer opinions, ratings, or product reviews", html)
             sitemap = (root / "dist" / "sitemap.xml").read_text(encoding="utf-8")
             self.assertIn("postgresql-vs-sqlite-backend", sitemap)
             self.assertNotIn("/drafts/", sitemap)
+            self.assertNotIn("raspberry-pi-5-vs-intel-nuc-13-pro", sitemap)
             ET.fromstring(sitemap)
             payload = re.search(
                 r'<script type="application/ld\+json">(.*?)</script>', html, re.DOTALL
@@ -72,12 +75,11 @@ class BuildTests(unittest.TestCase):
             self.assertIsNotNone(payload)
             structured_data = json.loads(payload.group(1))
             self.assertEqual(structured_data["@context"], "https://schema.org")
-            products = [node for node in structured_data["@graph"] if "Product" in node.get("@type", [])]
-            self.assertEqual(len(products), 2)
-            self.assertTrue(all(product["review"]["@type"] == "Review" for product in products))
-            self.assertTrue(all("reviewRating" not in product["review"] for product in products))
-            self.assertTrue(all("aggregateRating" not in product for product in products))
-            self.assertTrue((root / "dist" / "library" / "page" / "1" / "index.html").exists())
+            types = {node["@type"] for node in structured_data["@graph"]}
+            self.assertEqual(types, {"TechArticle", "BreadcrumbList", "ItemList"})
+            self.assertTrue((root / "dist" / "guides" / "index.html").exists())
+            self.assertTrue((root / "dist" / "topics" / "ci-cd" / "index.html").exists())
+            self.assertFalse((root / "dist" / "library").exists())
             llms = (root / "dist" / "llms.txt").read_text(encoding="utf-8")
             self.assertIn("postgresql-vs-sqlite-backend", llms)
             homepage = (root / "dist" / "index.html").read_text(encoding="utf-8")
@@ -96,19 +98,15 @@ class BuildTests(unittest.TestCase):
             self.assertIn("Consultar especificaciones y oferta en Amazon", homepage)
             self.assertIn(disclosure, homepage)
 
-            hardware_slug = "raspberry-pi-5-vs-intel-nuc-13-pro-for-bootstrapped-saas-limited-space"
-            hardware_dir = root / "dist" / "guides" / hardware_slug
-            hardware_html = (hardware_dir / "index.html").read_text(encoding="utf-8")
-            hardware_markdown = (hardware_dir / "index.md").read_text(encoding="utf-8")
-            self.assertIn("Amazon Renewed / Enterprise Usado", hardware_html)
-            self.assertIn("tag=blackboxia92-21", hardware_html)
-            self.assertRegex(
-                hardware_html,
-                r"Ganador:.*precio estimado: USD 240;.*Ver disponibilidad y precio actualizado en Amazon",
-            )
-            self.assertIn("Canal de Memoria (Single/Dual)", hardware_markdown)
-            self.assertIn("Límite de RAM Real", hardware_markdown)
-            self.assertIn("Consumo en reposo (Watts)", hardware_markdown)
+            target_dir = root / "dist" / "guides" / "azure-pipelines-vs-buildkite-for-self-hosted-infrastructure"
+            target_html = (target_dir / "index.html").read_text(encoding="utf-8")
+            target_markdown = (target_dir / "index.md").read_text(encoding="utf-8")
+            target_json = json.loads((target_dir / "index.json").read_text(encoding="utf-8"))
+            self.assertIn('href="/guides/"', target_html)
+            self.assertIn("Related guides", target_html)
+            self.assertNotIn("Canal de Memoria", target_html)
+            self.assertIn("Canonical: https://guides.example/guides/azure-pipelines-vs-buildkite-for-self-hosted-infrastructure/", target_markdown)
+            self.assertEqual(target_json["canonical_url"], "https://guides.example/guides/azure-pipelines-vs-buildkite-for-self-hosted-infrastructure/")
 
     def test_expanded_draft_is_noindex_and_excluded_from_sitemap(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
@@ -183,8 +181,9 @@ class BuildTests(unittest.TestCase):
             )
             self.assertEqual(report.reviewed, 40)
             pages = list((root / "dist" / "guides").rglob("index.html"))
-            self.assertEqual(len(pages), 40)
-            self.assertTrue(all("tag=blackboxia92-21" in page.read_text(encoding="utf-8") for page in pages))
+            article_pages = [page for page in pages if page.parent.name != "guides"]
+            self.assertEqual(len(article_pages), 40)
+            self.assertTrue(all("tag=blackboxia92-21" in page.read_text(encoding="utf-8") for page in article_pages))
             self.assertEqual((root / "dist" / "llms.txt").read_text(encoding="utf-8").count("/guides/"), 40)
 
 

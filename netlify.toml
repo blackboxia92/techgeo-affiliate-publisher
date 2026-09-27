@@ -1,5 +1,5 @@
 [build]
-  command = "python -m publisher build --content content/pages --output dist --state /tmp/techgeo-state.sqlite3 --base-url \"$URL\" --indexnow-key \"$(cat indexnow-key.txt)\""
+  command = "python -m publisher build --content content/pages --output dist --state /tmp/techgeo-state.sqlite3 --base-url https://stacksignal-tech.netlify.app --indexnow-key \"$(tr -d '\\r\\n' < indexnow-key.txt)\""
   publish = "dist"
 
 [build.environment]
@@ -21,6 +21,21 @@
   for = "/assets/*"
   [headers.values]
     Cache-Control = "public, max-age=2592000, immutable"
+
+[[headers]]
+  for = "/guides/*/index.md"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
+[[headers]]
+  for = "/guides/*/index.json"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
+[[redirects]]
+  from = "/library/*"
+  to = "/guides/"
+  status = 301
 
 [[headers]]
   for = "/.netlify/functions/analytics"

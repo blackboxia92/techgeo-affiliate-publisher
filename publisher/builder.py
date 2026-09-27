@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import re
 import shutil
 from dataclasses import dataclass
@@ -17,23 +18,10 @@ from .store import StateStore
 
 SITEMAP_LIMIT = 45_000
 
-RAG_HARDWARE_CRITERIA = (
-    Criterion(
-        "memory_channel",
-        "Canal de Memoria (Single/Dual)",
-        "Canal documentado por el fabricante; N/A cuando el producto no incorpora RAM de sistema.",
-    ),
-    Criterion(
-        "ram_limit",
-        "Límite de RAM Real",
-        "Máximo validado por el fabricante o estado no verificable claramente indicado.",
-    ),
-    Criterion(
-        "idle_watts",
-        "Consumo en reposo (Watts)",
-        "Medición publicada o estado no verificable; depende de la configuración y periféricos.",
-    ),
-)
+# These catalogs are retained in the repository for archival purposes only.  They
+# were generated for earlier product/kiosk experiments and must never be rendered,
+# linked, added to a sitemap, or submitted to IndexNow by StackSignal.
+EXCLUDED_CATALOG_ORIGINS = frozenset({"mass-products-v1", "consumer-products-v1"})
 
 HOME_RECOMMENDATIONS = (
     {
@@ -59,6 +47,7 @@ class BuildReport:
     drafts: int
     changed: int
     skipped_drafts: int
+    excluded_archived: int
     output: Path
 
 
@@ -73,30 +62,6 @@ def _canonical_base(value: str) -> str:
 
 
 def _json_ld(page: Page, public_url: str, site_name: str) -> str:
-    products = []
-    for position, alternative in enumerate(page.alternatives, 1):
-        operational_note = alternative.specs.get(
-            "operations",
-            "Verify deployment, maintenance, security, and support requirements in the official documentation.",
-        )
-        products.append(
-            {
-                "@type": "Product",
-                "@id": f"{public_url}#product-{position}",
-                "name": alternative.name,
-                "url": alternative.url,
-                "description": alternative.summary,
-                "review": {
-                    "@type": "Review",
-                    "author": {"@type": "Organization", "name": f"{site_name} technical editorial desk"},
-                    "datePublished": page.updated_at,
-                    "reviewBody": (
-                        f"Editorial technical synthesis: {alternative.summary} "
-                        f"Operational consideration: {operational_note}"
-                    ),
-                },
-            }
-        )
     payload = {
         "@context": "https://schema.org",
         "@graph": [
@@ -111,6 +76,14 @@ def _json_ld(page: Page, public_url: str, site_name: str) -> str:
                 "citation": [source.url for source in page.sources],
             },
             {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    {"@type": "ListItem", "position": 1, "name": site_name, "item": public_url.rsplit("/guides/", 1)[0] + "/"},
+                    {"@type": "ListItem", "position": 2, "name": "Guides", "item": public_url.rsplit("/guides/", 1)[0] + "/guides/"},
+                    {"@type": "ListItem", "position": 3, "name": page.title, "item": public_url},
+                ],
+            },
+            {
                 "@type": "ItemList",
                 "itemListElement": [
                     {
@@ -122,18 +95,6 @@ def _json_ld(page: Page, public_url: str, site_name: str) -> str:
                     for position, alternative in enumerate(page.alternatives, 1)
                 ],
             },
-            {
-                "@type": "FAQPage",
-                "mainEntity": [
-                    {
-                        "@type": "Question",
-                        "name": item.question,
-                        "acceptedAnswer": {"@type": "Answer", "text": item.answer},
-                    }
-                    for item in page.faq
-                ],
-            },
-            *products,
         ],
     }
     return json.dumps(payload, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
@@ -148,17 +109,10 @@ def _markdown_table(page: Page) -> str:
         "| Criterion | " + " | ".join(names) + " |",
         "| --- | " + " | ".join("---" for _ in names) + " |",
     ]
-    for criterion in _comparison_criteria(page):
+    for criterion in page.criteria:
         values = [cell(alternative.specs.get(criterion.key, "N/A — no aplica o no fue verificado")) for alternative in page.alternatives]
         rows.append(f"| {cell(criterion.label)} | " + " | ".join(values) + " |")
     return "\n".join(rows)
-
-
-def _comparison_criteria(page: Page) -> tuple[Criterion, ...]:
-    existing = {criterion.key for criterion in page.criteria}
-    return page.criteria + tuple(
-        criterion for criterion in RAG_HARDWARE_CRITERIA if criterion.key not in existing
-    )
 
 
 def _resource_url(resource: Resource) -> str:
@@ -187,10 +141,9 @@ def _markdown_document(page: Page, public_url: str) -> str:
         "",
         page.intro,
         "",
-        "### Consenso Real de Compradores (Pros, Contras y Veredicto)",
+        "## Editorial assessment",
         "",
-        "No se atribuyen opiniones, calificaciones ni consenso de compradores sin evidencia verificable. "
-        "Los siguientes puntos son una síntesis editorial de la documentación oficial citada.",
+        "This is an editorial synthesis of the cited primary documentation. It does not claim buyer opinions, ratings, or product reviews.",
         "",
         "#### Pros",
         "",
@@ -227,6 +180,62 @@ def _markdown_document(page: Page, public_url: str) -> str:
     lines.extend(f"- [{source.label}]({source.url}) — {source.publisher}" for source in page.sources)
     lines.append("")
     return "\n".join(lines)
+
+
+def _json_document(page: Page, public_url: str) -> str:
+    """Write a non-canonical, machine-readable view from the same Page object as HTML."""
+    payload = {
+        "title": page.title,
+        "slug": page.slug,
+        "canonical_url": public_url,
+        "updated_at": page.updated_at,
+        "summary": page.intro,
+        "entities": [{"name": item.name, "url": item.url} for item in page.alternatives],
+        "comparison": {
+            "criteria": [
+                {
+                    "key": criterion.key,
+                    "label": criterion.label,
+                    "description": criterion.description,
+                    "values": {item.name: item.specs[criterion.key] for item in page.alternatives},
+                }
+                for criterion in page.criteria
+            ],
+            "verdict": page.verdict,
+        },
+        "pros": [{"name": item.name, "text": item.summary} for item in page.alternatives],
+        "cons": [
+            {"name": item.name, "text": item.specs.get("operations", "Not separately specified.")}
+            for item in page.alternatives
+        ],
+        "sources": [
+            {"label": source.label, "publisher": source.publisher, "url": source.url}
+            for source in page.sources
+        ],
+        "outbound_urls": sorted({item.url for item in page.alternatives} | {source.url for source in page.sources}),
+    }
+    return json.dumps(payload, ensure_ascii=False, indent=2) + "\n"
+
+
+def _is_archived_catalog(raw: dict[str, object]) -> bool:
+    return raw.get("catalog_origin") in EXCLUDED_CATALOG_ORIGINS
+
+
+def _is_ci_cd_page(page: Page) -> bool:
+    names = {item.name.casefold() for item in page.alternatives}
+    return bool(names & {"azure pipelines", "buildkite", "circleci", "github actions", "gitlab ci"})
+
+
+def _related_pages(page: Page, pages: list[Page], limit: int = 3) -> list[Page]:
+    current_names = {item.name.casefold() for item in page.alternatives}
+    candidates = []
+    for candidate in pages:
+        if candidate.slug == page.slug:
+            continue
+        shared = len(current_names & {item.name.casefold() for item in candidate.alternatives})
+        if shared:
+            candidates.append((shared, candidate.updated_at, candidate.slug, candidate))
+    return [item[-1] for item in sorted(candidates, reverse=True)[:limit]]
 
 
 def _write_sitemaps(output: Path, rows: list[object], base_url: str) -> None:
@@ -301,19 +310,31 @@ def build_site(
         trim_blocks=True,
         lstrip_blocks=True,
     )
+    # Verification values are supplied in Netlify environment variables, never in Git.
+    environment.globals["google_site_verification"] = os.getenv("GOOGLE_SITE_VERIFICATION", "").strip()
+    environment.globals["bing_site_verification"] = os.getenv("BING_SITE_VERIFICATION", "").strip()
     article_template = environment.get_template("article.html")
     index_template = environment.get_template("index.html")
+    hub_template = environment.get_template("hub.html")
     if output_dir.exists():
         shutil.rmtree(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
     shutil.copytree(asset_dir, output_dir / "assets")
 
     pages: list[Page] = []
+    render_pages: list[tuple[Page, dict[str, object]]] = []
+    excluded_archived = 0
+    for path in sorted(content_dir.rglob("*.json")):
+        page, raw = load_page(path)
+        if _is_archived_catalog(raw):
+            excluded_archived += 1
+            continue
+        pages.append(page)
+        render_pages.append((page, raw))
+
     reviewed = drafts = changed = skipped_drafts = 0
     with StateStore(state_path) as store:
-        for path in sorted(content_dir.rglob("*.json")):
-            page, raw = load_page(path)
-            pages.append(page)
+        for page, raw in render_pages:
             if page.indexable:
                 reviewed += 1
                 route = f"guides/{page.slug}/"
@@ -341,13 +362,16 @@ def build_site(
                 site_name="StackSignal",
                 amazon_url=amazon_url,
                 resource_url=_resource_url,
-                comparison_criteria=_comparison_criteria(page),
                 json_ld=_json_ld(page, public_url, "StackSignal"),
                 markdown_table=_markdown_table(page),
+                related_pages=_related_pages(page, [candidate for candidate in pages if candidate.indexable]),
             )
             destination.write_text(html, encoding="utf-8")
             (destination.parent / "index.md").write_text(
                 _markdown_document(page, public_url), encoding="utf-8"
+            )
+            (destination.parent / "index.json").write_text(
+                _json_document(page, public_url), encoding="utf-8"
             )
             if store.upsert_page(
                 slug=page.slug,
@@ -372,24 +396,35 @@ def build_site(
             site_name="StackSignal",
         )
         (output_dir / "index.html").write_text(homepage, encoding="utf-8")
-        library_template = environment.get_template("library.html")
-        page_size = 100
-        library_page_count = max(1, (len(reviewed_pages) + page_size - 1) // page_size)
-        for number in range(1, library_page_count + 1):
-            subset = reviewed_pages[(number - 1) * page_size : number * page_size]
-            destination = output_dir / "library" / "page" / str(number) / "index.html"
-            destination.parent.mkdir(parents=True, exist_ok=True)
-            destination.write_text(
-                library_template.render(
-                    pages=subset,
-                    page_number=number,
-                    page_count=library_page_count,
-                    canonical_url=f"{base_url}/library/page/{number}/",
+        guides_destination = output_dir / "guides" / "index.html"
+        guides_destination.parent.mkdir(parents=True, exist_ok=True)
+        guides_destination.write_text(
+            hub_template.render(
+                pages=reviewed_pages,
+                title="Technical decision guides",
+                description="Source-backed comparisons of developer tools, infrastructure, and technical resources.",
+                canonical_url=f"{base_url}/guides/",
+                site_name="StackSignal",
+            ),
+            encoding="utf-8",
+        )
+        ci_cd_pages = [page for page in reviewed_pages if _is_ci_cd_page(page)]
+        hub_rows = [{"public_url": f"{base_url}/guides/", "lastmod": max((page.updated_at for page in reviewed_pages), default="")}]
+        if len(ci_cd_pages) >= 3:
+            topic_destination = output_dir / "topics" / "ci-cd" / "index.html"
+            topic_destination.parent.mkdir(parents=True, exist_ok=True)
+            topic_destination.write_text(
+                hub_template.render(
+                    pages=ci_cd_pages,
+                    title="CI/CD decision guides",
+                    description="Comparisons for CI/CD platforms, pipeline operations, and delivery workflows.",
+                    canonical_url=f"{base_url}/topics/ci-cd/",
                     site_name="StackSignal",
                 ),
                 encoding="utf-8",
             )
-        sitemap_rows: list[object] = list(store.indexable_pages())
+            hub_rows.append({"public_url": f"{base_url}/topics/ci-cd/", "lastmod": max(page.updated_at for page in ci_cd_pages)})
+        sitemap_rows: list[object] = list(store.indexable_pages()) + hub_rows
         _write_sitemaps(output_dir, sitemap_rows, base_url)
         _write_llms(output_dir, reviewed_pages, base_url)
 
@@ -402,7 +437,7 @@ def build_site(
 
         validate_key(indexnow_key)
         (output_dir / f"{indexnow_key}.txt").write_text(indexnow_key, encoding="utf-8")
-    return BuildReport(reviewed, drafts, changed, skipped_drafts, output_dir)
+    return BuildReport(reviewed, drafts, changed, skipped_drafts, excluded_archived, output_dir)
 
 
 def expand_catalog(catalog_path: Path, destination: Path, limit: int | None = None) -> int:

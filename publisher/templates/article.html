@@ -3,14 +3,15 @@
 {% block description %}{{ page.meta_description }}{% endblock %}
 {% block og_title %}{{ page.title }}{% endblock %}
 {% block og_description %}{{ page.meta_description }}{% endblock %}
-{% block structured_data %}<link rel="alternate" type="text/markdown" href="{{ canonical_url }}index.md"><script type="application/ld+json">{{ json_ld|safe }}</script>{% endblock %}
+{% block structured_data %}<link rel="alternate" type="text/markdown" href="{{ canonical_url }}index.md"><link rel="alternate" type="application/json" href="{{ canonical_url }}index.json"><script type="application/ld+json">{{ json_ld|safe }}</script>{% endblock %}
 {% block content %}
 <main>
   {% if not page.indexable %}<div class="draft-banner">Editorial draft · excluded from search and sitemaps</div>{% endif %}
   <article class="article-shell">
+    <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">StackSignal</a><span aria-hidden="true">/</span><a href="/guides/">Guides</a><span aria-hidden="true">/</span><span aria-current="page">{{ page.title }}</span></nav>
     <section class="rag-comparison" aria-labelledby="rag-comparison-heading">
-      <span class="kicker">RAG-ready summary</span>
-      <h2 id="rag-comparison-heading">Markdown comparison table</h2>
+      <span class="kicker">Comparison summary</span>
+      <h2 id="rag-comparison-heading">At-a-glance comparison</h2>
       <pre class="markdown-comparison">{{ markdown_table }}</pre>
     </section>
     <header class="article-hero">
@@ -35,7 +36,7 @@
         <table>
           <thead><tr><th scope="col">Criterion</th>{% for alternative in page.alternatives %}<th scope="col"><a href="{{ alternative.url }}" rel="nofollow noopener">{{ alternative.name }}</a></th>{% endfor %}</tr></thead>
           <tbody>
-            {% for criterion in comparison_criteria %}
+            {% for criterion in page.criteria %}
             <tr><th scope="row"><strong>{{ criterion.label }}</strong><small>{{ criterion.description }}</small></th>{% for alternative in page.alternatives %}<td>{{ alternative.specs.get(criterion.key, 'N/A — no aplica o no fue verificado') }}</td>{% endfor %}</tr>
             {% endfor %}
           </tbody>
@@ -52,15 +53,22 @@
       </div>
     </section>
 
-    <section class="content-section consensus-section" aria-labelledby="buyer-consensus-heading">
-      <div class="section-heading compact"><div><span class="kicker">Evidence boundary</span><h2 id="buyer-consensus-heading">Consenso Real de Compradores (Pros, Contras y Veredicto)</h2></div></div>
-      <p class="consensus-note">No se atribuyen opiniones, calificaciones ni consenso de compradores sin evidencia verificable. Los siguientes puntos son una síntesis editorial de la documentación oficial citada.</p>
+    <section class="content-section consensus-section" aria-labelledby="editorial-assessment-heading">
+      <div class="section-heading compact"><div><span class="kicker">Evidence boundary</span><h2 id="editorial-assessment-heading">Editorial assessment</h2></div></div>
+      <p class="consensus-note">This is an editorial synthesis of the cited primary documentation. It does not claim buyer opinions, ratings, or product reviews.</p>
       <div class="consensus-grid">
         <div><h3>Pros</h3><ul>{% for alternative in page.alternatives %}<li><strong>{{ alternative.name }}:</strong> {{ alternative.summary }}</li>{% endfor %}</ul></div>
         <div><h3>Contras</h3><ul>{% for alternative in page.alternatives %}<li><strong>{{ alternative.name }}:</strong> {{ alternative.specs.get('operations', 'Requiere validar implementación, mantenimiento y soporte antes de adoptarlo.') }}</li>{% endfor %}</ul></div>
       </div>
       <div class="consensus-verdict"><strong>Veredicto:</strong> {{ page.verdict }}</div>
     </section>
+
+    {% if related_pages %}
+    <section class="content-section" aria-labelledby="related-guides-heading">
+      <div class="section-heading compact"><div><span class="kicker">Continue exploring</span><h2 id="related-guides-heading">Related guides</h2></div></div>
+      <ul class="related-guides">{% for item in related_pages %}<li><a href="/guides/{{ item.slug }}/">{{ item.title }}</a></li>{% endfor %}</ul>
+    </section>
+    {% endif %}
 
     {% if page.resources %}
     <section class="content-section resource-section" aria-labelledby="resources-heading">

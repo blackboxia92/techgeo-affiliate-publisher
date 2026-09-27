@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}{{ title }} | {{ site_name }}{% endblock %}
+{% block description %}{{ description }}{% endblock %}
+{% block og_title %}{{ title }} | {{ site_name }}{% endblock %}
+{% block og_description %}{{ description }}{% endblock %}
+{% block content %}
+<main class="shell guide-section library-page">
+  <div class="section-heading">
+    <div><span class="kicker">Decision library</span><h1>{{ title }}</h1></div>
+    <p>{{ description }}</p>
+  </div>
+  <div class="guide-grid">
+    {% for item in pages %}
+    <article class="guide-card">
+      <div class="card-top"><span>{{ item.eyebrow }}</span><time datetime="{{ item.updated_at }}">{{ item.updated_at }}</time></div>
+      <h2><a href="/guides/{{ item.slug }}/">{{ item.title }}</a></h2>
+      <p>{{ item.meta_description }}</p>
+      <a class="text-link" href="/guides/{{ item.slug }}/">Read the evidence <span aria-hidden="true">→</span></a>
+    </article>
+    {% endfor %}
+  </div>
+</main>
+{% endblock %}

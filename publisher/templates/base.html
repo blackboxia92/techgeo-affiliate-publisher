@@ -6,6 +6,8 @@
   <title>{% block title %}{{ site_name }}{% endblock %}</title>
   <meta name="description" content="{% block description %}Source-backed technical comparisons for practical software decisions.{% endblock %}">
   <link rel="canonical" href="{{ canonical_url }}">
+  {% if google_site_verification %}<meta name="google-site-verification" content="{{ google_site_verification }}">{% endif %}
+  {% if bing_site_verification %}<meta name="msvalidate.01" content="{{ bing_site_verification }}">{% endif %}
   {% if page and not page.indexable %}<meta name="robots" content="noindex,nofollow">{% else %}<meta name="robots" content="index,follow,max-image-preview:large">{% endif %}
   <meta property="og:type" content="article">
   <meta property="og:title" content="{% block og_title %}{{ site_name }}{% endblock %}">
@@ -24,6 +26,7 @@
         <span class="brand-mark">S</span>
         <span><strong>Stack<span>Signal</span></strong><small>Technical decision briefs</small></span>
       </a>
+      <a class="nav-link" href="/guides/">Guides</a>
       <span class="locale-chip">{% if locale|default('en') == 'es' %}Español{% else %}Global · EN{% endif %}</span>
     </div>
   </header>
