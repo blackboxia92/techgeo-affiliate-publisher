@@ -79,6 +79,7 @@ class Recommendation:
 class Page:
     slug: str
     status: str
+    catalog_origin: str | None
     locale: str
     title: str
     meta_description: str
@@ -97,6 +98,10 @@ class Page:
     @property
     def indexable(self) -> bool:
         return self.status == "reviewed"
+
+    @property
+    def is_commercial(self) -> bool:
+        return self.catalog_origin in {"mass-products-v1", "consumer-products-v1"}
 
 
 def load_page(path: Path) -> tuple[Page, dict[str, Any]]:
@@ -194,6 +199,7 @@ def load_page(path: Path) -> tuple[Page, dict[str, Any]]:
     page = Page(
         slug=slug,
         status=status,
+        catalog_origin=_text(raw["catalog_origin"], "catalog_origin") if raw.get("catalog_origin") else None,
         locale=_text(raw.get("locale", "en"), "locale"),
         title=_text(raw.get("title"), "title", 20),
         meta_description=_text(raw.get("meta_description"), "meta_description", 80),

@@ -8,7 +8,7 @@
 <main>
   {% if not page.indexable %}<div class="draft-banner">Editorial draft · excluded from search and sitemaps</div>{% endif %}
   <article class="article-shell">
-    <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">StackSignal</a><span aria-hidden="true">/</span><a href="/guides/">Guides</a><span aria-hidden="true">/</span><span aria-current="page">{{ page.title }}</span></nav>
+    <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">StackSignal</a><span aria-hidden="true">/</span><a href="{{ section_url }}">{{ section_label }}</a><span aria-hidden="true">/</span><span aria-current="page">{{ page.title }}</span></nav>
     <section class="rag-comparison" aria-labelledby="rag-comparison-heading">
       <span class="kicker">Comparison summary</span>
       <h2 id="rag-comparison-heading">At-a-glance comparison</h2>

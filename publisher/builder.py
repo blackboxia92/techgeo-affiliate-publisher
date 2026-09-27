@@ -18,11 +18,6 @@ from .store import StateStore
 
 SITEMAP_LIMIT = 45_000
 
-# These catalogs are retained in the repository for archival purposes only.  They
-# were generated for earlier product/kiosk experiments and must never be rendered,
-# linked, added to a sitemap, or submitted to IndexNow by StackSignal.
-EXCLUDED_CATALOG_ORIGINS = frozenset({"mass-products-v1", "consumer-products-v1"})
-
 HOME_RECOMMENDATIONS = (
     {
         "title": "Designing Data-Intensive Applications",
@@ -47,7 +42,6 @@ class BuildReport:
     drafts: int
     changed: int
     skipped_drafts: int
-    excluded_archived: int
     output: Path
 
 
@@ -62,24 +56,41 @@ def _canonical_base(value: str) -> str:
 
 
 def _json_ld(page: Page, public_url: str, site_name: str) -> str:
+    section_path, section_label = _catalog_section(page)
+    site_url = public_url.rsplit("/guides/", 1)[0] + "/"
+    product_nodes = []
+    if page.is_commercial:
+        product_nodes = [
+            {
+                "@type": "Product",
+                "@id": f"{public_url}#product-{position}",
+                "name": alternative.name,
+                "url": alternative.url,
+                "description": alternative.summary,
+            }
+            for position, alternative in enumerate(page.alternatives, 1)
+        ]
+    article_nodes = [] if page.is_commercial else [
+        {
+            "@type": "TechArticle",
+            "headline": page.title,
+            "description": page.meta_description,
+            "dateModified": page.updated_at,
+            "inLanguage": page.locale,
+            "mainEntityOfPage": public_url,
+            "publisher": {"@type": "Organization", "name": site_name},
+            "citation": [source.url for source in page.sources],
+        }
+    ]
     payload = {
         "@context": "https://schema.org",
         "@graph": [
-            {
-                "@type": "TechArticle",
-                "headline": page.title,
-                "description": page.meta_description,
-                "dateModified": page.updated_at,
-                "inLanguage": page.locale,
-                "mainEntityOfPage": public_url,
-                "publisher": {"@type": "Organization", "name": site_name},
-                "citation": [source.url for source in page.sources],
-            },
+            *article_nodes,
             {
                 "@type": "BreadcrumbList",
                 "itemListElement": [
-                    {"@type": "ListItem", "position": 1, "name": site_name, "item": public_url.rsplit("/guides/", 1)[0] + "/"},
-                    {"@type": "ListItem", "position": 2, "name": "Guides", "item": public_url.rsplit("/guides/", 1)[0] + "/guides/"},
+                    {"@type": "ListItem", "position": 1, "name": site_name, "item": site_url},
+                    {"@type": "ListItem", "position": 2, "name": section_label, "item": site_url.rstrip("/") + section_path},
                     {"@type": "ListItem", "position": 3, "name": page.title, "item": public_url},
                 ],
             },
@@ -95,6 +106,7 @@ def _json_ld(page: Page, public_url: str, site_name: str) -> str:
                     for position, alternative in enumerate(page.alternatives, 1)
                 ],
             },
+            *product_nodes,
         ],
     }
     return json.dumps(payload, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
@@ -217,10 +229,6 @@ def _json_document(page: Page, public_url: str) -> str:
     return json.dumps(payload, ensure_ascii=False, indent=2) + "\n"
 
 
-def _is_archived_catalog(raw: dict[str, object]) -> bool:
-    return raw.get("catalog_origin") in EXCLUDED_CATALOG_ORIGINS
-
-
 def _is_ci_cd_page(page: Page) -> bool:
     names = {item.name.casefold() for item in page.alternatives}
     return bool(names & {"azure pipelines", "buildkite", "circleci", "github actions", "gitlab ci"})
@@ -236,6 +244,14 @@ def _related_pages(page: Page, pages: list[Page], limit: int = 3) -> list[Page]:
         if shared:
             candidates.append((shared, candidate.updated_at, candidate.slug, candidate))
     return [item[-1] for item in sorted(candidates, reverse=True)[:limit]]
+
+
+def _catalog_section(page: Page) -> tuple[str, str]:
+    if page.catalog_origin == "mass-products-v1":
+        return "/catalog/mass-products/", "Commercial catalog"
+    if page.catalog_origin == "consumer-products-v1":
+        return "/catalog/consumer-products/", "Consumer catalog"
+    return "/guides/", "Guides"
 
 
 def _write_sitemaps(output: Path, rows: list[object], base_url: str) -> None:
@@ -323,12 +339,8 @@ def build_site(
 
     pages: list[Page] = []
     render_pages: list[tuple[Page, dict[str, object]]] = []
-    excluded_archived = 0
     for path in sorted(content_dir.rglob("*.json")):
         page, raw = load_page(path)
-        if _is_archived_catalog(raw):
-            excluded_archived += 1
-            continue
         pages.append(page)
         render_pages.append((page, raw))
 
@@ -356,6 +368,7 @@ def build_site(
             content_hash = hashlib.sha256(
                 json.dumps(substantive_content, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
             ).hexdigest()
+            section_url, section_label = _catalog_section(page)
             html = article_template.render(
                 page=page,
                 canonical_url=public_url,
@@ -364,7 +377,12 @@ def build_site(
                 resource_url=_resource_url,
                 json_ld=_json_ld(page, public_url, "StackSignal"),
                 markdown_table=_markdown_table(page),
-                related_pages=_related_pages(page, [candidate for candidate in pages if candidate.indexable]),
+                related_pages=_related_pages(
+                    page,
+                    [candidate for candidate in pages if candidate.indexable and not candidate.is_commercial],
+                ) if not page.is_commercial else [],
+                section_url=section_url,
+                section_label=section_label,
             )
             destination.write_text(html, encoding="utf-8")
             (destination.parent / "index.md").write_text(
@@ -385,9 +403,11 @@ def build_site(
 
         store.prune_except({page.slug for page in pages})
         reviewed_pages = sorted((page for page in pages if page.indexable), key=lambda page: page.updated_at, reverse=True)
+        editorial_pages = [page for page in reviewed_pages if not page.is_commercial]
+        commercial_pages = [page for page in reviewed_pages if page.is_commercial]
         homepage = index_template.render(
-            pages=reviewed_pages[:24],
-            total_pages=len(reviewed_pages),
+            pages=editorial_pages[:24],
+            total_pages=len(editorial_pages),
             recommendations=[
                 recommendation | {"url": amazon_url(recommendation["asin"])}
                 for recommendation in HOME_RECOMMENDATIONS
@@ -400,7 +420,7 @@ def build_site(
         guides_destination.parent.mkdir(parents=True, exist_ok=True)
         guides_destination.write_text(
             hub_template.render(
-                pages=reviewed_pages,
+                pages=editorial_pages,
                 title="Technical decision guides",
                 description="Source-backed comparisons of developer tools, infrastructure, and technical resources.",
                 canonical_url=f"{base_url}/guides/",
@@ -408,8 +428,8 @@ def build_site(
             ),
             encoding="utf-8",
         )
-        ci_cd_pages = [page for page in reviewed_pages if _is_ci_cd_page(page)]
-        hub_rows = [{"public_url": f"{base_url}/guides/", "lastmod": max((page.updated_at for page in reviewed_pages), default="")}]
+        ci_cd_pages = [page for page in editorial_pages if _is_ci_cd_page(page)]
+        hub_rows = [{"public_url": f"{base_url}/guides/", "lastmod": max((page.updated_at for page in editorial_pages), default="")}]
         if len(ci_cd_pages) >= 3:
             topic_destination = output_dir / "topics" / "ci-cd" / "index.html"
             topic_destination.parent.mkdir(parents=True, exist_ok=True)
@@ -424,9 +444,56 @@ def build_site(
                 encoding="utf-8",
             )
             hub_rows.append({"public_url": f"{base_url}/topics/ci-cd/", "lastmod": max(page.updated_at for page in ci_cd_pages)})
+        catalog_template = environment.get_template("catalog.html")
+        catalog_destination = output_dir / "catalog" / "index.html"
+        mass_pages = [page for page in commercial_pages if page.catalog_origin == "mass-products-v1"]
+        consumer_pages = [page for page in commercial_pages if page.catalog_origin == "consumer-products-v1"]
+        if commercial_pages:
+            catalog_destination.parent.mkdir(parents=True, exist_ok=True)
+            catalog_destination.write_text(
+                catalog_template.render(
+                    mass_pages=mass_pages[:12],
+                    consumer_pages=consumer_pages[:12],
+                    mass_count=len(mass_pages),
+                    consumer_count=len(consumer_pages),
+                    canonical_url=f"{base_url}/catalog/",
+                    site_name="StackSignal",
+                ),
+                encoding="utf-8",
+            )
+        for route, title, subset in (
+            ("mass-products", "Commercial product comparisons", mass_pages),
+            ("consumer-products", "Consumer product comparisons", consumer_pages),
+        ):
+            if not subset:
+                continue
+            page_size = 100
+            page_count = max(1, (len(subset) + page_size - 1) // page_size)
+            for number in range(1, page_count + 1):
+                destination = output_dir / "catalog" / route / ("index.html" if number == 1 else f"page/{number}/index.html")
+                destination.parent.mkdir(parents=True, exist_ok=True)
+                canonical_path = f"/catalog/{route}/" if number == 1 else f"/catalog/{route}/page/{number}/"
+                destination.write_text(
+                    hub_template.render(
+                        pages=subset[(number - 1) * page_size : number * page_size],
+                        title=title,
+                        description="StackSignal product comparisons with source links and declared affiliate references.",
+                        canonical_url=f"{base_url}{canonical_path}",
+                        site_name="StackSignal",
+                        page_number=number,
+                        page_count=page_count,
+                        previous_url=(f"/catalog/{route}/" if number == 2 else f"/catalog/{route}/page/{number - 1}/") if number > 1 else None,
+                        next_url=f"/catalog/{route}/page/{number + 1}/" if number < page_count else None,
+                        noindex=number > 1,
+                    ),
+                    encoding="utf-8",
+                )
+            hub_rows.append({"public_url": f"{base_url}/catalog/{route}/", "lastmod": max(page.updated_at for page in subset)})
+        if commercial_pages:
+            hub_rows.append({"public_url": f"{base_url}/catalog/", "lastmod": max(page.updated_at for page in commercial_pages)})
         sitemap_rows: list[object] = list(store.indexable_pages()) + hub_rows
         _write_sitemaps(output_dir, sitemap_rows, base_url)
-        _write_llms(output_dir, reviewed_pages, base_url)
+        _write_llms(output_dir, editorial_pages, base_url)
 
     (output_dir / "robots.txt").write_text(
         f"User-agent: *\nAllow: /\nDisallow: /drafts/\nSitemap: {base_url}/sitemap.xml\n",
@@ -437,7 +504,7 @@ def build_site(
 
         validate_key(indexnow_key)
         (output_dir / f"{indexnow_key}.txt").write_text(indexnow_key, encoding="utf-8")
-    return BuildReport(reviewed, drafts, changed, skipped_drafts, excluded_archived, output_dir)
+    return BuildReport(reviewed, drafts, changed, skipped_drafts, output_dir)
 
 
 def expand_catalog(catalog_path: Path, destination: Path, limit: int | None = None) -> int:

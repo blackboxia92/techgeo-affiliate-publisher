@@ -19,5 +19,12 @@
     </article>
     {% endfor %}
   </div>
+  {% if page_count is defined and page_count > 1 %}
+  <nav class="pagination" aria-label="Catalog pages">
+    {% if previous_url %}<a href="{{ previous_url }}">← Previous</a>{% endif %}
+    <span>Page {{ page_number }} / {{ page_count }}</span>
+    {% if next_url %}<a href="{{ next_url }}">Next →</a>{% endif %}
+  </nav>
+  {% endif %}
 </main>
 {% endblock %}

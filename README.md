@@ -20,7 +20,7 @@ Generador estático independiente para comparativas técnicas, recursos para des
 
 ## Principio editorial
 
-Una página sólo entra al sitemap y a la cola IndexNow cuando tiene evidencia primaria, criterios completos, una conclusión útil y `status: "reviewed"`. Los catálogos archivados `mass-products-v1` y `consumer-products-v1` se preservan como fuente histórica, pero el generador los excluye de HTML público, feeds, navegación, sitemap y IndexNow. Este control evita convertir combinaciones de palabras clave en páginas vacías.
+Una página sólo entra al sitemap y a la cola IndexNow cuando tiene evidencia primaria, criterios completos, una conclusión útil y `status: "reviewed"`. Los catálogos comerciales `mass-products-v1` y `consumer-products-v1` son inventario de StackSignal: se publican, aparecen en el sitemap y se incluyen en IndexNow cuando cambian. Este control evita convertir combinaciones de palabras clave en páginas vacías.
 
 La estructura ayuda a lectores y sistemas automáticos a entender el contenido. No garantiza citas en modelos de lenguaje, rich results ni posiciones de búsqueda.
 

@@ -9,7 +9,7 @@ from pathlib import Path
 from urllib.parse import parse_qs, urlparse
 
 from publisher.affiliate import AMAZON_ASSOCIATE_TAG, amazon_url, assert_required_tag
-from publisher.builder import EXCLUDED_CATALOG_ORIGINS, build_site, expand_catalog
+from publisher.builder import build_site, expand_catalog
 from publisher.indexnow import notify_indexnow
 from publisher.schema import load_page
 from publisher.weekly import generate_weekly_pages
@@ -35,7 +35,6 @@ class BuildTests(unittest.TestCase):
             1
             for path in (PROJECT / "content" / "pages").rglob("*.json")
             if load_page(path)[0].indexable
-            and json.loads(path.read_text(encoding="utf-8")).get("catalog_origin") not in EXCLUDED_CATALOG_ORIGINS
         )
 
     def test_reviewed_pages_are_indexed_and_amazon_links_are_disclosed(self) -> None:
@@ -49,7 +48,6 @@ class BuildTests(unittest.TestCase):
             )
             self.assertEqual(report.reviewed, self.reviewed_fixture_count())
             self.assertEqual(report.drafts, 0)
-            self.assertEqual(report.excluded_archived, 3957)
             html = (root / "dist" / "guides" / "postgresql-vs-sqlite-backend" / "index.html").read_text(encoding="utf-8")
             self.assertIn("tag=blackboxia92-21", html)
             self.assertNotIn("paid link", html.lower())
@@ -67,7 +65,7 @@ class BuildTests(unittest.TestCase):
             sitemap = (root / "dist" / "sitemap.xml").read_text(encoding="utf-8")
             self.assertIn("postgresql-vs-sqlite-backend", sitemap)
             self.assertNotIn("/drafts/", sitemap)
-            self.assertNotIn("raspberry-pi-5-vs-intel-nuc-13-pro", sitemap)
+            self.assertIn("raspberry-pi-5-vs-intel-nuc-13-pro", sitemap)
             ET.fromstring(sitemap)
             payload = re.search(
                 r'<script type="application/ld\+json">(.*?)</script>', html, re.DOTALL
@@ -79,6 +77,9 @@ class BuildTests(unittest.TestCase):
             self.assertEqual(types, {"TechArticle", "BreadcrumbList", "ItemList"})
             self.assertTrue((root / "dist" / "guides" / "index.html").exists())
             self.assertTrue((root / "dist" / "topics" / "ci-cd" / "index.html").exists())
+            self.assertTrue((root / "dist" / "catalog" / "index.html").exists())
+            self.assertTrue((root / "dist" / "catalog" / "mass-products" / "index.html").exists())
+            self.assertTrue((root / "dist" / "catalog" / "consumer-products" / "page" / "2" / "index.html").exists())
             self.assertFalse((root / "dist" / "library").exists())
             llms = (root / "dist" / "llms.txt").read_text(encoding="utf-8")
             self.assertIn("postgresql-vs-sqlite-backend", llms)
@@ -107,6 +108,15 @@ class BuildTests(unittest.TestCase):
             self.assertNotIn("Canal de Memoria", target_html)
             self.assertIn("Canonical: https://guides.example/guides/azure-pipelines-vs-buildkite-for-self-hosted-infrastructure/", target_markdown)
             self.assertEqual(target_json["canonical_url"], "https://guides.example/guides/azure-pipelines-vs-buildkite-for-self-hosted-infrastructure/")
+
+            commercial_slug = "raspberry-pi-5-vs-intel-nuc-13-pro-for-bootstrapped-saas-limited-space"
+            commercial_dir = root / "dist" / "guides" / commercial_slug
+            commercial_html = (commercial_dir / "index.html").read_text(encoding="utf-8")
+            self.assertIn("tag=blackboxia92-21", commercial_html)
+            self.assertIn('href="/catalog/mass-products/"', commercial_html)
+            commercial_ld = json.loads(re.search(r'<script type="application/ld\+json">(.*?)</script>', commercial_html, re.DOTALL).group(1))
+            self.assertIn("Product", [node["@type"] for node in commercial_ld["@graph"]])
+            self.assertNotIn('"@type":"Review"', commercial_html)
 
     def test_expanded_draft_is_noindex_and_excluded_from_sitemap(self) -> None:
         with tempfile.TemporaryDirectory() as temp:

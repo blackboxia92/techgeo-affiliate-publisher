@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Product catalog | {{ site_name }}{% endblock %}
+{% block description %}StackSignal product comparisons with documented specifications, buying context, and declared affiliate references.{% endblock %}
+{% block og_title %}Product catalog | {{ site_name }}{% endblock %}
+{% block og_description %}StackSignal product comparisons with documented specifications and affiliate disclosures.{% endblock %}
+{% block content %}
+<main class="shell guide-section library-page">
+  <div class="section-heading"><div><span class="kicker">Commercial catalog</span><h1>Product comparisons</h1></div><p>Product pages remain part of StackSignal and retain their source links and declared affiliate references.</p></div>
+  <section aria-labelledby="commercial-products"><h2 id="commercial-products">Commercial product comparisons ({{ mass_count }})</h2><p><a class="button-link" href="/catalog/mass-products/">Browse all commercial comparisons</a></p><div class="guide-grid">{% for item in mass_pages %}<article class="guide-card"><h3><a href="/guides/{{ item.slug }}/">{{ item.title }}</a></h3><p>{{ item.meta_description }}</p></article>{% endfor %}</div></section>
+  <section aria-labelledby="consumer-products"><h2 id="consumer-products">Consumer product comparisons ({{ consumer_count }})</h2><p><a class="button-link" href="/catalog/consumer-products/">Browse all consumer comparisons</a></p><div class="guide-grid">{% for item in consumer_pages %}<article class="guide-card"><h3><a href="/guides/{{ item.slug }}/">{{ item.title }}</a></h3><p>{{ item.meta_description }}</p></article>{% endfor %}</div></section>
+</main>
+{% endblock %}
