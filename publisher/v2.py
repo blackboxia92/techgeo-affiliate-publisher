@@ -190,7 +190,8 @@ def is_publishable(
     reasons: list[str] = []
     if intent.kind not in category_schema.allowed_intent_types:
         reasons.append("unsupported intent type for category")
-    if len({entity.id for entity in entity_list}) < category_schema.minimum_entities:
+    minimum_entities = 1 if intent.kind == "entity" else category_schema.minimum_entities
+    if len({entity.id for entity in entity_list}) < minimum_entities:
         reasons.append("insufficient distinct entities")
     if len(source_list) < category_schema.minimum_sources:
         reasons.append("insufficient primary sources")

@@ -9,6 +9,7 @@ from pathlib import Path
 from .builder import build_site, expand_catalog
 from .consumer_catalog import generate_consumer_catalog
 from .indexnow import notify_indexnow
+from .ingest import compare_normalized_snapshots, ingest_google_books, ingest_openfoodfacts
 from .mass_catalog import generate_mass_catalog
 from .weekly import generate_weekly_pages
 
@@ -55,6 +56,23 @@ def parser() -> argparse.ArgumentParser:
     notify.add_argument("--key", default=os.getenv("INDEXNOW_KEY"))
     notify.add_argument("--dry-run", action="store_true")
     notify.add_argument("--skip-key-check", action="store_true")
+
+    ingest = commands.add_parser("ingest-google-books", help="Fetch a limited real feed, preserve raw data, and normalize it")
+    ingest.add_argument("--query", default="technology")
+    ingest.add_argument("--limit", type=int, default=200)
+    ingest.add_argument("--output", type=Path, default=Path("data/ingest/google-books"))
+    ingest.add_argument("--batch-id")
+    ingest.add_argument("--history", type=Path)
+
+    off = commands.add_parser("ingest-openfoodfacts", help="Fetch a limited real product feed, preserve raw data, and normalize it")
+    off.add_argument("--limit", type=int, default=200)
+    off.add_argument("--output", type=Path, default=Path("data/ingest/openfoodfacts"))
+    off.add_argument("--batch-id")
+    off.add_argument("--history", type=Path)
+
+    compare = commands.add_parser("compare-ingest-snapshots", help="Compare two preserved normalized ingest snapshots")
+    compare.add_argument("previous", type=Path)
+    compare.add_argument("current", type=Path)
 
     commands.add_parser("key", help="Generate an IndexNow key")
     return root
@@ -124,6 +142,19 @@ def main() -> int:
             skip_key_check=args.skip_key_check,
         )
         print(json.dumps(result, indent=2))
+        return 0
+    if args.command == "ingest-google-books":
+        report = ingest_google_books(
+            query=args.query, limit=args.limit, output_dir=args.output, batch_id=args.batch_id, history_path=args.history
+        )
+        print(json.dumps(report.__dict__, ensure_ascii=False, indent=2))
+        return 0
+    if args.command == "ingest-openfoodfacts":
+        report = ingest_openfoodfacts(limit=args.limit, output_dir=args.output, batch_id=args.batch_id, history_path=args.history)
+        print(json.dumps(report.__dict__, ensure_ascii=False, indent=2))
+        return 0
+    if args.command == "compare-ingest-snapshots":
+        print(json.dumps(compare_normalized_snapshots(args.previous, args.current), indent=2))
         return 0
     return 2
 

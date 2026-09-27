@@ -12,6 +12,8 @@ from publisher.affiliate import AMAZON_ASSOCIATE_TAG, amazon_url, assert_require
 from publisher.builder import build_site, expand_catalog
 from publisher.graph import validate_site_graph
 from publisher.indexnow import notify_indexnow
+from publisher.ingest import RawExternalItem, deduplicate, normalize_openfoodfacts, publication_count, valid_gtin
+from publisher.lifecycle import LifecycleHistory, advance_history, compare_offer_snapshots, evaluate_lifecycle, update_history_ledger
 from publisher.regression import validate_product_invariants
 from publisher.schema import load_page
 from publisher.store import StateStore
@@ -164,6 +166,78 @@ class V2ModelTests(unittest.TestCase):
         graph = validate_site_graph((page, adapt_legacy_page(page, raw)) for page, raw in rows)
         self.assertEqual(graph.orphaned_slugs, ())
         self.assertGreaterEqual(graph.entities, 3)
+
+
+class IngestLifecycleTests(unittest.TestCase):
+    @staticmethod
+    def raw_item(*, code: str, title: str = "  <b>SNACK</b>  DELUXE ", brand: str = "ACME") -> RawExternalItem:
+        return RawExternalItem(
+            source="openfoodfacts-api", source_url=f"https://us.openfoodfacts.org/api/v2/product/{code}.json",
+            retrieved_at="2026-09-26T00:00:00+00:00", batch_id="test-batch",
+            raw={"code": code, "product_name": title, "brands": brand, "packaging": "  Box ", "categories_tags": ["en:snacks"]},
+        )
+
+    def test_dirty_data_is_normalized_with_raw_and_provenance_preserved(self) -> None:
+        candidate = normalize_openfoodfacts(self.raw_item(code="4006381333931"))
+        self.assertIsNotNone(candidate)
+        assert candidate is not None
+        self.assertEqual(candidate.title, "SNACK DELUXE")
+        self.assertEqual(candidate.identifiers["GTIN"], "4006381333931")
+        self.assertEqual(candidate.source.retrieved_at, "2026-09-26T00:00:00+00:00")
+        self.assertEqual(candidate.raw.raw["product_name"], "  <b>SNACK</b>  DELUXE ")
+        self.assertFalse(candidate.offers)
+        self.assertEqual(publication_count((candidate,)), 0)
+
+    def test_invalid_identifiers_and_variants_do_not_auto_merge(self) -> None:
+        invalid = normalize_openfoodfacts(self.raw_item(code="not-a-gtin"))
+        self.assertIsNotNone(invalid)
+        assert invalid is not None
+        self.assertFalse(valid_gtin("not-a-gtin"))
+        self.assertEqual(invalid.identifiers["raw_code"], "not-a-gtin")
+        first = normalize_openfoodfacts(self.raw_item(code="4006381333931"))
+        duplicate = normalize_openfoodfacts(self.raw_item(code="4006381333931", title="Other listing"))
+        variant = normalize_openfoodfacts(self.raw_item(code="unknown-code", title="SNACK DELUXE"))
+        variant_second = normalize_openfoodfacts(self.raw_item(code="another-unknown-code", title="SNACK DELUXE"))
+        accepted, duplicates, variants = deduplicate((first, duplicate, variant, variant_second))
+        self.assertEqual(duplicates, 1)
+        self.assertEqual(variants, 1)
+        self.assertEqual(len(accepted), 3)
+        self.assertTrue(accepted[-1].possible_duplicate)
+
+    def test_lifecycle_never_deletes_or_redirects_on_one_missing_snapshot(self) -> None:
+        entity = Entity("entity:test", "physical-product", "Test", "robot-vacuum", ())
+        active = Offer("offer:test", entity.id, "merchant", "https://merchant.example/item", TemporalState(availability="active", price=100))
+        unavailable = Offer("offer:test", entity.id, "merchant", "https://merchant.example/item", TemporalState(availability="temporarily_unavailable"))
+        self.assertEqual(evaluate_lifecycle(entity, (active,), LifecycleHistory()).status, "active")
+        self.assertEqual(evaluate_lifecycle(entity, (unavailable,), LifecycleHistory()).status, "temporarily_unavailable")
+        missing_once = evaluate_lifecycle(entity, (), LifecycleHistory(consecutive_missing_count=1))
+        self.assertEqual(missing_once.status, "stale")
+        self.assertTrue(missing_once.indexable)
+        self.assertFalse(missing_once.requires_retirement)
+        self.assertFalse(missing_once.requires_redirect)
+        discontinued = evaluate_lifecycle(entity, (), LifecycleHistory(explicit_discontinued=True))
+        self.assertEqual(discontinued.status, "discontinued")
+        replacement = evaluate_lifecycle(entity, (), LifecycleHistory(explicit_discontinued=True, official_successor_id="entity:new"))
+        self.assertEqual(replacement.status, "replaced")
+        self.assertFalse(replacement.requires_redirect)
+        retired = evaluate_lifecycle(entity, (), LifecycleHistory(consecutive_missing_count=3, has_residual_value=False, has_traffic=False))
+        self.assertTrue(retired.requires_retirement)
+        self.assertFalse(retired.requires_redirect)
+        seen = advance_history(LifecycleHistory(), entity_seen=True, offer_seen=True, observed_at="2026-09-26T00:00:00Z")
+        missing = advance_history(seen, entity_seen=False, offer_seen=False, observed_at="2026-09-27T00:00:00Z")
+        self.assertEqual(missing.consecutive_missing_count, 1)
+        self.assertEqual(missing.missing_since, "2026-09-27T00:00:00Z")
+        with tempfile.TemporaryDirectory() as temp:
+            ledger_path = Path(temp) / "history.json"
+            update_history_ledger(ledger_path, entity_ids=(entity.id,), offers=(active,), observed_at="2026-09-26T00:00:00Z")
+            ledger = update_history_ledger(ledger_path, entity_ids=(), offers=(), observed_at="2026-09-27T00:00:00Z")
+            self.assertEqual(ledger[entity.id].consecutive_missing_count, 1)
+
+    def test_snapshot_diff_detects_offer_changes_without_retiring_entity(self) -> None:
+        before = Offer("offer:test", "entity:test", "merchant", "https://merchant.example/a", TemporalState(price=100, availability="active"))
+        after = Offer("offer:test", "entity:test", "merchant", "https://merchant.example/b", TemporalState(price=90, availability="temporarily_unavailable"))
+        kinds = {change.kind for change in compare_offer_snapshots((before,), (after,))}
+        self.assertEqual(kinds, {"price_changed", "availability_changed", "destination_changed"})
 
 
 class BuildTests(unittest.TestCase):
