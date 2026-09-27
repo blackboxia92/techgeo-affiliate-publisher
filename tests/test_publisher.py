@@ -8,7 +8,7 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
 
-from publisher.affiliate import AMAZON_ASSOCIATE_TAG, amazon_url, assert_required_tag
+from publisher.affiliate import AMAZON_ASSOCIATE_TAG, amazon_url, assert_required_tag, validate_affiliate_target
 from publisher.builder import build_site, expand_catalog
 from publisher.graph import validate_site_graph
 from publisher.indexnow import notify_indexnow
@@ -47,6 +47,11 @@ class AffiliateTests(unittest.TestCase):
     def test_wrong_tag_is_rejected(self) -> None:
         with self.assertRaises(ValueError):
             assert_required_tag("different-20")
+
+    def test_sovrn_target_is_preserved_and_unrelated_targets_are_rejected(self) -> None:
+        self.assertEqual(validate_affiliate_target("https://sovrn.co/ngrip4g"), "https://sovrn.co/ngrip4g")
+        with self.assertRaises(ValueError):
+            validate_affiliate_target("https://www.walmart.com/ip/example")
 
 
 class V2ModelTests(unittest.TestCase):

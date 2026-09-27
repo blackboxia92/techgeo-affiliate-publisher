@@ -1,0 +1,91 @@
+{
+  "content_model": "v2",
+  "category": "consumer-product",
+  "intent_type": "entity",
+  "slug": "mastercraft-stratus-as-235-50r18-97v-fit-check",
+  "status": "reviewed",
+  "locale": "en",
+  "title": "Mastercraft Stratus A/S 235/50R18 97V: fit-check guide before buying",
+  "meta_description": "A source-backed fit-check guide for the Mastercraft Stratus A/S 235/50R18 97V tire: verify vehicle size, load, speed and cold pressure first.",
+  "eyebrow": "Vehicle tire fit guide",
+  "intro": "The Mastercraft Stratus A/S 235/50R18 97V listing describes an all-season passenger tire for sedans and CUVs. This guide explains what that description confirms, what it cannot confirm, and the vehicle information to check before ordering.",
+  "verdict": "Treat 235/50R18 97V as a product specification, not a universal fitment decision. Order only after your vehicle placard or owner’s manual confirms the required size, load capability, speed capability, and cold inflation pressure.",
+  "updated_at": "2026-09-26",
+  "reviewed_by": "StackSignal technical editorial desk",
+  "criteria": [
+    {
+      "key": "identity",
+      "label": "What it identifies",
+      "description": "The product listing versus the vehicle-specific source of truth."
+    },
+    {
+      "key": "fit",
+      "label": "Fit decision",
+      "description": "What must be matched before a replacement tire is ordered."
+    },
+    {
+      "key": "operations",
+      "label": "Safe next step",
+      "description": "The verification and maintenance action that follows from each source."
+    }
+  ],
+  "alternatives": [
+    {
+      "name": "Mastercraft Stratus A/S 235/50R18 97V listing",
+      "url": "https://www.walmart.com/ip/Mastercraft-Stratus-A-S-All-Season-235-50R18-97V-Passenger-Tire/384696512",
+      "summary": "A current retailer listing for an all-season passenger tire described for sedans and CUVs, with the size and service description 235/50R18 97V.",
+      "specs": {
+        "model": "Mastercraft Stratus A/S 235/50R18 97V",
+        "identity": "Identifies the listed tire as Mastercraft Stratus A/S, size 235/50R18, service description 97V, and all-season passenger-tire use.",
+        "fit": "Does not by itself establish that the tire matches a specific vehicle, axle requirement, wheel, load requirement, or manufacturer-approved replacement size.",
+        "operations": "Check the exact listing, vehicle fitment, seller, installation options, warranty terms, and current availability at the time of purchase."
+      }
+    },
+    {
+      "name": "Vehicle placard and owner’s manual",
+      "url": "https://www.nhtsa.gov/vehicle-safety/tires",
+      "summary": "NHTSA directs drivers to the owner’s manual or Tire and Loading Information Label to identify the correct replacement-tire size and recommended cold pressure.",
+      "specs": {
+        "model": "Vehicle placard and owner’s manual requirements",
+        "identity": "Provides the vehicle manufacturer’s recommended tire size and cold inflation pressure for the specific vehicle configuration.",
+        "fit": "The decision authority: match the vehicle’s original size or another size recommended by the manufacturer, and confirm applicable load and speed requirements.",
+        "operations": "Use the vehicle manufacturer’s cold-pressure specification, not a sidewall maximum, and check pressure monthly when tires are cold."
+      }
+    }
+  ],
+  "faq": [
+    {
+      "question": "Does 235/50R18 97V guarantee that this tire fits my vehicle?",
+      "answer": "No. The code identifies the listed tire’s size and service description, but fitment also depends on the vehicle manufacturer’s specified size, load and speed requirements, wheel compatibility, and the vehicle configuration. Check the Tire and Loading Information Label or owner’s manual before ordering."
+    },
+    {
+      "question": "What should I compare before buying a replacement tire?",
+      "answer": "Compare the listing’s tire size and service description with the vehicle placard or owner’s manual. Also verify that the seller’s fitment tool, installation process, warranty conditions, and local availability apply to your exact vehicle and intended use."
+    },
+    {
+      "question": "Which tire pressure should I use after installation?",
+      "answer": "Use the vehicle manufacturer’s recommended cold inflation pressure shown on the Tire and Loading Information Label or in the owner’s manual. NHTSA advises checking tires when cold; a pressure printed on the tire sidewall is not a substitute for the vehicle specification."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Mastercraft Stratus A/S 235/50R18 97V product listing",
+      "publisher": "Walmart",
+      "url": "https://www.walmart.com/ip/Mastercraft-Stratus-A-S-All-Season-235-50R18-97V-Passenger-Tire/384696512"
+    },
+    {
+      "label": "Tire safety, fitment and pressure guidance",
+      "publisher": "National Highway Traffic Safety Administration",
+      "url": "https://www.nhtsa.gov/vehicle-safety/tires"
+    }
+  ],
+  "affiliate_disclosure": "This page contains an affiliate link. If you make a qualifying purchase through it, StackSignal may earn a commission at no extra cost to you.",
+  "resources": [
+    {
+      "title": "Check the Mastercraft Stratus A/S 235/50R18 97V listing",
+      "target_url": "https://sovrn.co/ngrip4g",
+      "link_label": "Check current price and availability at Walmart",
+      "note": "Use the current listing only after confirming the exact vehicle fitment and manufacturer requirements described in this guide."
+    }
+  ]
+}

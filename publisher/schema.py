@@ -8,7 +8,7 @@ from pathlib import Path
 from typing import Any
 from urllib.parse import urlparse
 
-from .affiliate import validate_amazon_target
+from .affiliate import validate_affiliate_target, validate_amazon_target
 
 _SLUG = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 _ALLOWED_STATUS = {"draft", "reviewed"}
@@ -66,6 +66,7 @@ class Resource:
     note: str
     asin: str | None = None
     target_url: str | None = None
+    link_label: str | None = None
 
 
 @dataclass(frozen=True)
@@ -93,6 +94,7 @@ class Page:
     faq: tuple[Faq, ...]
     sources: tuple[Source, ...]
     resources: tuple[Resource, ...]
+    affiliate_disclosure: str | None = None
     recommendation: Recommendation | None = None
 
     @property
@@ -164,7 +166,7 @@ def load_page(path: Path) -> tuple[Page, dict[str, Any]]:
             raise ContentError(f"resources[{i}] must contain exactly one of asin or target_url")
         if target_url:
             try:
-                target_url = validate_amazon_target(_https_url(target_url, f"resources[{i}].target_url"))
+                target_url = validate_affiliate_target(_https_url(target_url, f"resources[{i}].target_url"))
             except ValueError as exc:
                 raise ContentError(str(exc)) from exc
         resource_items.append(
@@ -173,6 +175,7 @@ def load_page(path: Path) -> tuple[Page, dict[str, Any]]:
                 note=_text(item.get("note"), f"resources[{i}].note", 20),
                 asin=_text(asin, f"resources[{i}].asin") if asin else None,
                 target_url=target_url,
+                link_label=_text(item["link_label"], f"resources[{i}].link_label") if item.get("link_label") else None,
             )
         )
     resources = tuple(resource_items)
@@ -213,6 +216,8 @@ def load_page(path: Path) -> tuple[Page, dict[str, Any]]:
         faq=faq,
         sources=sources,
         resources=resources,
+        affiliate_disclosure=_text(raw["affiliate_disclosure"], "affiliate_disclosure", 20)
+        if raw.get("affiliate_disclosure") else None,
         recommendation=recommendation,
     )
     _validate_page(page)

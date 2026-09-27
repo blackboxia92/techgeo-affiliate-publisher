@@ -199,7 +199,7 @@ def _markdown_document(
     if page.resources:
         lines.extend(["## Recursos", ""])
         for position, resource in enumerate(page.resources):
-            label = (
+            label = resource.link_label or (
                 "Ver disponibilidad y precio actualizado en Amazon"
                 if position % 2 == 0
                 else "Consultar especificaciones y oferta en Amazon"
@@ -208,7 +208,7 @@ def _markdown_document(
         lines.extend(
             [
                 "",
-                "StackSignal participa en el programa de afiliados de Amazon. Si compras a través de nuestros "
+                page.affiliate_disclosure or "StackSignal participa en el programa de afiliados de Amazon. Si compras a través de nuestros "
                 "enlaces recomendados, podemos recibir una comisión sin ningún costo adicional para vos.",
                 "",
             ]

@@ -72,11 +72,11 @@
 
     {% if page.resources %}
     <section class="content-section resource-section" aria-labelledby="resources-heading">
-      <div class="affiliate-notice">StackSignal participa en el programa de afiliados de Amazon. Si compras a través de nuestros enlaces recomendados, podemos recibir una comisión sin ningún costo adicional para vos.</div>
-      <div class="section-heading compact"><div><span class="kicker">Further reading</span><h2 id="resources-heading">Technical books</h2></div></div>
+      <div class="affiliate-notice">{{ page.affiliate_disclosure or "StackSignal participa en el programa de afiliados de Amazon. Si compras a través de nuestros enlaces recomendados, podemos recibir una comisión sin ningún costo adicional para vos." }}</div>
+      <div class="section-heading compact"><div><span class="kicker">Further reading</span><h2 id="resources-heading">Recommended references</h2></div></div>
       <div class="resource-grid">
         {% for resource in page.resources %}
-        <div class="resource-card"><div><h3>{{ resource.title }}</h3><p>{{ resource.note }}</p></div><a class="button-link" href="{{ resource_url(resource) }}" rel="sponsored nofollow noopener" target="_blank">{% if loop.index is odd %}Ver disponibilidad y precio actualizado en Amazon{% else %}Consultar especificaciones y oferta en Amazon{% endif %}</a></div>
+        <div class="resource-card"><div><h3>{{ resource.title }}</h3><p>{{ resource.note }}</p></div><a class="button-link" href="{{ resource_url(resource) }}" rel="sponsored nofollow noopener" target="_blank">{{ resource.link_label or ("Ver disponibilidad y precio actualizado en Amazon" if loop.index is odd else "Consultar especificaciones y oferta en Amazon") }}</a></div>
         {% endfor %}
       </div>
     </section>

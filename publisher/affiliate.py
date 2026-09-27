@@ -5,6 +5,7 @@ from urllib.parse import parse_qs, urlencode, urlparse
 
 AMAZON_ASSOCIATE_TAG = "blackboxia92-21"
 AMAZON_DOMAIN = "www.amazon.es"
+SOVRN_DOMAINS = frozenset({"sovrn.co", "www.sovrn.co"})
 _ASIN = re.compile(r"^[A-Z0-9]{10}$", re.IGNORECASE)
 
 
@@ -32,6 +33,22 @@ def validate_amazon_target(url: str) -> str:
     if parse_qs(parsed.query).get("tag") != [AMAZON_ASSOCIATE_TAG]:
         raise ValueError(f"Amazon target must include tag={AMAZON_ASSOCIATE_TAG}")
     return url
+
+
+def validate_affiliate_target(url: str) -> str:
+    """Accept a configured direct Amazon link or a Sovrn Commerce short link.
+
+    Sovrn links are intentionally preserved as supplied. Resolving or replacing
+    one during a build could discard the affiliate routing selected by Commerce.
+    """
+    parsed = urlparse(url)
+    if parsed.scheme != "https":
+        raise ValueError("Affiliate target must use HTTPS")
+    if parsed.hostname in SOVRN_DOMAINS:
+        if not parsed.path or parsed.path == "/":
+            raise ValueError("Sovrn target must include a link path")
+        return url
+    return validate_amazon_target(url)
 
 
 def assert_required_tag(configured_tag: str | None) -> None:
