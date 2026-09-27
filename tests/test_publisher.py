@@ -12,6 +12,7 @@ from publisher.affiliate import AMAZON_ASSOCIATE_TAG, amazon_url, assert_require
 from publisher.builder import build_site, expand_catalog
 from publisher.indexnow import notify_indexnow
 from publisher.schema import load_page
+from publisher.v2 import adapt_legacy_page, create_comparison, renderable_criteria
 from publisher.weekly import generate_weekly_pages
 
 
@@ -26,6 +27,63 @@ class AffiliateTests(unittest.TestCase):
     def test_wrong_tag_is_rejected(self) -> None:
         with self.assertRaises(ValueError):
             assert_required_tag("different-20")
+
+
+class V2ModelTests(unittest.TestCase):
+    def test_legacy_catalog_adapter_preserves_count_and_affiliate_routes(self) -> None:
+        legacy_rows = [load_page(path) for path in (PROJECT / "content" / "pages").rglob("*.json")]
+        pages = [page for page, _ in legacy_rows]
+        commercial = [page for page in pages if page.is_commercial]
+        self.assertEqual(len(commercial), 3957)
+
+        page, raw = load_page(PROJECT / "content" / "pages" / "postgresql-vs-sqlite-backend.json")
+        model = adapt_legacy_page(page, raw)
+        self.assertTrue(model.entities)
+        self.assertTrue(model.offers)
+        self.assertTrue(model.affiliate_routes)
+        self.assertNotEqual(model.entities[0].id, model.offers[0].id)
+        self.assertEqual(model.resource_url(page.resources[0]), page.resources[0].target_url or amazon_url(page.resources[0].asin))
+        self.assertTrue(model.intent.canonical_intent.startswith("comparison:"))
+        self.assertTrue(all(source.verified_at == page.updated_at for source in model.sources))
+        for legacy_page, legacy_raw in legacy_rows:
+            legacy_model = adapt_legacy_page(legacy_page, legacy_raw)
+            for resource in legacy_page.resources:
+                self.assertEqual(
+                    legacy_model.resource_url(resource),
+                    resource.target_url or amazon_url(resource.asin),
+                )
+            if legacy_page.recommendation:
+                self.assertEqual(legacy_model.recommendation_url(), legacy_page.recommendation.amazon_url)
+
+    def test_category_schema_removes_placeholders_without_erasing_hardware_facts(self) -> None:
+        azure, raw = load_page(PROJECT / "content" / "pages" / "azure-pipelines-vs-buildkite-for-self-hosted-infrastructure.json")
+        azure_keys = {criterion.key for criterion in renderable_criteria(azure, adapt_legacy_page(azure, raw).category_schema)}
+        self.assertEqual(azure_keys, {"model", "operations", "fit", "audience"})
+        self.assertNotIn("ram_limit", azure_keys)
+
+        consumer_path = next((PROJECT / "content" / "pages" / "consumer").glob("*.json"))
+        consumer, raw = load_page(consumer_path)
+        consumer_keys = {criterion.key for criterion in renderable_criteria(consumer, adapt_legacy_page(consumer, raw).category_schema)}
+        self.assertFalse({"memory_channel", "ram_limit", "idle_watts"} & consumer_keys)
+
+        mass_path = next((PROJECT / "content" / "pages" / "mass").glob("*.json"))
+        mass, raw = load_page(mass_path)
+        mass_keys = {criterion.key for criterion in renderable_criteria(mass, adapt_legacy_page(mass, raw).category_schema)}
+        self.assertTrue({"memory_channel", "ram_limit"} <= mass_keys)
+
+    def test_draft_factory_requires_intent_inputs_and_never_writes_layout(self) -> None:
+        draft = create_comparison(
+            slug="alpha-vs-beta-for-teams",
+            title="Alpha vs Beta for teams",
+            category="software",
+            audience="teams",
+            alternatives=[{"name": "Alpha"}, {"name": "Beta"}],
+            criteria=[{"key": "fit", "label": "Fit"}],
+            sources=[{"url": "https://example.com"}],
+        )
+        self.assertEqual(draft["status"], "draft")
+        self.assertEqual(draft["category"], "software")
+        self.assertIn("canonical_intent", draft)
 
 
 class BuildTests(unittest.TestCase):
@@ -47,6 +105,7 @@ class BuildTests(unittest.TestCase):
                 base_url="https://guides.example",
             )
             self.assertEqual(report.reviewed, self.reviewed_fixture_count())
+            self.assertEqual(report.reviewed, 4000)
             self.assertEqual(report.drafts, 0)
             html = (root / "dist" / "guides" / "postgresql-vs-sqlite-backend" / "index.html").read_text(encoding="utf-8")
             self.assertIn("tag=blackboxia92-21", html)
@@ -68,6 +127,7 @@ class BuildTests(unittest.TestCase):
             self.assertNotIn("/drafts/", sitemap)
             self.assertIn("raspberry-pi-5-vs-intel-nuc-13-pro", sitemap)
             ET.fromstring(sitemap)
+            self.assertEqual(len(ET.fromstring(sitemap)), 4006)
             payload = re.search(
                 r'<script type="application/ld\+json">(.*?)</script>', html, re.DOTALL
             )

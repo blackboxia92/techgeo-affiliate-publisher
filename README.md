@@ -4,7 +4,7 @@ Generador estático independiente para comparativas técnicas, recursos para des
 
 ## Qué incluye
 
-- Generación estática desde JSON con HTML, Markdown y JSON derivados de la misma fuente.
+- Generación estática desde JSON con HTML, Markdown y JSON derivados de la misma fuente; el adaptador V2 separa `Intent`, `Entity`, `Offer`, `AffiliateRoute`, `TemporalState` y provenance sin migrar el inventario histórico.
 - Borradores `noindex,nofollow` hasta que un editor cambia su estado a `reviewed`.
 - Puerta de calidad obligatoria para títulos, descripción, criterios, FAQs, fuentes y revisión.
 - Hash de contenido y restricción única en SQLite para evitar duplicados.
@@ -12,7 +12,7 @@ Generador estático independiente para comparativas técnicas, recursos para des
 - Aviso de comisión general y contextual junto a cada bloque de enlaces de Amazon.
 - Atributos `rel="sponsored nofollow noopener"` en enlaces afiliados.
 - `TechArticle`, `BreadcrumbList` e `ItemList` en JSON-LD, sin `Product`, `Review`, precios, ratings ni disponibilidad inventados.
-- Sitemap XML automático, fragmentado cada 45.000 URLs, con sólo páginas editoriales públicas y hubs de StackSignal.
+- Sitemap XML automático, fragmentado cada 45.000 URLs, con guías, catálogo comercial público y hubs indexables de StackSignal.
 - `robots.txt`, URLs canónicas y fechas `lastmod`.
 - Cola incremental de URLs modificadas para IndexNow, en lotes de hasta 10.000.
 - Contenedor de producción con Nginx y puerto 8080.
@@ -23,6 +23,12 @@ Generador estático independiente para comparativas técnicas, recursos para des
 Una página sólo entra al sitemap y a la cola IndexNow cuando tiene evidencia primaria, criterios completos, una conclusión útil y `status: "reviewed"`. Los catálogos comerciales `mass-products-v1` y `consumer-products-v1` son inventario de StackSignal: se publican, aparecen en el sitemap y se incluyen en IndexNow cuando cambian. Este control evita convertir combinaciones de palabras clave en páginas vacías.
 
 La estructura ayuda a lectores y sistemas automáticos a entender el contenido. No garantiza citas en modelos de lenguaje, rich results ni posiciones de búsqueda.
+
+## Modelo V2 y creación de contenido
+
+El build adapta los JSON actuales a un modelo interno de `Intent → CategorySchema → Entity/Facts → Offer → AffiliateRoute → output`. Las tablas se eligen por categoría y omiten placeholders o atributos irrelevantes sin modificar los datos fuente. La capa mantiene los enlaces de Amazon históricos como primera ruta; no activa una red nueva automáticamente.
+
+Para crear un borrador con muy poco boilerplate, usar `publisher.v2.create_comparison`, completar investigación/fuentes/FAQ y recién entonces marcarlo `reviewed`. El ejemplo y el flujo de actualización de facts sin tocar templates están en [docs/architecture-v2.md](docs/architecture-v2.md). La evaluación de Sovrn y la recomendación de integración futura están en [docs/sovrn-commerce.md](docs/sovrn-commerce.md).
 
 ## Instalación local
 

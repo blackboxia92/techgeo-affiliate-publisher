@@ -15,6 +15,7 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 from .affiliate import amazon_url, assert_required_tag
 from .schema import ContentError, Criterion, Page, Resource, load_page
 from .store import StateStore
+from .v2 import LegacyPageModel, adapt_legacy_page, renderable_criteria
 
 SITEMAP_LIMIT = 45_000
 
@@ -112,7 +113,7 @@ def _json_ld(page: Page, public_url: str, site_name: str) -> str:
     return json.dumps(payload, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
 
 
-def _markdown_table(page: Page) -> str:
+def _markdown_table(page: Page, criteria: tuple[Criterion, ...]) -> str:
     def cell(value: str) -> str:
         return " ".join(value.split()).replace("|", "\\|")
 
@@ -121,7 +122,7 @@ def _markdown_table(page: Page) -> str:
         "| Criterion | " + " | ".join(names) + " |",
         "| --- | " + " | ".join("---" for _ in names) + " |",
     ]
-    for criterion in page.criteria:
+    for criterion in criteria:
         values = [cell(alternative.specs.get(criterion.key, "N/A — no aplica o no fue verificado")) for alternative in page.alternatives]
         rows.append(f"| {cell(criterion.label)} | " + " | ".join(values) + " |")
     return "\n".join(rows)
@@ -135,13 +136,19 @@ def _resource_url(resource: Resource) -> str:
     raise ContentError(f"Resource {resource.title!r} has no Amazon target")
 
 
-def _markdown_document(page: Page, public_url: str) -> str:
+def _markdown_document(
+    page: Page,
+    public_url: str,
+    criteria: tuple[Criterion, ...],
+    resource_url,
+    recommendation_url: str | None,
+) -> str:
     lines = [f"# {page.title}", ""]
     if page.recommendation:
         lines.extend(
             [
                 f"Ganador: **{page.recommendation.winner}**; precio estimado: **USD {page.recommendation.estimated_price_usd}**; "
-                f"[Ver disponibilidad y precio actualizado en Amazon]({page.recommendation.amazon_url}).",
+                f"[Ver disponibilidad y precio actualizado en Amazon]({recommendation_url or page.recommendation.amazon_url}).",
                 "",
             ]
         )
@@ -149,7 +156,7 @@ def _markdown_document(page: Page, public_url: str) -> str:
         f"Canonical: {public_url}",
         f"Updated: {page.updated_at}",
         "",
-        _markdown_table(page),
+        _markdown_table(page, criteria),
         "",
         page.intro,
         "",
@@ -179,7 +186,7 @@ def _markdown_document(page: Page, public_url: str) -> str:
                 if position % 2 == 0
                 else "Consultar especificaciones y oferta en Amazon"
             )
-            lines.extend([f"- [{label}]({_resource_url(resource)}) — {resource.title}: {resource.note}"])
+            lines.extend([f"- [{label}]({resource_url(resource)}) — {resource.title}: {resource.note}"])
         lines.extend(
             [
                 "",
@@ -194,12 +201,19 @@ def _markdown_document(page: Page, public_url: str) -> str:
     return "\n".join(lines)
 
 
-def _json_document(page: Page, public_url: str) -> str:
+def _json_document(
+    page: Page,
+    public_url: str,
+    criteria: tuple[Criterion, ...],
+    model: LegacyPageModel,
+) -> str:
     """Write a non-canonical, machine-readable view from the same Page object as HTML."""
     payload = {
         "title": page.title,
         "slug": page.slug,
         "canonical_url": public_url,
+        "canonical_intent": model.intent.canonical_intent,
+        "category": model.category_schema.id,
         "updated_at": page.updated_at,
         "summary": page.intro,
         "entities": [{"name": item.name, "url": item.url} for item in page.alternatives],
@@ -211,7 +225,7 @@ def _json_document(page: Page, public_url: str) -> str:
                     "description": criterion.description,
                     "values": {item.name: item.specs[criterion.key] for item in page.alternatives},
                 }
-                for criterion in page.criteria
+                for criterion in criteria
             ],
             "verdict": page.verdict,
         },
@@ -221,8 +235,14 @@ def _json_document(page: Page, public_url: str) -> str:
             for item in page.alternatives
         ],
         "sources": [
-            {"label": source.label, "publisher": source.publisher, "url": source.url}
-            for source in page.sources
+            {
+                "id": source.id,
+                "publisher": source.publisher,
+                "url": source.url,
+                "source_type": source.source_type,
+                "verified_at": source.verified_at,
+            }
+            for source in model.sources
         ],
         "outbound_urls": sorted({item.url for item in page.alternatives} | {source.url for source in page.sources}),
     }
@@ -365,18 +385,25 @@ def build_site(
                 for key, value in raw.items()
                 if key not in {"slug", "status", "updated_at", "reviewed_by"}
             }
+            # A schema change alters the public representation and must reach
+            # the existing post-deploy IndexNow queue on persistent builds.
+            substantive_content["presentation_schema_version"] = 2
             content_hash = hashlib.sha256(
                 json.dumps(substantive_content, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
             ).hexdigest()
             section_url, section_label = _catalog_section(page)
+            model = adapt_legacy_page(page, raw)
+            comparison_criteria = renderable_criteria(page, model.category_schema)
             html = article_template.render(
                 page=page,
                 canonical_url=public_url,
                 site_name="StackSignal",
                 amazon_url=amazon_url,
-                resource_url=_resource_url,
+                resource_url=model.resource_url,
+                recommendation_url=model.recommendation_url(),
                 json_ld=_json_ld(page, public_url, "StackSignal"),
-                markdown_table=_markdown_table(page),
+                markdown_table=_markdown_table(page, comparison_criteria),
+                comparison_criteria=comparison_criteria,
                 related_pages=_related_pages(
                     page,
                     [candidate for candidate in pages if candidate.indexable and not candidate.is_commercial],
@@ -386,10 +413,12 @@ def build_site(
             )
             destination.write_text(html, encoding="utf-8")
             (destination.parent / "index.md").write_text(
-                _markdown_document(page, public_url), encoding="utf-8"
+                _markdown_document(
+                    page, public_url, comparison_criteria, model.resource_url, model.recommendation_url()
+                ), encoding="utf-8"
             )
             (destination.parent / "index.json").write_text(
-                _json_document(page, public_url), encoding="utf-8"
+                _json_document(page, public_url, comparison_criteria, model), encoding="utf-8"
             )
             if store.upsert_page(
                 slug=page.slug,
