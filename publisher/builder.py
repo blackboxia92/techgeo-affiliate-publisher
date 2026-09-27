@@ -5,17 +5,20 @@ import json
 import os
 import re
 import shutil
+import tracemalloc
 from dataclasses import dataclass
 from pathlib import Path
+from time import perf_counter
 from urllib.parse import urlparse
 from xml.sax.saxutils import escape
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 from .affiliate import amazon_url, assert_required_tag
+from .graph import validate_site_graph
 from .schema import ContentError, Criterion, Page, Resource, load_page
 from .store import StateStore
-from .v2 import LegacyPageModel, adapt_legacy_page, renderable_criteria
+from .v2 import LegacyPageModel, adapt_legacy_page, is_publishable, renderable_criteria
 
 SITEMAP_LIMIT = 45_000
 
@@ -44,6 +47,21 @@ class BuildReport:
     changed: int
     skipped_drafts: int
     output: Path
+    metrics: "BuildMetrics | None" = None
+
+
+@dataclass(frozen=True)
+class BuildMetrics:
+    page_count: int
+    total_seconds: float
+    load_seconds: float
+    render_seconds: float
+    hub_and_sitemap_seconds: float
+    peak_tracemalloc_bytes: int
+
+    @property
+    def pages_per_second(self) -> float:
+        return 0.0 if not self.render_seconds else self.page_count / self.render_seconds
 
 
 def _canonical_base(value: str) -> str:
@@ -335,7 +353,12 @@ def build_site(
     indexnow_key: str | None = None,
     configured_tag: str | None = None,
     include_drafts: bool = False,
+    collect_metrics: bool = False,
+    trace_memory: bool = False,
 ) -> BuildReport:
+    started = perf_counter()
+    if trace_memory:
+        tracemalloc.start()
     assert_required_tag(configured_tag)
     base_url = _canonical_base(base_url)
     template_dir = Path(__file__).parent / "templates"
@@ -363,9 +386,15 @@ def build_site(
         page, raw = load_page(path)
         pages.append(page)
         render_pages.append((page, raw))
+    loaded_at = perf_counter()
+    graph = validate_site_graph((page, adapt_legacy_page(page, raw)) for page, raw in render_pages)
+    if graph.orphaned_slugs:
+        raise ContentError(f"Public pages without a catalog graph path: {', '.join(graph.orphaned_slugs)}")
 
     reviewed = drafts = changed = skipped_drafts = 0
     with StateStore(state_path) as store:
+        render_started = perf_counter()
+        published_v2_intents: set[str] = set()
         for page, raw in render_pages:
             if page.indexable:
                 reviewed += 1
@@ -393,6 +422,20 @@ def build_site(
             ).hexdigest()
             section_url, section_label = _catalog_section(page)
             model = adapt_legacy_page(page, raw)
+            if raw.get("content_model") == "v2" and page.indexable:
+                eligibility = is_publishable(
+                    intent=model.intent,
+                    category_schema=model.category_schema,
+                    entities=model.entities,
+                    sources=model.sources,
+                    offers=model.offers,
+                    existing_intents=published_v2_intents,
+                )
+                if not eligibility.publishable:
+                    raise ContentError(
+                        f"{page.slug} is not publishable: {'; '.join(eligibility.reasons)}"
+                    )
+                published_v2_intents.add(eligibility.canonical_intent)
             comparison_criteria = renderable_criteria(page, model.category_schema)
             html = article_template.render(
                 page=page,
@@ -430,6 +473,7 @@ def build_site(
             ):
                 changed += 1
 
+        rendered_at = perf_counter()
         store.prune_except({page.slug for page in pages})
         reviewed_pages = sorted((page for page in pages if page.indexable), key=lambda page: page.updated_at, reverse=True)
         editorial_pages = [page for page in reviewed_pages if not page.is_commercial]
@@ -527,6 +571,7 @@ def build_site(
         sitemap_rows: list[object] = list(store.indexable_pages()) + hub_rows
         _write_sitemaps(output_dir, sitemap_rows, base_url)
         _write_llms(output_dir, editorial_pages, base_url)
+        hubs_written_at = perf_counter()
 
     (output_dir / "robots.txt").write_text(
         f"User-agent: *\nAllow: /\nDisallow: /drafts/\nSitemap: {base_url}/sitemap.xml\n",
@@ -537,7 +582,21 @@ def build_site(
 
         validate_key(indexnow_key)
         (output_dir / f"{indexnow_key}.txt").write_text(indexnow_key, encoding="utf-8")
-    return BuildReport(reviewed, drafts, changed, skipped_drafts, output_dir)
+    metrics = None
+    if collect_metrics or trace_memory:
+        peak_bytes = 0
+        if trace_memory:
+            _, peak_bytes = tracemalloc.get_traced_memory()
+            tracemalloc.stop()
+        metrics = BuildMetrics(
+            page_count=reviewed + (drafts if include_drafts else 0),
+            total_seconds=perf_counter() - started,
+            load_seconds=loaded_at - started,
+            render_seconds=rendered_at - render_started,
+            hub_and_sitemap_seconds=hubs_written_at - rendered_at,
+            peak_tracemalloc_bytes=peak_bytes,
+        )
+    return BuildReport(reviewed, drafts, changed, skipped_drafts, output_dir, metrics)
 
 
 def expand_catalog(catalog_path: Path, destination: Path, limit: int | None = None) -> int:

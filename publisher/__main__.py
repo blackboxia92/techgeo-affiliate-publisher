@@ -24,6 +24,8 @@ def parser() -> argparse.ArgumentParser:
     build.add_argument("--base-url", default=os.getenv("BASE_URL", "https://example.com"))
     build.add_argument("--indexnow-key", default=os.getenv("INDEXNOW_KEY") or None)
     build.add_argument("--include-drafts", action="store_true")
+    build.add_argument("--metrics", action="store_true", help="Measure build phases and throughput")
+    build.add_argument("--trace-memory", action="store_true", help="Also collect Python allocation peak; slower")
 
     expand = commands.add_parser("expand", help="Generate noindex editorial drafts from a catalog")
     expand.add_argument("--catalog", type=Path, default=Path("content/catalog.json"))
@@ -103,8 +105,13 @@ def main() -> int:
             indexnow_key=args.indexnow_key,
             configured_tag=os.getenv("AMAZON_ASSOCIATE_TAG"),
             include_drafts=args.include_drafts,
+            collect_metrics=args.metrics or args.trace_memory,
+            trace_memory=args.trace_memory,
         )
-        print(json.dumps(report.__dict__ | {"output": str(report.output)}, indent=2))
+        payload = report.__dict__ | {"output": str(report.output)}
+        if report.metrics:
+            payload["metrics"] = report.metrics.__dict__ | {"pages_per_second": report.metrics.pages_per_second}
+        print(json.dumps(payload, indent=2))
         return 0
     if args.command == "notify":
         if not args.key:

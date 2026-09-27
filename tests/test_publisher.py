@@ -10,9 +10,27 @@ from urllib.parse import parse_qs, urlparse
 
 from publisher.affiliate import AMAZON_ASSOCIATE_TAG, amazon_url, assert_required_tag
 from publisher.builder import build_site, expand_catalog
+from publisher.graph import validate_site_graph
 from publisher.indexnow import notify_indexnow
+from publisher.regression import validate_product_invariants
 from publisher.schema import load_page
-from publisher.v2 import adapt_legacy_page, create_comparison, renderable_criteria
+from publisher.store import StateStore
+from publisher.v2 import (
+    AffiliateRoute,
+    CATEGORY_SCHEMAS,
+    Entity,
+    Fact,
+    Intent,
+    Offer,
+    Source,
+    TemporalState,
+    adapt_legacy_page,
+    canonical_intent_key,
+    create_comparison,
+    is_publishable,
+    renderable_criteria,
+    resolve_affiliate_link,
+)
 from publisher.weekly import generate_weekly_pages
 
 
@@ -43,7 +61,7 @@ class V2ModelTests(unittest.TestCase):
         self.assertTrue(model.affiliate_routes)
         self.assertNotEqual(model.entities[0].id, model.offers[0].id)
         self.assertEqual(model.resource_url(page.resources[0]), page.resources[0].target_url or amazon_url(page.resources[0].asin))
-        self.assertTrue(model.intent.canonical_intent.startswith("comparison:"))
+        self.assertIn(":comparison:", model.intent.canonical_intent)
         self.assertTrue(all(source.verified_at == page.updated_at for source in model.sources))
         for legacy_page, legacy_raw in legacy_rows:
             legacy_model = adapt_legacy_page(legacy_page, legacy_raw)
@@ -84,6 +102,68 @@ class V2ModelTests(unittest.TestCase):
         self.assertEqual(draft["status"], "draft")
         self.assertEqual(draft["category"], "software")
         self.assertIn("canonical_intent", draft)
+
+    def test_archetype_schemas_and_eligibility_are_explicit(self) -> None:
+        self.assertTrue({"robot-vacuum", "ci-cd", "hotel"} <= set(CATEGORY_SCHEMAS))
+        robot = CATEGORY_SCHEMAS["robot-vacuum"]
+        hotel = CATEGORY_SCHEMAS["hotel"]
+        self.assertTrue(robot.requires_offer)
+        self.assertTrue(any(field.temporal for field in hotel.fields or ()))
+
+        source = Source("source:roborock", "Roborock", "https://example.com/source", "official", verified_at="2026-09-26")
+        entities = (
+            Entity("entity:roborock-qrevo-s", "physical-product", "Roborock Qrevo S", "robot-vacuum", (
+                Fact("navigation", "LiDAR", source.id, "2026-09-26"),
+                Fact("mopping", "Supported", source.id, "2026-09-26"),
+            )),
+            Entity("entity:irobot-roomba", "physical-product", "iRobot Roomba", "robot-vacuum", (
+                Fact("navigation", "Camera-based", source.id, "2026-09-26"),
+                Fact("mopping", "Not supported", source.id, "2026-09-26"),
+            )),
+        )
+        intent = Intent("comparison", tuple(item.id for item in entities), "pet hair", canonical_intent_key(
+            category="robot-vacuum", intent_type="comparison", entity_ids=(item.id for item in entities), constraints={"use_case": "pet hair"}
+        ))
+        offers = (
+            Offer(
+                "offer:roborock:merchant-a", entities[0].id, "merchant-a", "https://merchant-a.example/p",
+                TemporalState(market="US", currency="USD", price=499, availability="in_stock", last_verified_at="2026-09-26"),
+            ),
+            Offer(
+                "offer:roborock:merchant-b", entities[0].id, "merchant-b", "https://merchant-b.example/p",
+                TemporalState(market="US", currency="USD", price=479, availability="limited", last_verified_at="2026-09-26"),
+            ),
+        )
+        route = AffiliateRoute("offer:roborock:merchant-a", "future-network", "merchant-a", "api", "https://affiliate.example/link")
+        self.assertEqual(resolve_affiliate_link(offers[0], (route,)), "https://affiliate.example/link")
+        self.assertNotIn("price", {fact.key for entity in entities for fact in entity.facts})
+        result = is_publishable(
+            intent=intent, category_schema=robot, entities=entities, sources=(source, source), offers=offers
+        )
+        self.assertTrue(result.publishable, result.reasons)
+        duplicate = is_publishable(
+            intent=intent, category_schema=robot, entities=entities, sources=(source, source), offers=offers, existing_intents=(intent.canonical_intent,)
+        )
+        self.assertFalse(duplicate.publishable)
+        self.assertIn("duplicate canonical intent", duplicate.reasons)
+
+    def test_canonical_intent_normalizes_budget_synonyms_and_graph_reuses_entities(self) -> None:
+        first = canonical_intent_key(
+            category="robot-vacuum", intent_type="best-for", entity_ids=("entity:a",), constraints={"price": "cheap"}
+        )
+        second = canonical_intent_key(
+            category="robot-vacuum", intent_type="best-for", entity_ids=("entity:a",), constraints={"price": "affordable"}
+        )
+        self.assertEqual(first, second)
+
+        paths = [
+            PROJECT / "content" / "pages" / "azure-pipelines-vs-buildkite-for-self-hosted-infrastructure.json",
+            PROJECT / "content" / "pages" / "azure-pipelines-vs-gitlab-ci-for-self-hosted-infrastructure.json",
+        ]
+        rows = [load_page(path) for path in paths]
+        graph = validate_site_graph((page, adapt_legacy_page(page, raw)) for page, raw in rows)
+        self.assertEqual(graph.orphaned_slugs, ())
+        self.assertGreaterEqual(graph.entities, 3)
 
 
 class BuildTests(unittest.TestCase):
@@ -128,6 +208,13 @@ class BuildTests(unittest.TestCase):
             self.assertIn("raspberry-pi-5-vs-intel-nuc-13-pro", sitemap)
             ET.fromstring(sitemap)
             self.assertEqual(len(ET.fromstring(sitemap)), 4006)
+            regression = validate_product_invariants(
+                content_dir=PROJECT / "content" / "pages",
+                manifest_path=PROJECT / "tests" / "fixtures" / "production-invariants.json",
+                output_dir=root / "dist",
+                base_url="https://guides.example",
+            )
+            self.assertEqual(regression.failures, ())
             payload = re.search(
                 r'<script type="application/ld\+json">(.*?)</script>', html, re.DOTALL
             )
@@ -218,6 +305,17 @@ class BuildTests(unittest.TestCase):
             )
             self.assertEqual(result["status"], "dry_run")
             self.assertEqual(result["pending"], self.reviewed_fixture_count())
+
+    def test_state_pruning_has_no_sql_parameter_limit(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            with StateStore(Path(temp) / "state.sqlite3") as store:
+                for index in range(1_200):
+                    store.upsert_page(
+                        slug=f"page-{index}", content_hash=f"hash-{index}", public_url=f"https://example.com/{index}",
+                        output_path=f"/{index}", status="reviewed", lastmod="2026-09-26",
+                    )
+                store.prune_except({f"page-{index}" for index in range(1_100)})
+                self.assertEqual(len(store.indexable_pages()), 1_100)
 
     def test_catalog_expansion_scales_pairwise_by_audience(self) -> None:
         with tempfile.TemporaryDirectory() as temp:

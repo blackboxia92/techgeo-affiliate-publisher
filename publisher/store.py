@@ -86,13 +86,19 @@ class StateStore:
         )
 
     def prune_except(self, slugs: set[str]) -> None:
-        if not slugs:
-            self.connection.execute("DELETE FROM pages")
-        else:
-            placeholders = ",".join("?" for _ in slugs)
-            self.connection.execute(
-                f"DELETE FROM pages WHERE slug NOT IN ({placeholders})", tuple(sorted(slugs))
-            )
+        """Prune with a temporary table instead of an SQL parameter per page.
+
+        The former ``NOT IN (?, ?, ...)`` form can exceed a SQLite build's
+        variable limit long before StackSignal reaches its intended scale.
+        """
+        self.connection.execute("CREATE TEMP TABLE IF NOT EXISTS live_slugs (slug TEXT PRIMARY KEY)")
+        self.connection.execute("DELETE FROM live_slugs")
+        self.connection.executemany(
+            "INSERT INTO live_slugs(slug) VALUES (?)", ((slug,) for slug in slugs)
+        )
+        self.connection.execute(
+            "DELETE FROM pages WHERE NOT EXISTS (SELECT 1 FROM live_slugs WHERE live_slugs.slug = pages.slug)"
+        )
         self.connection.commit()
 
     def pending_urls(self) -> list[str]:

@@ -11,7 +11,7 @@ from dataclasses import dataclass
 from datetime import date
 from math import ceil
 import re
-from typing import Any, Mapping
+from typing import Any, Iterable, Mapping
 
 from .affiliate import amazon_url
 from .schema import Criterion, Page, Resource
@@ -103,6 +103,8 @@ class AttributeSchema:
     unit: str | None = None
     comparable: bool = True
     required: bool = False
+    temporal: bool = False
+    importance: str = "supporting"
 
 
 @dataclass(frozen=True)
@@ -110,6 +112,11 @@ class CategorySchema:
     id: str
     fields: tuple[AttributeSchema, ...] | None
     minimum_useful_ratio: float = 0.5
+    minimum_entities: int = 2
+    minimum_sources: int = 2
+    minimum_comparable_fields: int = 2
+    requires_offer: bool = False
+    allowed_intent_types: frozenset[str] = frozenset({"comparison", "best-for", "entity"})
 
     @property
     def relevant_keys(self) -> frozenset[str] | None:
@@ -122,18 +129,110 @@ class CategorySchema:
         return useful >= max(1, ceil(alternatives * self.minimum_useful_ratio))
 
 
+@dataclass(frozen=True)
+class EligibilityResult:
+    publishable: bool
+    reasons: tuple[str, ...]
+    canonical_intent: str
+
+
+_CONSTRAINT_ALIASES = {
+    "cheap": "budget",
+    "affordable": "budget",
+    "low-cost": "budget",
+    "low cost": "budget",
+    "inexpensive": "budget",
+}
+
+
+def normalize_constraint(value: str) -> str:
+    """Normalize a small, explainable vocabulary before future clustering."""
+    normalized = " ".join(value.casefold().split())
+    for source, target in _CONSTRAINT_ALIASES.items():
+        normalized = normalized.replace(source, target)
+    return _identifier(normalized)
+
+
+def canonical_intent_key(
+    *,
+    category: str,
+    intent_type: str,
+    entity_ids: Iterable[str],
+    constraints: Mapping[str, str] | None = None,
+) -> str:
+    """Stable key for duplicate prevention, without pretending it is ML."""
+    entities = "--".join(sorted({_identifier(entity_id) for entity_id in entity_ids}))
+    normalized_constraints = "--".join(
+        f"{_identifier(key)}={normalize_constraint(value)}"
+        for key, value in sorted((constraints or {}).items())
+        if value and normalize_constraint(value)
+    )
+    return ":".join(part for part in (_identifier(category), _identifier(intent_type), entities, normalized_constraints) if part)
+
+
+def is_publishable(
+    *,
+    intent: Intent,
+    category_schema: CategorySchema,
+    entities: Iterable[Entity],
+    sources: Iterable[Source],
+    offers: Iterable[Offer],
+    existing_intents: Iterable[str] = (),
+) -> EligibilityResult:
+    """Make a category-aware, explainable publication decision.
+
+    It intentionally uses several explicit checks instead of one universal
+    completeness percentage. A caller may display all reasons to an editor.
+    """
+    entity_list = tuple(entities)
+    source_list = tuple(sources)
+    offer_list = tuple(offers)
+    reasons: list[str] = []
+    if intent.kind not in category_schema.allowed_intent_types:
+        reasons.append("unsupported intent type for category")
+    if len({entity.id for entity in entity_list}) < category_schema.minimum_entities:
+        reasons.append("insufficient distinct entities")
+    if len(source_list) < category_schema.minimum_sources:
+        reasons.append("insufficient primary sources")
+    if category_schema.requires_offer and not offer_list:
+        reasons.append("category requires an offer")
+    if intent.canonical_intent in set(existing_intents):
+        reasons.append("duplicate canonical intent")
+
+    facts_by_entity = {entity.id: {fact.key: fact.value for fact in entity.facts} for entity in entity_list}
+    comparable = 0
+    required_missing: list[str] = []
+    for field in category_schema.fields or ():
+        values = [facts_by_entity.get(entity.id, {}).get(field.key, "") for entity in entity_list]
+        if field.comparable and sum(_is_useful(value) for value in values) >= max(1, ceil(len(entity_list) * category_schema.minimum_useful_ratio)):
+            comparable += 1
+        if field.required and not any(_is_useful(value) for value in values):
+            required_missing.append(field.key)
+    if required_missing:
+        reasons.append("missing required facts: " + ", ".join(required_missing))
+    if category_schema.fields is not None and comparable < category_schema.minimum_comparable_fields:
+        reasons.append("insufficient comparable facts")
+    return EligibilityResult(not reasons, tuple(reasons), intent.canonical_intent)
+
+
 CATEGORY_SCHEMAS: Mapping[str, CategorySchema] = {
     # The fields are a category contract, not a universal comparison table.
     "ci-cd": CategorySchema("ci-cd", (
-        AttributeSchema("model", required=True),
-        AttributeSchema("operations", required=True),
-        AttributeSchema("fit", required=True),
-        AttributeSchema("audience"),
+        AttributeSchema("model", required=True, importance="core"),
+        AttributeSchema("operations", required=True, importance="core"),
+        AttributeSchema("fit", required=True, importance="core"),
+        AttributeSchema("audience", importance="supporting"),
+        AttributeSchema("hosting_model", importance="core"),
+        AttributeSchema("self_hosting", value_type="boolean", importance="core"),
+        AttributeSchema("pricing_model", importance="core"),
+        AttributeSchema("integrations", importance="supporting"),
+        AttributeSchema("security_compliance", importance="supporting"),
+        AttributeSchema("api", value_type="boolean", importance="supporting"),
     )),
     "hardware": CategorySchema("hardware", None),
     "consumer-product": CategorySchema(
         "consumer-product", (
-            AttributeSchema("model", required=True),
+            AttributeSchema("model", required=True, importance="core"),
             AttributeSchema("interface"),
             AttributeSchema("form"),
             AttributeSchema("operations", required=True),
@@ -142,6 +241,33 @@ CATEGORY_SCHEMAS: Mapping[str, CategorySchema] = {
         )
     ),
     "software": CategorySchema("software", None),
+    "robot-vacuum": CategorySchema(
+        "robot-vacuum",
+        (
+            AttributeSchema("navigation", required=True, importance="core"),
+            AttributeSchema("suction", value_type="number", unit="Pa", importance="core"),
+            AttributeSchema("battery", value_type="duration", unit="minutes", importance="supporting"),
+            AttributeSchema("mopping", value_type="boolean", importance="core"),
+            AttributeSchema("obstacle_avoidance", value_type="boolean", importance="core"),
+            AttributeSchema("dock", importance="supporting"),
+            AttributeSchema("pet_hair", importance="supporting"),
+        ),
+        requires_offer=True,
+    ),
+    "hotel": CategorySchema(
+        "hotel",
+        (
+            AttributeSchema("location", required=True, importance="core"),
+            AttributeSchema("amenities", importance="core"),
+            AttributeSchema("property_class", importance="supporting"),
+            AttributeSchema("rating", value_type="number", importance="supporting"),
+            AttributeSchema("availability", value_type="boolean", temporal=True, importance="core"),
+            AttributeSchema("price", value_type="currency", temporal=True, importance="core"),
+            AttributeSchema("occupancy", value_type="integer", temporal=True, importance="supporting"),
+        ),
+        requires_offer=True,
+        allowed_intent_types=frozenset({"comparison", "best-for", "entity"}),
+    ),
 }
 
 
@@ -314,12 +440,18 @@ def adapt_legacy_page(page: Page, raw: Mapping[str, Any] | None = None) -> Legac
                 affiliate_url=page.recommendation.amazon_url,
             )
         )
-    qualifier = str((raw or {}).get("canonical_intent") or page.slug)
+    intent_type = str((raw or {}).get("intent_type") or "comparison")
+    qualifier = str((raw or {}).get("audience") or (raw or {}).get("canonical_intent") or page.slug)
     intent = Intent(
-        kind="comparison",
+        kind=intent_type,
         entity_ids=tuple(entity.id for entity in entities),
         qualifier=qualifier,
-        canonical_intent=f"comparison:{'--vs--'.join(_identifier(item.name) for item in page.alternatives)}:{_identifier(qualifier)}",
+        canonical_intent=canonical_intent_key(
+            category=category,
+            intent_type=intent_type,
+            entity_ids=(entity.id for entity in entities),
+            constraints={"audience": qualifier},
+        ),
     )
     return LegacyPageModel(intent, schema, entities, sources, tuple(offers), tuple(routes), recommendation_offer_id)
 
@@ -339,9 +471,10 @@ def create_comparison(
         raise ValueError(f"Unknown category schema: {category}")
     if len(alternatives) < 2 or not criteria or not sources:
         raise ValueError("A comparison needs at least two alternatives, one criterion, and one source")
-    entity_ids = [_identifier(str(item["name"])) for item in alternatives]
+    entity_ids = [f"entity:{_identifier(str(item['name']))}" for item in alternatives]
     return {
         "slug": slug,
+        "content_model": "v2",
         "status": "draft",
         "locale": "en",
         "title": title,
@@ -361,7 +494,13 @@ def create_comparison(
         ),
         "updated_at": date.today().isoformat(),
         "reviewed_by": "Pending editorial review",
-        "canonical_intent": f"comparison:{'--vs--'.join(entity_ids)}:{_identifier(audience)}",
+        "intent_type": "comparison",
+        "canonical_intent": canonical_intent_key(
+            category=category,
+            intent_type="comparison",
+            entity_ids=entity_ids,
+            constraints={"audience": audience},
+        ),
         "category": category,
         "audience": audience,
         "alternatives": alternatives,

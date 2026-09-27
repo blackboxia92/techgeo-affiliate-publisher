@@ -62,6 +62,33 @@ fact, source, resource, or offer in the JSON and rebuilding updates every
 derived surface (HTML, JSON-LD where applicable, Markdown and JSON) from the
 same source.
 
-`category` currently accepts `ci-cd`, `software`, `hardware`, and
-`consumer-product`. New domains can add a `CategorySchema` without changing a
-template or the legacy adapter.
+`category` currently accepts `ci-cd`, `software`, `hardware`,
+`consumer-product`, `robot-vacuum`, and `hotel`. New domains can add a
+`CategorySchema` without changing a template or the legacy adapter.
+
+## Publication gate and canonical intent
+
+`is_publishable(...)` is the explicit gate for pages created with
+`content_model: "v2"`. It checks the category's allowed intent type, distinct
+entities, source minimum, required offer, required/comparable facts and an
+existing canonical intent. It returns all rejection reasons; it is not a
+single opaque score. Legacy pages intentionally bypass this new gate so their
+approved public baseline remains stable.
+
+`canonical_intent_key(...)` uses category, intent type, sorted stable entity
+IDs and normalized constraints. Its first vocabulary intentionally maps
+`cheap`, `affordable`, `low-cost` and `inexpensive` to `budget`, allowing a
+future intake job to reject duplicate intent pages before writing content.
+
+## Archetype proof
+
+The current schemas include `robot-vacuum`, `ci-cd` and `hotel`. Hotel's
+availability, price and occupancy fields are marked temporal; they belong in
+an `Offer.TemporalState`, never in durable entity facts. The schemas are only
+model contracts today: no hotel or robot-vacuum URL is published without
+real, current sources and eligible offers.
+
+`publisher.graph.validate_site_graph` validates the current category → entity
+→ intent relationship. Existing public pages remain reached via the approved
+guides/catalog hubs; it deliberately does not invent entity-page URLs before
+there is canonical entity data to support them.
