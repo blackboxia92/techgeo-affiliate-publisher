@@ -11,6 +11,7 @@
         "market": "ES",
         "locale": "es_ES",
         "enabled": false,
+        "membership_status": "pending",
         "feed_status": "unverified_requires_join_or_feed_key"
       },
       {
