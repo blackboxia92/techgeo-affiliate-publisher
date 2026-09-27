@@ -1,0 +1,81 @@
+{
+  "awin": {
+    "publisher_id": 3107154,
+    "market": "ES",
+    "locale": "es_ES",
+    "advertisers": [
+      {
+        "advertiser_id": 20982,
+        "name": "PcComponentes ES",
+        "tier": "A",
+        "market": "ES",
+        "locale": "es_ES",
+        "enabled": false,
+        "feed_status": "unverified_requires_join_or_feed_key"
+      },
+      {
+        "advertiser_id": 9294,
+        "name": "alternate ES",
+        "tier": "A",
+        "market": "ES",
+        "locale": "es_ES",
+        "enabled": false,
+        "feed_status": "unverified_requires_join_or_feed_key"
+      },
+      {
+        "advertiser_id": 17092,
+        "name": "Aosom ES",
+        "tier": "A",
+        "market": "ES",
+        "locale": "es_ES",
+        "enabled": false,
+        "feed_status": "unverified_requires_join_or_feed_key"
+      },
+      {
+        "advertiser_id": 20598,
+        "name": "Leroy Merlin ES",
+        "tier": "B",
+        "market": "ES",
+        "locale": "es_ES",
+        "enabled": false,
+        "feed_status": "unverified_requires_join_or_feed_key"
+      },
+      {
+        "advertiser_id": 122484,
+        "name": "Dyson ES",
+        "tier": "B",
+        "market": "ES",
+        "locale": "es_ES",
+        "enabled": false,
+        "feed_status": "unverified_requires_join_or_feed_key"
+      },
+      {
+        "advertiser_id": 21707,
+        "name": "Samsung ES",
+        "tier": "B",
+        "market": "ES",
+        "locale": "es_ES",
+        "enabled": false,
+        "feed_status": "unverified_requires_join_or_feed_key"
+      },
+      {
+        "advertiser_id": 124624,
+        "name": "Coolmod ES",
+        "tier": "B",
+        "market": "ES",
+        "locale": "es_ES",
+        "enabled": false,
+        "feed_status": "unverified_requires_join_or_feed_key"
+      },
+      {
+        "advertiser_id": 23677,
+        "name": "Xiaomi ES",
+        "tier": "B",
+        "market": "ES",
+        "locale": "es_ES",
+        "enabled": false,
+        "feed_status": "unverified_requires_join_or_feed_key"
+      }
+    ]
+  }
+}
