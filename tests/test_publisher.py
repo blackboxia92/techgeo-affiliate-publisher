@@ -264,7 +264,7 @@ class BuildTests(unittest.TestCase):
                 base_url="https://guides.example",
             )
             self.assertEqual(report.reviewed, self.reviewed_fixture_count())
-            self.assertEqual(report.reviewed, 4000)
+            self.assertEqual(report.reviewed, 4001)
             self.assertEqual(report.drafts, 0)
             html = (root / "dist" / "guides" / "postgresql-vs-sqlite-backend" / "index.html").read_text(encoding="utf-8")
             self.assertIn("tag=blackboxia92-21", html)
@@ -286,7 +286,7 @@ class BuildTests(unittest.TestCase):
             self.assertNotIn("/drafts/", sitemap)
             self.assertIn("raspberry-pi-5-vs-intel-nuc-13-pro", sitemap)
             ET.fromstring(sitemap)
-            self.assertEqual(len(ET.fromstring(sitemap)), 4006)
+            self.assertEqual(len(ET.fromstring(sitemap)), 4007)
             regression = validate_product_invariants(
                 content_dir=PROJECT / "content" / "pages",
                 manifest_path=PROJECT / "tests" / "fixtures" / "production-invariants.json",

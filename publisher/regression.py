@@ -14,7 +14,9 @@ from .v2 import adapt_legacy_page
 @dataclass(frozen=True)
 class RegressionReport:
     commercial_pages: int
+    legacy_indexable_pages: int
     indexable_pages: int
+    legacy_affiliate_url_count: int
     affiliate_url_count: int
     failures: tuple[str, ...]
 
@@ -34,20 +36,30 @@ def validate_product_invariants(
     expected = json.loads(manifest_path.read_text(encoding="utf-8"))
     rows = [load_page(path) for path in sorted(content_dir.rglob("*.json"))]
     indexable = [(page, raw) for page, raw in rows if page.indexable]
+    legacy_indexable = [(page, raw) for page, raw in indexable if raw.get("content_model") != "v2"]
     commercial = [page for page, _ in rows if page.is_commercial]
     routes = [f"/guides/{page.slug}/" for page, _ in indexable]
+    legacy_routes = [f"/guides/{page.slug}/" for page, _ in legacy_indexable]
     affiliate_urls: list[str] = []
-    for page, raw in rows:
+    legacy_affiliate_urls: list[str] = []
+    for page, raw in indexable:
         model = adapt_legacy_page(page, raw)
-        affiliate_urls.extend(model.resource_url(resource) for resource in page.resources)
+        destinations = [model.resource_url(resource) for resource in page.resources]
         if page.recommendation:
-            affiliate_urls.append(model.recommendation_url() or "")
+            destinations.append(model.recommendation_url() or "")
+        affiliate_urls.extend(destinations)
+        if raw.get("content_model") != "v2":
+            legacy_affiliate_urls.extend(destinations)
 
     failures: list[str] = []
     for field, actual in (
         ("commercial_pages", len(commercial)),
+        ("legacy_indexable_pages", len(legacy_indexable)),
         ("indexable_pages", len(indexable)),
+        ("legacy_affiliate_url_count", len(legacy_affiliate_urls)),
         ("affiliate_url_count", len(affiliate_urls)),
+        ("legacy_indexable_url_sha256", _digest(legacy_routes)),
+        ("legacy_affiliate_url_sha256", _digest(legacy_affiliate_urls)),
         ("indexable_url_sha256", _digest(routes)),
         ("affiliate_url_sha256", _digest(affiliate_urls)),
     ):
@@ -79,4 +91,6 @@ def validate_product_invariants(
         if len(sitemap_urls) != expected["sitemap_urls"]:
             failures.append(f"sitemap URL count changed: expected {expected['sitemap_urls']}, got {len(sitemap_urls)}")
 
-    return RegressionReport(len(commercial), len(indexable), len(affiliate_urls), tuple(failures))
+    return RegressionReport(
+        len(commercial), len(legacy_indexable), len(indexable), len(legacy_affiliate_urls), len(affiliate_urls), tuple(failures)
+    )
