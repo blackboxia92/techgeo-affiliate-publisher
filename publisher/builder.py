@@ -429,7 +429,11 @@ def build_site(
             encoding="utf-8",
         )
         ci_cd_pages = [page for page in editorial_pages if _is_ci_cd_page(page)]
-        hub_rows = [{"public_url": f"{base_url}/guides/", "lastmod": max((page.updated_at for page in editorial_pages), default="")}]
+        latest_content_update = max((page.updated_at for page in reviewed_pages), default="")
+        hub_rows = [
+            {"public_url": f"{base_url}/", "lastmod": latest_content_update},
+            {"public_url": f"{base_url}/guides/", "lastmod": max((page.updated_at for page in editorial_pages), default="")},
+        ]
         if len(ci_cd_pages) >= 3:
             topic_destination = output_dir / "topics" / "ci-cd" / "index.html"
             topic_destination.parent.mkdir(parents=True, exist_ok=True)

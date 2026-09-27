@@ -63,6 +63,7 @@ class BuildTests(unittest.TestCase):
             self.assertIn("Editorial assessment", html)
             self.assertIn("does not claim buyer opinions, ratings, or product reviews", html)
             sitemap = (root / "dist" / "sitemap.xml").read_text(encoding="utf-8")
+            self.assertIn("https://guides.example/</loc>", sitemap)
             self.assertIn("postgresql-vs-sqlite-backend", sitemap)
             self.assertNotIn("/drafts/", sitemap)
             self.assertIn("raspberry-pi-5-vs-intel-nuc-13-pro", sitemap)
