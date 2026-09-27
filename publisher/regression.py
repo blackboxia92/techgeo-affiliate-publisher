@@ -7,6 +7,7 @@ import xml.etree.ElementTree as ET
 from dataclasses import dataclass
 from pathlib import Path
 
+from .metrics import catalog_metrics, intentional_hub_paths
 from .schema import load_page
 from .v2 import adapt_legacy_page
 
@@ -35,6 +36,7 @@ def validate_product_invariants(
     """Compare current data/output with the deliberately checked-in baseline."""
     expected = json.loads(manifest_path.read_text(encoding="utf-8"))
     rows = [load_page(path) for path in sorted(content_dir.rglob("*.json"))]
+    metrics = catalog_metrics(rows)
     indexable = [(page, raw) for page, raw in rows if page.indexable]
     legacy_indexable = [(page, raw) for page, raw in indexable if raw.get("content_model") != "v2"]
     commercial = [page for page, _ in rows if page.is_commercial]
@@ -53,11 +55,13 @@ def validate_product_invariants(
 
     failures: list[str] = []
     for field, actual in (
-        ("commercial_pages", len(commercial)),
+        ("reviewed_guides", metrics.reviewed_guides),
+        ("commercial_pages", metrics.commercial_pages),
         ("legacy_indexable_pages", len(legacy_indexable)),
         ("indexable_pages", len(indexable)),
         ("legacy_affiliate_url_count", len(legacy_affiliate_urls)),
-        ("affiliate_url_count", len(affiliate_urls)),
+        ("affiliate_url_count", metrics.affiliate_routes),
+        ("sitemap_hubs", metrics.sitemap_hubs),
         ("legacy_indexable_url_sha256", _digest(legacy_routes)),
         ("legacy_affiliate_url_sha256", _digest(legacy_affiliate_urls)),
         ("indexable_url_sha256", _digest(routes)),
@@ -88,8 +92,14 @@ def validate_product_invariants(
         sitemap = ET.parse(output_dir / "sitemap.xml").getroot()
         namespace = {"s": "http://www.sitemaps.org/schemas/sitemap/0.9"}
         sitemap_urls = sitemap.findall("s:url", namespace)
-        if len(sitemap_urls) != expected["sitemap_urls"]:
-            failures.append(f"sitemap URL count changed: expected {expected['sitemap_urls']}, got {len(sitemap_urls)}")
+        actual_sitemap_urls = {node.findtext("s:loc", default="", namespaces=namespace) for node in sitemap_urls}
+        expected_sitemap_urls = {
+            f"{base_url}/guides/{page.slug}/" for page, _ in indexable
+        } | {f"{base_url}{path}" for path in intentional_hub_paths(rows)}
+        if len(actual_sitemap_urls) != expected["sitemap_urls"]:
+            failures.append(f"sitemap URL count changed: expected {expected['sitemap_urls']}, got {len(actual_sitemap_urls)}")
+        if actual_sitemap_urls != expected_sitemap_urls:
+            failures.append("sitemap contains a URL outside the intentional indexable page and hub set")
 
     return RegressionReport(
         len(commercial), len(legacy_indexable), len(indexable), len(legacy_affiliate_urls), len(affiliate_urls), tuple(failures)

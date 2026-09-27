@@ -26,7 +26,7 @@ La estructura ayuda a lectores y sistemas automáticos a entender el contenido. 
 
 ## Modelo V2 y creación de contenido
 
-El build adapta los JSON actuales a un modelo interno de `Intent → CategorySchema → Entity/Facts → Offer → AffiliateRoute → output`. Las tablas se eligen por categoría y omiten placeholders o atributos irrelevantes sin modificar los datos fuente. La capa mantiene los enlaces de Amazon históricos como primera ruta; no activa una red nueva automáticamente.
+El build adapta los JSON actuales a un modelo interno de `Intent → CategorySchema → Entity/Facts → Offer → AffiliateRoute → output`. Las tablas se eligen por categoría y omiten placeholders o atributos irrelevantes sin modificar los datos fuente. La capa mantiene los enlaces de Amazon históricos como primera ruta; no activa una red nueva automáticamente. La frontera entre core estático, contexto de consulta y comercio dinámico está documentada en [docs/product-surface-dynamic-commerce-v23.md](docs/product-surface-dynamic-commerce-v23.md).
 
 Para crear un borrador con muy poco boilerplate, usar `publisher.v2.create_comparison`, completar investigación/fuentes/FAQ y recién entonces marcarlo `reviewed`. El ejemplo y el flujo de actualización de facts sin tocar templates están en [docs/architecture-v2.md](docs/architecture-v2.md). La evaluación de Sovrn y la recomendación de integración futura están en [docs/sovrn-commerce.md](docs/sovrn-commerce.md).
 

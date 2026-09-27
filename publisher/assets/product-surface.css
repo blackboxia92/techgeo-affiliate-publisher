@@ -1,0 +1,3 @@
+.nav-link{color:var(--muted);font-size:.78rem;font-weight:800;text-decoration:none}.nav-link:hover{color:var(--text)}
+.hero-stats>div{padding:.7rem 1rem;border:1px solid var(--border);background:rgba(15,23,42,.7);border-radius:12px;color:var(--muted);font-size:.78rem}.hero-stats dt,.hero-stats dd{display:inline;margin:0}.hero-stats dd{margin-left:.25rem}
+@media(max-width:720px){.nav-shell{height:auto;min-height:76px;flex-wrap:wrap;padding-block:.7rem}.locale-chip{margin-left:auto}}

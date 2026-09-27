@@ -16,6 +16,7 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 from .affiliate import amazon_url, assert_required_tag
 from .graph import validate_site_graph
+from .metrics import CatalogMetrics, catalog_metrics, intentional_hub_paths
 from .schema import ContentError, Criterion, Page, Resource, load_page
 from .store import StateStore
 from .v2 import LegacyPageModel, adapt_legacy_page, is_publishable, renderable_criteria
@@ -126,6 +127,32 @@ def _json_ld(page: Page, public_url: str, site_name: str) -> str:
                 ],
             },
             *product_nodes,
+        ],
+    }
+    return json.dumps(payload, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
+
+
+def _home_json_ld(base_url: str, metrics: CatalogMetrics) -> str:
+    """Describe the public surface without claiming products or offers we lack."""
+    payload = {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "WebSite",
+                "@id": f"{base_url}/#website",
+                "name": "StackSignal",
+                "url": f"{base_url}/",
+                "description": "Structured comparisons, entity evidence, and disclosed commercial routes for search engines, agents, and language models.",
+            },
+            {
+                "@type": "ItemList",
+                "name": "StackSignal public surface",
+                "numberOfItems": metrics.indexable_pages,
+                "itemListElement": [
+                    {"@type": "ListItem", "position": 1, "name": f"{metrics.reviewed_guides} reviewed decision guides", "url": f"{base_url}/guides/"},
+                    {"@type": "ListItem", "position": 2, "name": f"{metrics.commercial_pages} commercial comparisons", "url": f"{base_url}/catalog/"},
+                ],
+            },
         ],
     }
     return json.dumps(payload, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
@@ -386,6 +413,7 @@ def build_site(
         page, raw = load_page(path)
         pages.append(page)
         render_pages.append((page, raw))
+    catalog_counts = catalog_metrics(render_pages)
     loaded_at = perf_counter()
     graph = validate_site_graph((page, adapt_legacy_page(page, raw)) for page, raw in render_pages)
     if graph.orphaned_slugs:
@@ -480,7 +508,8 @@ def build_site(
         commercial_pages = [page for page in reviewed_pages if page.is_commercial]
         homepage = index_template.render(
             pages=editorial_pages[:24],
-            total_pages=len(editorial_pages),
+            metrics=catalog_counts,
+            home_json_ld=_home_json_ld(base_url, catalog_counts),
             recommendations=[
                 recommendation | {"url": amazon_url(recommendation["asin"])}
                 for recommendation in HOME_RECOMMENDATIONS
@@ -568,6 +597,10 @@ def build_site(
             hub_rows.append({"public_url": f"{base_url}/catalog/{route}/", "lastmod": max(page.updated_at for page in subset)})
         if commercial_pages:
             hub_rows.append({"public_url": f"{base_url}/catalog/", "lastmod": max(page.updated_at for page in commercial_pages)})
+        actual_hub_paths = tuple(row["public_url"].removeprefix(base_url) for row in hub_rows)
+        expected_hub_paths = intentional_hub_paths(render_pages)
+        if set(actual_hub_paths) != set(expected_hub_paths):
+            raise ContentError(f"Sitemap hubs diverged from catalog metrics: {actual_hub_paths!r} != {expected_hub_paths!r}")
         sitemap_rows: list[object] = list(store.indexable_pages()) + hub_rows
         _write_sitemaps(output_dir, sitemap_rows, base_url)
         _write_llms(output_dir, editorial_pages, base_url)

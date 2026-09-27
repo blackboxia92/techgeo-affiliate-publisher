@@ -10,11 +10,24 @@ from urllib.parse import parse_qs, urlparse
 
 from publisher.affiliate import AMAZON_ASSOCIATE_TAG, amazon_url, assert_required_tag, validate_affiliate_target
 from publisher.builder import build_site, expand_catalog
+from publisher.commerce import (
+    IAffiliateRouter,
+    IEntityRepository,
+    IOfferHealth,
+    IOfferResolver,
+    QueryContext,
+    StaticAffiliateRouter,
+    StaticEntityRepository,
+    StaticOfferHealth,
+    StaticOfferResolver,
+    offer_payload,
+)
 from publisher.graph import validate_site_graph
 from publisher.indexnow import notify_indexnow
 from publisher.ingest import RawExternalItem, deduplicate, normalize_openfoodfacts, publication_count, valid_gtin
 from publisher.lifecycle import LifecycleHistory, advance_history, compare_offer_snapshots, evaluate_lifecycle, update_history_ledger
 from publisher.regression import validate_product_invariants
+from publisher.metrics import catalog_metrics, intentional_hub_paths
 from publisher.schema import load_page
 from publisher.store import StateStore
 from publisher.v2 import (
@@ -24,6 +37,7 @@ from publisher.v2 import (
     Fact,
     Intent,
     Offer,
+    OfferHealth,
     Source,
     TemporalState,
     adapt_legacy_page,
@@ -55,6 +69,56 @@ class AffiliateTests(unittest.TestCase):
 
 
 class V2ModelTests(unittest.TestCase):
+    def test_public_metrics_are_single_source_for_home_and_sitemap(self) -> None:
+        rows = [load_page(path) for path in (PROJECT / "content" / "pages").rglob("*.json")]
+        metrics = catalog_metrics(rows)
+        self.assertEqual(metrics.reviewed_guides, 44)
+        self.assertEqual(metrics.commercial_pages, 3957)
+        self.assertEqual(metrics.indexable_pages, 4001)
+        self.assertEqual(metrics.affiliate_routes, 8359)
+        self.assertEqual(metrics.sitemap_hubs, 6)
+        self.assertEqual(metrics.sitemap_urls, 4007)
+        self.assertEqual(
+            intentional_hub_paths(rows),
+            ("/", "/guides/", "/topics/ci-cd/", "/catalog/", "/catalog/mass-products/", "/catalog/consumer-products/"),
+        )
+
+    def test_query_context_and_static_commerce_contracts_preserve_original_money(self) -> None:
+        context = QueryContext(market="AR", currency="ARS", requested_currency="USD")
+        with self.assertRaises(ValueError):
+            QueryContext(market="arg", currency="ARS")
+        with self.assertRaises(ValueError):
+            QueryContext(market="AR", currency="ars")
+        entity = Entity("entity:test", "physical-product", "Test", "robot-vacuum", ())
+        health = OfferHealth(
+            last_checked_at="2026-09-26T00:00:00Z", last_seen_at="2026-09-26T00:00:00Z",
+            destination_valid=True, affiliate_valid=True, merchant_present=True, feed_present=True,
+        )
+        offer = Offer(
+            "offer:test", entity.id, "merchant-us", "https://merchant.example/p",
+            TemporalState(market="US", currency="USD", price=499, availability="in_stock", last_verified_at="2026-09-26T00:00:00Z"),
+            ships_to=("AR",), health=health,
+        )
+        route = AffiliateRoute(offer.id, "future-network", "merchant-us", "adapter", "https://affiliate.example/p")
+        repository = StaticEntityRepository({entity.id: entity})
+        resolver = StaticOfferResolver((offer,))
+        router = StaticAffiliateRouter({offer.id: (route,)})
+        health_store = StaticOfferHealth({offer.id: health})
+        self.assertIsInstance(repository, IEntityRepository)
+        self.assertIsInstance(resolver, IOfferResolver)
+        self.assertIsInstance(router, IAffiliateRouter)
+        self.assertIsInstance(health_store, IOfferHealth)
+        self.assertEqual(repository.get_entity(entity.id), entity)
+        self.assertEqual(resolver.get_offers(entity.id, context), (offer,))
+        resolved = router.generate_route(offer, context)
+        self.assertEqual(resolved, "https://affiliate.example/p")
+        self.assertEqual(health_store.get_health(offer.id), health)
+        payload = offer_payload(offer, resolved)
+        self.assertEqual(payload["price_original"], {"amount": 499, "currency": "USD"})
+        self.assertEqual(payload["ships_to"], ["AR"])
+        unhealthy = Offer(offer.id, offer.entity_id, offer.merchant_id, offer.raw_destination_url, offer.temporal_state, health=OfferHealth(destination_valid=False))
+        self.assertEqual(evaluate_lifecycle(entity, (unhealthy,), LifecycleHistory()).status, "stale")
+
     def test_legacy_catalog_adapter_preserves_count_and_affiliate_routes(self) -> None:
         legacy_rows = [load_page(path) for path in (PROJECT / "content" / "pages").rglob("*.json")]
         pages = [page for page, _ in legacy_rows]
@@ -325,6 +389,16 @@ class BuildTests(unittest.TestCase):
             self.assertIn("Ver disponibilidad y precio actualizado en Amazon", homepage)
             self.assertIn("Consultar especificaciones y oferta en Amazon", homepage)
             self.assertIn(disclosure, homepage)
+            self.assertIn("44</strong></dt><dd>reviewed decision guides", homepage)
+            self.assertIn("3957</strong></dt><dd>commercial comparisons", homepage)
+            self.assertIn("8359</strong></dt><dd>disclosed monetized destinations", homepage)
+            self.assertIn('href="/catalog/"', homepage)
+            self.assertIn('href="/topics/ci-cd/"', homepage)
+            self.assertNotIn("Zero hidden sponsored links", homepage)
+            self.assertNotIn("44 reviewed guides", (PROJECT / "publisher" / "templates" / "index.html").read_text(encoding="utf-8"))
+            home_ld = json.loads(re.search(r'<script type="application/ld\+json">(.*?)</script>', homepage, re.DOTALL).group(1))
+            self.assertEqual({node["@type"] for node in home_ld["@graph"]}, {"WebSite", "ItemList"})
+            self.assertEqual(home_ld["@graph"][1]["numberOfItems"], 4001)
 
             target_dir = root / "dist" / "guides" / "azure-pipelines-vs-buildkite-for-self-hosted-infrastructure"
             target_html = (target_dir / "index.html").read_text(encoding="utf-8")

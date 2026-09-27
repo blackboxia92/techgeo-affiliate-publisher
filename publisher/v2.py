@@ -64,12 +64,27 @@ class TemporalState:
 
 
 @dataclass(frozen=True)
+class OfferHealth:
+    """Observed delivery health, separate from entity facts and offer values."""
+
+    last_checked_at: str | None = None
+    last_seen_at: str | None = None
+    destination_valid: bool | None = None
+    affiliate_valid: bool | None = None
+    merchant_present: bool | None = None
+    feed_present: bool | None = None
+    consecutive_failures: int = 0
+
+
+@dataclass(frozen=True)
 class Offer:
     id: str
     entity_id: str
     merchant_id: str
     raw_destination_url: str | None
     temporal_state: TemporalState
+    ships_to: tuple[str, ...] = ()
+    health: OfferHealth | None = None
 
 
 @dataclass(frozen=True)
@@ -359,6 +374,17 @@ def resolve_affiliate_link(
     if offer.raw_destination_url:
         return offer.raw_destination_url
     raise ValueError(f"Offer {offer.id} has neither an affiliate route nor a raw destination")
+
+
+def offer_is_healthy(offer: Offer) -> bool:
+    """Unknown legacy health is not a failure; explicit failures are actionable."""
+    health = offer.health
+    if health is None:
+        return True
+    return all(
+        value is not False
+        for value in (health.destination_valid, health.affiliate_valid, health.merchant_present, health.feed_present)
+    )
 
 
 def adapt_legacy_page(page: Page, raw: Mapping[str, Any] | None = None) -> LegacyPageModel:

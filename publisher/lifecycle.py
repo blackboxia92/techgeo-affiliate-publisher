@@ -6,7 +6,7 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Iterable
 
-from .v2 import Entity, Offer
+from .v2 import Entity, Offer, offer_is_healthy
 
 
 @dataclass(frozen=True)
@@ -95,7 +95,11 @@ def update_history_ledger(
 def evaluate_lifecycle(entity: Entity, offers: Iterable[Offer], history: LifecycleHistory) -> LifecycleDecision:
     """Choose a safe action; never 301 or delete from a single absence."""
     offers = tuple(offers)
-    active = [offer for offer in offers if offer.temporal_state.availability == "active"]
+    active = [
+        offer for offer in offers
+        if offer.temporal_state.availability in {"active", "in_stock", "limited"}
+        and offer_is_healthy(offer)
+    ]
     unavailable = [offer for offer in offers if offer.temporal_state.availability == "temporarily_unavailable"]
     if active:
         return LifecycleDecision("active", ("at least one active offer",), "keep", True, True, False, False, False)

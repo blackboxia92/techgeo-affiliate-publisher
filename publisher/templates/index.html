@@ -1,19 +1,21 @@
 {% extends "base.html" %}
-{% block title %}StackSignal | Evidence-led technical comparisons{% endblock %}
-{% block description %}Practical, source-backed comparisons of developer tools, infrastructure and technical resources.{% endblock %}
-{% block og_title %}StackSignal | Evidence-led technical comparisons{% endblock %}
-{% block og_description %}Practical, source-backed comparisons of developer tools, infrastructure and technical resources.{% endblock %}
+{% block title %}StackSignal | Structured decision and commerce data{% endblock %}
+{% block description %}Structured comparisons, entity evidence, and disclosed commercial routes for search engines, agents, and language models.{% endblock %}
+{% block og_title %}StackSignal | Structured decision and commerce data{% endblock %}
+{% block og_description %}Structured comparisons, entity evidence, and disclosed commercial routes for search engines, agents, and language models.{% endblock %}
+{% block structured_data %}<script type="application/ld+json">{{ home_json_ld|safe }}</script>{% endblock %}
 {% block content %}
 <main>
   <section class="hero shell">
     <div class="eyebrow"><span></span> Evidence before recommendation</div>
-    <h1>Technical decisions,<br><em>made inspectable.</em></h1>
-    <p>Compact comparison briefs for builders. Every published page shows its criteria, source trail, review status and update date.</p>
-    <div class="hero-stats" aria-label="Publishing principles">
-      <span><strong>{{ total_pages }}</strong> reviewed guides</span>
-      <span><strong>Primary</strong> documentation cited</span>
-      <span><strong>Zero</strong> hidden sponsored links</span>
-    </div>
+    <h1>Decision and commerce data,<br><em>made inspectable.</em></h1>
+    <p>Structured comparisons, entities, evidence, and commercial routes for search engines, agents, and language models. Every published surface exposes its criteria, source trail, review status, and update date.</p>
+    <dl class="hero-stats" aria-label="StackSignal public catalog">
+      <div><dt><strong>{{ metrics.reviewed_guides }}</strong></dt><dd>reviewed decision guides</dd></div>
+      <div><dt><strong>{{ metrics.commercial_pages }}</strong></dt><dd>commercial comparisons</dd></div>
+      <div><dt><strong>{{ metrics.affiliate_routes }}</strong></dt><dd>disclosed monetized destinations</dd></div>
+    </dl>
+    <p class="library-cta"><a class="button-link" href="/catalog/">Browse the commercial catalog</a></p>
   </section>
 
   <section class="shell recommendation-section" aria-labelledby="recommended-reading" data-associate-tag="blackboxia92-21">
@@ -51,7 +53,7 @@
       <article class="guide-card"><h3>No reviewed guides yet</h3><p>Drafts remain private until they satisfy the publishing gate.</p></article>
       {% endfor %}
     </div>
-    {% if total_pages %}<div class="library-cta"><a class="button-link" href="/guides/">Browse the full decision library</a></div>{% endif %}
+    {% if metrics.reviewed_guides %}<div class="library-cta"><a class="button-link" href="/guides/">Browse the full decision library</a></div>{% endif %}
   </section>
 </main>
 {% endblock %}
