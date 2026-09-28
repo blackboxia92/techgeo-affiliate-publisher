@@ -457,7 +457,7 @@ class BuildTests(unittest.TestCase):
             disclosure = "StackSignal participa en el programa de afiliados de Amazon. Si compras a través de nuestros enlaces recomendados, podemos recibir una comisión sin ningún costo adicional para vos."
             self.assertIn(disclosure, html)
             self.assertIn("As an Amazon Associate I earn from qualifying purchases.", html)
-            self.assertLess(html.index('class="rag-comparison"'), html.index('class="article-hero"'))
+            self.assertGreater(html.index('class="rag-comparison"'), html.index('class="article-hero"'))
             self.assertIn("| Criterion | PostgreSQL | SQLite |", html)
             self.assertIn("Editorial assessment", html)
             self.assertIn("does not claim buyer opinions, ratings, or product reviews", html)

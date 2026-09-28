@@ -158,5 +158,12 @@
       "target_url": "https://www.amazon.es/s?k=Bose+QuietComfort+headphones&tag=blackboxia92-21",
       "note": "Check the current exact model, specifications and availability for Bose QuietComfort Series."
     }
-  ]
+  ],
+  "publication_role": {
+    "kind": "direct-monetization",
+    "merchant": "amazon.es",
+    "route_type": "affiliate-search",
+    "cluster": "consumer-product/noise-cancelling-headphones",
+    "note": "The source-backed decision guide has Amazon ES search routes; current offers remain unverified and are not editorial facts."
+  }
 }

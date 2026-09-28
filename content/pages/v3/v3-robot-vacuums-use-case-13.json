@@ -158,5 +158,12 @@
       "target_url": "https://www.amazon.es/s?k=Roborock+robot+vacuum&tag=blackboxia92-21",
       "note": "Check the current exact model, specifications and availability for Roborock Robot Vacuum Series."
     }
-  ]
+  ],
+  "publication_role": {
+    "kind": "direct-monetization",
+    "merchant": "amazon.es",
+    "route_type": "affiliate-search",
+    "cluster": "consumer-product/robot-vacuums",
+    "note": "The source-backed decision guide has Amazon ES search routes; current offers remain unverified and are not editorial facts."
+  }
 }

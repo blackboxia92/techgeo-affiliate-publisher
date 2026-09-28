@@ -158,5 +158,12 @@
       "target_url": "https://www.amazon.es/s?k=Amazon+Kindle+e-reader&tag=blackboxia92-21",
       "note": "Check the current exact model, specifications and availability for Amazon Kindle Series."
     }
-  ]
+  ],
+  "publication_role": {
+    "kind": "direct-monetization",
+    "merchant": "amazon.es",
+    "route_type": "affiliate-search",
+    "cluster": "consumer-product/e-readers",
+    "note": "The source-backed decision guide has Amazon ES search routes; current offers remain unverified and are not editorial facts."
+  }
 }
