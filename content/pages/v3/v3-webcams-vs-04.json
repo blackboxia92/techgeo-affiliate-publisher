@@ -1,0 +1,116 @@
+{
+  "slug": "v3-webcams-vs-04",
+  "content_model": "v2",
+  "status": "reviewed",
+  "locale": "en",
+  "category": "consumer-product",
+  "topic": "webcams",
+  "intent_type": "comparison",
+  "audience": "vs-direct comparison",
+  "title": "Elgato Facecam Series vs Insta360 Link Series: which webcams fits your setup?",
+  "meta_description": "Elgato Facecam Series vs Insta360 Link Series: which webcams fits your setup?: a source-backed decision matrix using official documentation, stable compatibility facts an",
+  "eyebrow": "Webcams decision guide",
+  "answer_first": "Start with Elgato Facecam Series when you need creators and desk video setups. Start with Insta360 Link Series when you need presenters who need framing controls. Verify the exact current model before buying.",
+  "intro": "This answer-first guide compares documented webcams options for direct comparison. It uses official manufacturer documentation, omits volatile price and stock claims, and keeps retailer destinations separate from the editorial decision.",
+  "verdict": "Start with Elgato Facecam Series when you need creators and desk video setups. Start with Insta360 Link Series when you need presenters who need framing controls. Verify the exact current model before buying.",
+  "updated_at": "2026-09-27",
+  "reviewed_by": "StackSignal technical editorial desk",
+  "criteria": [
+    {
+      "key": "model",
+      "label": "Product family",
+      "description": "The documented product family being compared."
+    },
+    {
+      "key": "interface",
+      "label": "Platform and connection",
+      "description": "The documented primary interface or ecosystem."
+    },
+    {
+      "key": "form",
+      "label": "Form factor",
+      "description": "The product form that affects the buying decision."
+    },
+    {
+      "key": "operations",
+      "label": "Ownership considerations",
+      "description": "Compatibility, maintenance and setup checks before purchase."
+    },
+    {
+      "key": "fit",
+      "label": "Decision fit",
+      "description": "The stated situation where the option is a sensible starting point."
+    },
+    {
+      "key": "intent",
+      "label": "Intent relevance",
+      "description": "Why this option belongs in this decision."
+    }
+  ],
+  "alternatives": [
+    {
+      "name": "Elgato Facecam Series",
+      "url": "https://www.elgato.com/us/en/s/webcams",
+      "summary": "Creators and desk video setups. Confirm the exact current model and regional compatibility in its official documentation.",
+      "specs": {
+        "model": "Elgato Facecam Series",
+        "interface": "USB video",
+        "form": "Desktop webcam",
+        "operations": "Verify host software, mounting, USB requirements and manual controls.",
+        "fit": "Creators and desk video setups.",
+        "intent": "Relevant to direct comparison because it is documented as a desktop webcam with usb video."
+      }
+    },
+    {
+      "name": "Insta360 Link Series",
+      "url": "https://www.insta360.com/product/insta360-link",
+      "summary": "Presenters who need framing controls. Confirm the exact current model and regional compatibility in its official documentation.",
+      "specs": {
+        "model": "Insta360 Link Series",
+        "interface": "USB video",
+        "form": "Gimbal webcam",
+        "operations": "Check tracking features, host software, mounting and USB bandwidth.",
+        "fit": "Presenters who need framing controls.",
+        "intent": "Relevant to direct comparison because it is documented as a gimbal webcam with usb video."
+      }
+    }
+  ],
+  "faq": [
+    {
+      "question": "How should I choose webcams for direct comparison?",
+      "answer": "Start with the documented platform, physical form, setup and ongoing maintenance. Confirm exact model, regional compatibility and current listing details in the linked primary documentation before purchase."
+    },
+    {
+      "question": "Does this guide publish live price or stock?",
+      "answer": "No. Prices, bundles and availability change frequently, so StackSignal links to the current destination without freezing volatile commercial claims."
+    },
+    {
+      "question": "Are ratings or buyer-review claims used here?",
+      "answer": "No. This is a technical editorial synthesis of official documentation and does not claim an independently verified buyer-review dataset."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Elgato Facecam Series official documentation",
+      "publisher": "Elgato",
+      "url": "https://www.elgato.com/us/en/s/webcams"
+    },
+    {
+      "label": "Insta360 Link Series official documentation",
+      "publisher": "Insta360",
+      "url": "https://www.insta360.com/product/insta360-link"
+    }
+  ],
+  "resources": [
+    {
+      "title": "Elgato Facecam Series",
+      "target_url": "https://www.amazon.es/s?k=Elgato+Facecam&tag=blackboxia92-21",
+      "note": "Check the current exact model, specifications and availability for Elgato Facecam Series."
+    },
+    {
+      "title": "Insta360 Link Series",
+      "target_url": "https://www.amazon.es/s?k=Insta360+Link+webcam&tag=blackboxia92-21",
+      "note": "Check the current exact model, specifications and availability for Insta360 Link Series."
+    }
+  ]
+}

@@ -1,0 +1,116 @@
+{
+  "slug": "v3-coffee-machines-vs-01",
+  "content_model": "v2",
+  "status": "reviewed",
+  "locale": "en",
+  "category": "consumer-product",
+  "topic": "coffee-machines",
+  "intent_type": "comparison",
+  "audience": "vs-direct comparison",
+  "title": "Nespresso Original System vs De'Longhi Bean-to-Cup Series: which coffee machines fits your setup?",
+  "meta_description": "Nespresso Original System vs De'Longhi Bean-to-Cup Series: which coffee machines fits your setup?: a source-backed decision matrix using official documentation, stable co",
+  "eyebrow": "Coffee Machines decision guide",
+  "answer_first": "Start with Nespresso Original System when you need short espresso-style drinks in a compact capsule system. Start with De'Longhi Bean-to-Cup Series when you need users wanting fresh-bean coffee with guided maintenance. Verify the exact current model before buying.",
+  "intro": "This answer-first guide compares documented coffee machines options for direct comparison. It uses official manufacturer documentation, omits volatile price and stock claims, and keeps retailer destinations separate from the editorial decision.",
+  "verdict": "Start with Nespresso Original System when you need short espresso-style drinks in a compact capsule system. Start with De'Longhi Bean-to-Cup Series when you need users wanting fresh-bean coffee with guided maintenance. Verify the exact current model before buying.",
+  "updated_at": "2026-09-27",
+  "reviewed_by": "StackSignal technical editorial desk",
+  "criteria": [
+    {
+      "key": "model",
+      "label": "Product family",
+      "description": "The documented product family being compared."
+    },
+    {
+      "key": "interface",
+      "label": "Platform and connection",
+      "description": "The documented primary interface or ecosystem."
+    },
+    {
+      "key": "form",
+      "label": "Form factor",
+      "description": "The product form that affects the buying decision."
+    },
+    {
+      "key": "operations",
+      "label": "Ownership considerations",
+      "description": "Compatibility, maintenance and setup checks before purchase."
+    },
+    {
+      "key": "fit",
+      "label": "Decision fit",
+      "description": "The stated situation where the option is a sensible starting point."
+    },
+    {
+      "key": "intent",
+      "label": "Intent relevance",
+      "description": "Why this option belongs in this decision."
+    }
+  ],
+  "alternatives": [
+    {
+      "name": "Nespresso Original System",
+      "url": "https://www.nespresso.com/es/es/maquinas-de-cafe",
+      "summary": "Short espresso-style drinks in a compact capsule system. Confirm the exact current model and regional compatibility in its official documentation.",
+      "specs": {
+        "model": "Nespresso Original System",
+        "interface": "Capsule pressure brewing",
+        "form": "Countertop coffee machine",
+        "operations": "Verify capsule system, water access, descaling and regional voltage.",
+        "fit": "Short espresso-style drinks in a compact capsule system.",
+        "intent": "Relevant to direct comparison because it is documented as a countertop coffee machine with capsule pressure brewing."
+      }
+    },
+    {
+      "name": "De'Longhi Bean-to-Cup Series",
+      "url": "https://www.delonghi.com/es-es/productos/cafe/cafeteras-superautomaticas",
+      "summary": "Users wanting fresh-bean coffee with guided maintenance. Confirm the exact current model and regional compatibility in its official documentation.",
+      "specs": {
+        "model": "De'Longhi Bean-to-Cup Series",
+        "interface": "Bean-to-cup espresso brewing",
+        "form": "Automatic coffee machine",
+        "operations": "Check grinder, milk workflow, cleaning cycle and counter clearance.",
+        "fit": "Users wanting fresh-bean coffee with guided maintenance.",
+        "intent": "Relevant to direct comparison because it is documented as a automatic coffee machine with bean-to-cup espresso brewing."
+      }
+    }
+  ],
+  "faq": [
+    {
+      "question": "How should I choose coffee machines for direct comparison?",
+      "answer": "Start with the documented platform, physical form, setup and ongoing maintenance. Confirm exact model, regional compatibility and current listing details in the linked primary documentation before purchase."
+    },
+    {
+      "question": "Does this guide publish live price or stock?",
+      "answer": "No. Prices, bundles and availability change frequently, so StackSignal links to the current destination without freezing volatile commercial claims."
+    },
+    {
+      "question": "Are ratings or buyer-review claims used here?",
+      "answer": "No. This is a technical editorial synthesis of official documentation and does not claim an independently verified buyer-review dataset."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Nespresso Original System official documentation",
+      "publisher": "Nespresso",
+      "url": "https://www.nespresso.com/es/es/maquinas-de-cafe"
+    },
+    {
+      "label": "De'Longhi Bean-to-Cup Series official documentation",
+      "publisher": "De'Longhi",
+      "url": "https://www.delonghi.com/es-es/productos/cafe/cafeteras-superautomaticas"
+    }
+  ],
+  "resources": [
+    {
+      "title": "Nespresso Original System",
+      "target_url": "https://www.amazon.es/s?k=Nespresso+Original+coffee+machine&tag=blackboxia92-21",
+      "note": "Check the current exact model, specifications and availability for Nespresso Original System."
+    },
+    {
+      "title": "De'Longhi Bean-to-Cup Series",
+      "target_url": "https://www.amazon.es/s?k=DeLonghi+bean+to+cup+coffee+machine&tag=blackboxia92-21",
+      "note": "Check the current exact model, specifications and availability for De'Longhi Bean-to-Cup Series."
+    }
+  ]
+}

@@ -37,6 +37,8 @@ def intentional_hub_paths(rows: Iterable[tuple[Page, Mapping[str, object]]]) -> 
     paths = ["/", "/guides/"]
     if sum(category_for_page(page, raw) == "ci-cd" for page, raw in indexable) >= 3:
         paths.append("/topics/ci-cd/")
+    topics = sorted({str(raw.get("topic")) for _, raw in indexable if raw.get("topic")})
+    paths.extend(f"/topics/{topic}/" for topic in topics)
     commercial = [page for page, _ in indexable if page.is_commercial]
     if commercial:
         paths.append("/catalog/")

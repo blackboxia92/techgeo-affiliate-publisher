@@ -1,0 +1,139 @@
+{
+  "slug": "v3-e-readers-alternatives-02",
+  "content_model": "v2",
+  "status": "reviewed",
+  "locale": "en",
+  "category": "consumer-product",
+  "topic": "e-readers",
+  "intent_type": "comparison",
+  "audience": "alternatives-Kobo E-reader Series",
+  "title": "Alternatives to Kobo E-reader Series: e-readers with different trade-offs",
+  "meta_description": "Alternatives to Kobo E-reader Series: e-readers with different trade-offs: a source-backed decision matrix using official documentation, stable compatibility facts and cu",
+  "eyebrow": "E-Readers decision guide",
+  "answer_first": "If Kobo E-reader Series is not the right fit, compare Amazon Kindle Series and PocketBook E-reader Series on their documented interface, setup and ownership requirements.",
+  "intro": "This answer-first guide compares documented e-readers options for Kobo E-reader Series. It uses official manufacturer documentation, omits volatile price and stock claims, and keeps retailer destinations separate from the editorial decision.",
+  "verdict": "If Kobo E-reader Series is not the right fit, compare Amazon Kindle Series and PocketBook E-reader Series on their documented interface, setup and ownership requirements.",
+  "updated_at": "2026-09-27",
+  "reviewed_by": "StackSignal technical editorial desk",
+  "criteria": [
+    {
+      "key": "model",
+      "label": "Product family",
+      "description": "The documented product family being compared."
+    },
+    {
+      "key": "interface",
+      "label": "Platform and connection",
+      "description": "The documented primary interface or ecosystem."
+    },
+    {
+      "key": "form",
+      "label": "Form factor",
+      "description": "The product form that affects the buying decision."
+    },
+    {
+      "key": "operations",
+      "label": "Ownership considerations",
+      "description": "Compatibility, maintenance and setup checks before purchase."
+    },
+    {
+      "key": "fit",
+      "label": "Decision fit",
+      "description": "The stated situation where the option is a sensible starting point."
+    },
+    {
+      "key": "intent",
+      "label": "Intent relevance",
+      "description": "Why this option belongs in this decision."
+    }
+  ],
+  "alternatives": [
+    {
+      "name": "Kobo E-reader Series",
+      "url": "https://www.kobo.com/ereaders",
+      "summary": "Readers valuing format flexibility and library integrations. Confirm the exact current model and regional compatibility in its official documentation.",
+      "specs": {
+        "model": "Kobo E-reader Series",
+        "interface": "Wi-Fi e-reading platform",
+        "form": "Dedicated e-reader",
+        "operations": "Check regional store, library support, formats, lighting and stylus options.",
+        "fit": "Readers valuing format flexibility and library integrations.",
+        "intent": "Relevant to Kobo E-reader Series because it is documented as a dedicated e-reader with wi-fi e-reading platform."
+      }
+    },
+    {
+      "name": "Amazon Kindle Series",
+      "url": "https://www.amazon.es/b?node=827231031",
+      "summary": "Long-form reading with a low-distraction display. Confirm the exact current model and regional compatibility in its official documentation.",
+      "specs": {
+        "model": "Amazon Kindle Series",
+        "interface": "Wi-Fi e-reading platform",
+        "form": "Dedicated e-reader",
+        "operations": "Check lighting, storage, file workflow, waterproofing and library compatibility.",
+        "fit": "Long-form reading with a low-distraction display.",
+        "intent": "Relevant to Kobo E-reader Series because it is documented as a dedicated e-reader with wi-fi e-reading platform."
+      }
+    },
+    {
+      "name": "PocketBook E-reader Series",
+      "url": "https://pocketbook.ch/en-ch/catalog/e-readers",
+      "summary": "Readers comparing ecosystem independence and formats. Confirm the exact current model and regional compatibility in its official documentation.",
+      "specs": {
+        "model": "PocketBook E-reader Series",
+        "interface": "Wi-Fi e-reading platform",
+        "form": "Dedicated e-reader",
+        "operations": "Verify format handling, storefront support, display and regional warranty.",
+        "fit": "Readers comparing ecosystem independence and formats.",
+        "intent": "Relevant to Kobo E-reader Series because it is documented as a dedicated e-reader with wi-fi e-reading platform."
+      }
+    }
+  ],
+  "faq": [
+    {
+      "question": "How should I choose e-readers for Kobo E-reader Series?",
+      "answer": "Start with the documented platform, physical form, setup and ongoing maintenance. Confirm exact model, regional compatibility and current listing details in the linked primary documentation before purchase."
+    },
+    {
+      "question": "Does this guide publish live price or stock?",
+      "answer": "No. Prices, bundles and availability change frequently, so StackSignal links to the current destination without freezing volatile commercial claims."
+    },
+    {
+      "question": "Are ratings or buyer-review claims used here?",
+      "answer": "No. This is a technical editorial synthesis of official documentation and does not claim an independently verified buyer-review dataset."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Kobo E-reader Series official documentation",
+      "publisher": "Rakuten Kobo",
+      "url": "https://www.kobo.com/ereaders"
+    },
+    {
+      "label": "Amazon Kindle Series official documentation",
+      "publisher": "Amazon",
+      "url": "https://www.amazon.es/b?node=827231031"
+    },
+    {
+      "label": "PocketBook E-reader Series official documentation",
+      "publisher": "PocketBook",
+      "url": "https://pocketbook.ch/en-ch/catalog/e-readers"
+    }
+  ],
+  "resources": [
+    {
+      "title": "Kobo E-reader Series",
+      "target_url": "https://www.amazon.es/s?k=Kobo+e-reader&tag=blackboxia92-21",
+      "note": "Check the current exact model, specifications and availability for Kobo E-reader Series."
+    },
+    {
+      "title": "Amazon Kindle Series",
+      "target_url": "https://www.amazon.es/s?k=Amazon+Kindle+e-reader&tag=blackboxia92-21",
+      "note": "Check the current exact model, specifications and availability for Amazon Kindle Series."
+    },
+    {
+      "title": "PocketBook E-reader Series",
+      "target_url": "https://www.amazon.es/s?k=PocketBook+e-reader&tag=blackboxia92-21",
+      "note": "Check the current exact model, specifications and availability for PocketBook E-reader Series."
+    }
+  ]
+}

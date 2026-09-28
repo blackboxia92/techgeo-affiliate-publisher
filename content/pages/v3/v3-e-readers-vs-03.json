@@ -1,0 +1,116 @@
+{
+  "slug": "v3-e-readers-vs-03",
+  "content_model": "v2",
+  "status": "reviewed",
+  "locale": "en",
+  "category": "consumer-product",
+  "topic": "e-readers",
+  "intent_type": "comparison",
+  "audience": "vs-direct comparison",
+  "title": "Amazon Kindle Series vs Onyx BOOX E-reader Series: which e-readers fits your setup?",
+  "meta_description": "Amazon Kindle Series vs Onyx BOOX E-reader Series: which e-readers fits your setup?: a source-backed decision matrix using official documentation, stable compatibility fa",
+  "eyebrow": "E-Readers decision guide",
+  "answer_first": "Start with Amazon Kindle Series when you need long-form reading with a low-distraction display. Start with Onyx BOOX E-reader Series when you need readers who also need flexible note-taking workflows. Verify the exact current model before buying.",
+  "intro": "This answer-first guide compares documented e-readers options for direct comparison. It uses official manufacturer documentation, omits volatile price and stock claims, and keeps retailer destinations separate from the editorial decision.",
+  "verdict": "Start with Amazon Kindle Series when you need long-form reading with a low-distraction display. Start with Onyx BOOX E-reader Series when you need readers who also need flexible note-taking workflows. Verify the exact current model before buying.",
+  "updated_at": "2026-09-27",
+  "reviewed_by": "StackSignal technical editorial desk",
+  "criteria": [
+    {
+      "key": "model",
+      "label": "Product family",
+      "description": "The documented product family being compared."
+    },
+    {
+      "key": "interface",
+      "label": "Platform and connection",
+      "description": "The documented primary interface or ecosystem."
+    },
+    {
+      "key": "form",
+      "label": "Form factor",
+      "description": "The product form that affects the buying decision."
+    },
+    {
+      "key": "operations",
+      "label": "Ownership considerations",
+      "description": "Compatibility, maintenance and setup checks before purchase."
+    },
+    {
+      "key": "fit",
+      "label": "Decision fit",
+      "description": "The stated situation where the option is a sensible starting point."
+    },
+    {
+      "key": "intent",
+      "label": "Intent relevance",
+      "description": "Why this option belongs in this decision."
+    }
+  ],
+  "alternatives": [
+    {
+      "name": "Amazon Kindle Series",
+      "url": "https://www.amazon.es/b?node=827231031",
+      "summary": "Long-form reading with a low-distraction display. Confirm the exact current model and regional compatibility in its official documentation.",
+      "specs": {
+        "model": "Amazon Kindle Series",
+        "interface": "Wi-Fi e-reading platform",
+        "form": "Dedicated e-reader",
+        "operations": "Check lighting, storage, file workflow, waterproofing and library compatibility.",
+        "fit": "Long-form reading with a low-distraction display.",
+        "intent": "Relevant to direct comparison because it is documented as a dedicated e-reader with wi-fi e-reading platform."
+      }
+    },
+    {
+      "name": "Onyx BOOX E-reader Series",
+      "url": "https://shop.boox.com/collections/eink-tablet",
+      "summary": "Readers who also need flexible note-taking workflows. Confirm the exact current model and regional compatibility in its official documentation.",
+      "specs": {
+        "model": "Onyx BOOX E-reader Series",
+        "interface": "E-ink Android platform",
+        "form": "E-ink reader and note device",
+        "operations": "Check Android version, app support, stylus workflow and update policy.",
+        "fit": "Readers who also need flexible note-taking workflows.",
+        "intent": "Relevant to direct comparison because it is documented as a e-ink reader and note device with e-ink android platform."
+      }
+    }
+  ],
+  "faq": [
+    {
+      "question": "How should I choose e-readers for direct comparison?",
+      "answer": "Start with the documented platform, physical form, setup and ongoing maintenance. Confirm exact model, regional compatibility and current listing details in the linked primary documentation before purchase."
+    },
+    {
+      "question": "Does this guide publish live price or stock?",
+      "answer": "No. Prices, bundles and availability change frequently, so StackSignal links to the current destination without freezing volatile commercial claims."
+    },
+    {
+      "question": "Are ratings or buyer-review claims used here?",
+      "answer": "No. This is a technical editorial synthesis of official documentation and does not claim an independently verified buyer-review dataset."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Amazon Kindle Series official documentation",
+      "publisher": "Amazon",
+      "url": "https://www.amazon.es/b?node=827231031"
+    },
+    {
+      "label": "Onyx BOOX E-reader Series official documentation",
+      "publisher": "BOOX",
+      "url": "https://shop.boox.com/collections/eink-tablet"
+    }
+  ],
+  "resources": [
+    {
+      "title": "Amazon Kindle Series",
+      "target_url": "https://www.amazon.es/s?k=Amazon+Kindle+e-reader&tag=blackboxia92-21",
+      "note": "Check the current exact model, specifications and availability for Amazon Kindle Series."
+    },
+    {
+      "title": "Onyx BOOX E-reader Series",
+      "target_url": "https://www.amazon.es/s?k=Onyx+BOOX+e-reader&tag=blackboxia92-21",
+      "note": "Check the current exact model, specifications and availability for Onyx BOOX E-reader Series."
+    }
+  ]
+}

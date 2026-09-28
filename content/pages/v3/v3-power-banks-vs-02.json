@@ -1,0 +1,116 @@
+{
+  "slug": "v3-power-banks-vs-02",
+  "content_model": "v2",
+  "status": "reviewed",
+  "locale": "en",
+  "category": "consumer-product",
+  "topic": "power-banks",
+  "intent_type": "comparison",
+  "audience": "vs-direct comparison",
+  "title": "Anker PowerCore Series vs UGREEN Nexode Power Bank Series: which power banks fits your setup?",
+  "meta_description": "Anker PowerCore Series vs UGREEN Nexode Power Bank Series: which power banks fits your setup?: a source-backed decision matrix using official documentation, stable compat",
+  "eyebrow": "Power Banks decision guide",
+  "answer_first": "Start with Anker PowerCore Series when you need general-purpose phone and tablet charging. Start with UGREEN Nexode Power Bank Series when you need usb-c laptops and multi-device travel kits. Verify the exact current model before buying.",
+  "intro": "This answer-first guide compares documented power banks options for direct comparison. It uses official manufacturer documentation, omits volatile price and stock claims, and keeps retailer destinations separate from the editorial decision.",
+  "verdict": "Start with Anker PowerCore Series when you need general-purpose phone and tablet charging. Start with UGREEN Nexode Power Bank Series when you need usb-c laptops and multi-device travel kits. Verify the exact current model before buying.",
+  "updated_at": "2026-09-27",
+  "reviewed_by": "StackSignal technical editorial desk",
+  "criteria": [
+    {
+      "key": "model",
+      "label": "Product family",
+      "description": "The documented product family being compared."
+    },
+    {
+      "key": "interface",
+      "label": "Platform and connection",
+      "description": "The documented primary interface or ecosystem."
+    },
+    {
+      "key": "form",
+      "label": "Form factor",
+      "description": "The product form that affects the buying decision."
+    },
+    {
+      "key": "operations",
+      "label": "Ownership considerations",
+      "description": "Compatibility, maintenance and setup checks before purchase."
+    },
+    {
+      "key": "fit",
+      "label": "Decision fit",
+      "description": "The stated situation where the option is a sensible starting point."
+    },
+    {
+      "key": "intent",
+      "label": "Intent relevance",
+      "description": "Why this option belongs in this decision."
+    }
+  ],
+  "alternatives": [
+    {
+      "name": "Anker PowerCore Series",
+      "url": "https://www.anker.com/collections/power-banks",
+      "summary": "General-purpose phone and tablet charging. Confirm the exact current model and regional compatibility in its official documentation.",
+      "specs": {
+        "model": "Anker PowerCore Series",
+        "interface": "USB portable power",
+        "form": "Portable battery pack",
+        "operations": "Compare USB-PD profiles, ports, recharge time and airline limits.",
+        "fit": "General-purpose phone and tablet charging.",
+        "intent": "Relevant to direct comparison because it is documented as a portable battery pack with usb portable power."
+      }
+    },
+    {
+      "name": "UGREEN Nexode Power Bank Series",
+      "url": "https://www.ugreen.com/collections/power-bank",
+      "summary": "USB-C laptops and multi-device travel kits. Confirm the exact current model and regional compatibility in its official documentation.",
+      "specs": {
+        "model": "UGREEN Nexode Power Bank Series",
+        "interface": "USB-C Power Delivery",
+        "form": "High-output portable battery",
+        "operations": "Check port allocation, laptop profiles, input and cable requirements.",
+        "fit": "USB-C laptops and multi-device travel kits.",
+        "intent": "Relevant to direct comparison because it is documented as a high-output portable battery with usb-c power delivery."
+      }
+    }
+  ],
+  "faq": [
+    {
+      "question": "How should I choose power banks for direct comparison?",
+      "answer": "Start with the documented platform, physical form, setup and ongoing maintenance. Confirm exact model, regional compatibility and current listing details in the linked primary documentation before purchase."
+    },
+    {
+      "question": "Does this guide publish live price or stock?",
+      "answer": "No. Prices, bundles and availability change frequently, so StackSignal links to the current destination without freezing volatile commercial claims."
+    },
+    {
+      "question": "Are ratings or buyer-review claims used here?",
+      "answer": "No. This is a technical editorial synthesis of official documentation and does not claim an independently verified buyer-review dataset."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Anker PowerCore Series official documentation",
+      "publisher": "Anker",
+      "url": "https://www.anker.com/collections/power-banks"
+    },
+    {
+      "label": "UGREEN Nexode Power Bank Series official documentation",
+      "publisher": "UGREEN",
+      "url": "https://www.ugreen.com/collections/power-bank"
+    }
+  ],
+  "resources": [
+    {
+      "title": "Anker PowerCore Series",
+      "target_url": "https://www.amazon.es/s?k=Anker+PowerCore+power+bank&tag=blackboxia92-21",
+      "note": "Check the current exact model, specifications and availability for Anker PowerCore Series."
+    },
+    {
+      "title": "UGREEN Nexode Power Bank Series",
+      "target_url": "https://www.amazon.es/s?k=UGREEN+Nexode+power+bank&tag=blackboxia92-21",
+      "note": "Check the current exact model, specifications and availability for UGREEN Nexode Power Bank Series."
+    }
+  ]
+}

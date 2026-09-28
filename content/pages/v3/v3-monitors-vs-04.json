@@ -1,0 +1,116 @@
+{
+  "slug": "v3-monitors-vs-04",
+  "content_model": "v2",
+  "status": "reviewed",
+  "locale": "en",
+  "category": "consumer-product",
+  "topic": "monitors",
+  "intent_type": "comparison",
+  "audience": "vs-direct comparison",
+  "title": "LG UltraFine Series vs ASUS ProArt Series: which monitors fits your setup?",
+  "meta_description": "LG UltraFine Series vs ASUS ProArt Series: which monitors fits your setup?: a source-backed decision matrix using official documentation, stable compatibility facts and c",
+  "eyebrow": "Monitors decision guide",
+  "answer_first": "Start with LG UltraFine Series when you need laptop-centric desk setups. Start with ASUS ProArt Series when you need content-creation and color-managed workflows. Verify the exact current model before buying.",
+  "intro": "This answer-first guide compares documented monitors options for direct comparison. It uses official manufacturer documentation, omits volatile price and stock claims, and keeps retailer destinations separate from the editorial decision.",
+  "verdict": "Start with LG UltraFine Series when you need laptop-centric desk setups. Start with ASUS ProArt Series when you need content-creation and color-managed workflows. Verify the exact current model before buying.",
+  "updated_at": "2026-09-27",
+  "reviewed_by": "StackSignal technical editorial desk",
+  "criteria": [
+    {
+      "key": "model",
+      "label": "Product family",
+      "description": "The documented product family being compared."
+    },
+    {
+      "key": "interface",
+      "label": "Platform and connection",
+      "description": "The documented primary interface or ecosystem."
+    },
+    {
+      "key": "form",
+      "label": "Form factor",
+      "description": "The product form that affects the buying decision."
+    },
+    {
+      "key": "operations",
+      "label": "Ownership considerations",
+      "description": "Compatibility, maintenance and setup checks before purchase."
+    },
+    {
+      "key": "fit",
+      "label": "Decision fit",
+      "description": "The stated situation where the option is a sensible starting point."
+    },
+    {
+      "key": "intent",
+      "label": "Intent relevance",
+      "description": "Why this option belongs in this decision."
+    }
+  ],
+  "alternatives": [
+    {
+      "name": "LG UltraFine Series",
+      "url": "https://www.lg.com/us/monitors",
+      "summary": "Laptop-centric desk setups. Confirm the exact current model and regional compatibility in its official documentation.",
+      "specs": {
+        "model": "LG UltraFine Series",
+        "interface": "DisplayPort, HDMI and USB-C",
+        "form": "Desktop monitor",
+        "operations": "Verify host compatibility, USB-C behavior, ergonomics and panel specification.",
+        "fit": "Laptop-centric desk setups.",
+        "intent": "Relevant to direct comparison because it is documented as a desktop monitor with displayport, hdmi and usb-c."
+      }
+    },
+    {
+      "name": "ASUS ProArt Series",
+      "url": "https://www.asus.com/displays-desktops/monitors/proart/",
+      "summary": "Content-creation and color-managed workflows. Confirm the exact current model and regional compatibility in its official documentation.",
+      "specs": {
+        "model": "ASUS ProArt Series",
+        "interface": "DisplayPort, HDMI and USB-C",
+        "form": "Desktop monitor",
+        "operations": "Check calibration claims, ports, color workflow and stand adjustment.",
+        "fit": "Content-creation and color-managed workflows.",
+        "intent": "Relevant to direct comparison because it is documented as a desktop monitor with displayport, hdmi and usb-c."
+      }
+    }
+  ],
+  "faq": [
+    {
+      "question": "How should I choose monitors for direct comparison?",
+      "answer": "Start with the documented platform, physical form, setup and ongoing maintenance. Confirm exact model, regional compatibility and current listing details in the linked primary documentation before purchase."
+    },
+    {
+      "question": "Does this guide publish live price or stock?",
+      "answer": "No. Prices, bundles and availability change frequently, so StackSignal links to the current destination without freezing volatile commercial claims."
+    },
+    {
+      "question": "Are ratings or buyer-review claims used here?",
+      "answer": "No. This is a technical editorial synthesis of official documentation and does not claim an independently verified buyer-review dataset."
+    }
+  ],
+  "sources": [
+    {
+      "label": "LG UltraFine Series official documentation",
+      "publisher": "LG",
+      "url": "https://www.lg.com/us/monitors"
+    },
+    {
+      "label": "ASUS ProArt Series official documentation",
+      "publisher": "ASUS",
+      "url": "https://www.asus.com/displays-desktops/monitors/proart/"
+    }
+  ],
+  "resources": [
+    {
+      "title": "LG UltraFine Series",
+      "target_url": "https://www.amazon.es/s?k=LG+UltraFine+monitor&tag=blackboxia92-21",
+      "note": "Check the current exact model, specifications and availability for LG UltraFine Series."
+    },
+    {
+      "title": "ASUS ProArt Series",
+      "target_url": "https://www.amazon.es/s?k=ASUS+ProArt+monitor&tag=blackboxia92-21",
+      "note": "Check the current exact model, specifications and availability for ASUS ProArt Series."
+    }
+  ]
+}

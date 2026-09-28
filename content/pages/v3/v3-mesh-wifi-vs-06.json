@@ -1,0 +1,116 @@
+{
+  "slug": "v3-mesh-wifi-vs-06",
+  "content_model": "v2",
+  "status": "reviewed",
+  "locale": "en",
+  "category": "consumer-product",
+  "topic": "mesh-wifi",
+  "intent_type": "comparison",
+  "audience": "vs-direct comparison",
+  "title": "eero Mesh Wi-Fi Series vs NETGEAR Orbi Series: which mesh Wi-Fi systems fits your setup?",
+  "meta_description": "eero Mesh Wi-Fi Series vs NETGEAR Orbi Series: which mesh Wi-Fi systems fits your setup?: a source-backed decision matrix using official documentation, stable compatibili",
+  "eyebrow": "Mesh Wi-Fi Systems decision guide",
+  "answer_first": "Start with eero Mesh Wi-Fi Series when you need simplified whole-home mesh management. Start with NETGEAR Orbi Series when you need larger homes comparing mesh topologies. Verify the exact current model before buying.",
+  "intro": "This answer-first guide compares documented mesh Wi-Fi systems options for direct comparison. It uses official manufacturer documentation, omits volatile price and stock claims, and keeps retailer destinations separate from the editorial decision.",
+  "verdict": "Start with eero Mesh Wi-Fi Series when you need simplified whole-home mesh management. Start with NETGEAR Orbi Series when you need larger homes comparing mesh topologies. Verify the exact current model before buying.",
+  "updated_at": "2026-09-27",
+  "reviewed_by": "StackSignal technical editorial desk",
+  "criteria": [
+    {
+      "key": "model",
+      "label": "Product family",
+      "description": "The documented product family being compared."
+    },
+    {
+      "key": "interface",
+      "label": "Platform and connection",
+      "description": "The documented primary interface or ecosystem."
+    },
+    {
+      "key": "form",
+      "label": "Form factor",
+      "description": "The product form that affects the buying decision."
+    },
+    {
+      "key": "operations",
+      "label": "Ownership considerations",
+      "description": "Compatibility, maintenance and setup checks before purchase."
+    },
+    {
+      "key": "fit",
+      "label": "Decision fit",
+      "description": "The stated situation where the option is a sensible starting point."
+    },
+    {
+      "key": "intent",
+      "label": "Intent relevance",
+      "description": "Why this option belongs in this decision."
+    }
+  ],
+  "alternatives": [
+    {
+      "name": "eero Mesh Wi-Fi Series",
+      "url": "https://eero.com/",
+      "summary": "Simplified whole-home mesh management. Confirm the exact current model and regional compatibility in its official documentation.",
+      "specs": {
+        "model": "eero Mesh Wi-Fi Series",
+        "interface": "Wi-Fi mesh networking",
+        "form": "Mesh router system",
+        "operations": "Check ISP compatibility, node placement, app requirements and subscription boundaries.",
+        "fit": "Simplified whole-home mesh management.",
+        "intent": "Relevant to direct comparison because it is documented as a mesh router system with wi-fi mesh networking."
+      }
+    },
+    {
+      "name": "NETGEAR Orbi Series",
+      "url": "https://www.netgear.com/home/wifi/mesh/",
+      "summary": "Larger homes comparing mesh topologies. Confirm the exact current model and regional compatibility in its official documentation.",
+      "specs": {
+        "model": "NETGEAR Orbi Series",
+        "interface": "Wi-Fi mesh networking",
+        "form": "Mesh router system",
+        "operations": "Verify backhaul design, ports, coverage planning and subscription features.",
+        "fit": "Larger homes comparing mesh topologies.",
+        "intent": "Relevant to direct comparison because it is documented as a mesh router system with wi-fi mesh networking."
+      }
+    }
+  ],
+  "faq": [
+    {
+      "question": "How should I choose mesh Wi-Fi systems for direct comparison?",
+      "answer": "Start with the documented platform, physical form, setup and ongoing maintenance. Confirm exact model, regional compatibility and current listing details in the linked primary documentation before purchase."
+    },
+    {
+      "question": "Does this guide publish live price or stock?",
+      "answer": "No. Prices, bundles and availability change frequently, so StackSignal links to the current destination without freezing volatile commercial claims."
+    },
+    {
+      "question": "Are ratings or buyer-review claims used here?",
+      "answer": "No. This is a technical editorial synthesis of official documentation and does not claim an independently verified buyer-review dataset."
+    }
+  ],
+  "sources": [
+    {
+      "label": "eero Mesh Wi-Fi Series official documentation",
+      "publisher": "eero",
+      "url": "https://eero.com/"
+    },
+    {
+      "label": "NETGEAR Orbi Series official documentation",
+      "publisher": "NETGEAR",
+      "url": "https://www.netgear.com/home/wifi/mesh/"
+    }
+  ],
+  "resources": [
+    {
+      "title": "eero Mesh Wi-Fi Series",
+      "target_url": "https://www.amazon.es/s?k=eero+mesh+WiFi&tag=blackboxia92-21",
+      "note": "Check the current exact model, specifications and availability for eero Mesh Wi-Fi Series."
+    },
+    {
+      "title": "NETGEAR Orbi Series",
+      "target_url": "https://www.amazon.es/s?k=NETGEAR+Orbi+mesh+WiFi&tag=blackboxia92-21",
+      "note": "Check the current exact model, specifications and availability for NETGEAR Orbi Series."
+    }
+  ]
+}

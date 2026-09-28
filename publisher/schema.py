@@ -96,6 +96,7 @@ class Page:
     resources: tuple[Resource, ...]
     affiliate_disclosure: str | None = None
     recommendation: Recommendation | None = None
+    answer_first: str | None = None
 
     @property
     def indexable(self) -> bool:
@@ -219,6 +220,8 @@ def load_page(path: Path) -> tuple[Page, dict[str, Any]]:
         affiliate_disclosure=_text(raw["affiliate_disclosure"], "affiliate_disclosure", 20)
         if raw.get("affiliate_disclosure") else None,
         recommendation=recommendation,
+        answer_first=_text(raw["answer_first"], "answer_first", 40)
+        if raw.get("answer_first") else None,
     )
     _validate_page(page)
     return page, raw

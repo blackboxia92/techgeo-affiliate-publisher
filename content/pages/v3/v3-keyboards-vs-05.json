@@ -1,0 +1,116 @@
+{
+  "slug": "v3-keyboards-vs-05",
+  "content_model": "v2",
+  "status": "reviewed",
+  "locale": "en",
+  "category": "consumer-product",
+  "topic": "keyboards",
+  "intent_type": "comparison",
+  "audience": "vs-direct comparison",
+  "title": "Keychron Keyboard Series vs Razer Productivity Keyboard Series: which wireless keyboards fits your setup?",
+  "meta_description": "Keychron Keyboard Series vs Razer Productivity Keyboard Series: which wireless keyboards fits your setup?: a source-backed decision matrix using official documentation, s",
+  "eyebrow": "Wireless Keyboards decision guide",
+  "answer_first": "Start with Keychron Keyboard Series when you need users choosing configurable mechanical layouts. Start with Razer Productivity Keyboard Series when you need users combining work and gaming devices. Verify the exact current model before buying.",
+  "intro": "This answer-first guide compares documented wireless keyboards options for direct comparison. It uses official manufacturer documentation, omits volatile price and stock claims, and keeps retailer destinations separate from the editorial decision.",
+  "verdict": "Start with Keychron Keyboard Series when you need users choosing configurable mechanical layouts. Start with Razer Productivity Keyboard Series when you need users combining work and gaming devices. Verify the exact current model before buying.",
+  "updated_at": "2026-09-27",
+  "reviewed_by": "StackSignal technical editorial desk",
+  "criteria": [
+    {
+      "key": "model",
+      "label": "Product family",
+      "description": "The documented product family being compared."
+    },
+    {
+      "key": "interface",
+      "label": "Platform and connection",
+      "description": "The documented primary interface or ecosystem."
+    },
+    {
+      "key": "form",
+      "label": "Form factor",
+      "description": "The product form that affects the buying decision."
+    },
+    {
+      "key": "operations",
+      "label": "Ownership considerations",
+      "description": "Compatibility, maintenance and setup checks before purchase."
+    },
+    {
+      "key": "fit",
+      "label": "Decision fit",
+      "description": "The stated situation where the option is a sensible starting point."
+    },
+    {
+      "key": "intent",
+      "label": "Intent relevance",
+      "description": "Why this option belongs in this decision."
+    }
+  ],
+  "alternatives": [
+    {
+      "name": "Keychron Keyboard Series",
+      "url": "https://www.keychron.com/collections/keyboards",
+      "summary": "Users choosing configurable mechanical layouts. Confirm the exact current model and regional compatibility in its official documentation.",
+      "specs": {
+        "model": "Keychron Keyboard Series",
+        "interface": "Wired and Bluetooth keyboard",
+        "form": "Mechanical keyboard",
+        "operations": "Verify layout, switch options, OS support, remapping and connectivity mode.",
+        "fit": "Users choosing configurable mechanical layouts.",
+        "intent": "Relevant to direct comparison because it is documented as a mechanical keyboard with wired and bluetooth keyboard."
+      }
+    },
+    {
+      "name": "Razer Productivity Keyboard Series",
+      "url": "https://www.razer.com/pc/gaming-keyboards",
+      "summary": "Users combining work and gaming devices. Confirm the exact current model and regional compatibility in its official documentation.",
+      "specs": {
+        "model": "Razer Productivity Keyboard Series",
+        "interface": "Bluetooth and USB receiver",
+        "form": "Wireless keyboard",
+        "operations": "Verify host software, layout, connectivity and device switching.",
+        "fit": "Users combining work and gaming devices.",
+        "intent": "Relevant to direct comparison because it is documented as a wireless keyboard with bluetooth and usb receiver."
+      }
+    }
+  ],
+  "faq": [
+    {
+      "question": "How should I choose wireless keyboards for direct comparison?",
+      "answer": "Start with the documented platform, physical form, setup and ongoing maintenance. Confirm exact model, regional compatibility and current listing details in the linked primary documentation before purchase."
+    },
+    {
+      "question": "Does this guide publish live price or stock?",
+      "answer": "No. Prices, bundles and availability change frequently, so StackSignal links to the current destination without freezing volatile commercial claims."
+    },
+    {
+      "question": "Are ratings or buyer-review claims used here?",
+      "answer": "No. This is a technical editorial synthesis of official documentation and does not claim an independently verified buyer-review dataset."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Keychron Keyboard Series official documentation",
+      "publisher": "Keychron",
+      "url": "https://www.keychron.com/collections/keyboards"
+    },
+    {
+      "label": "Razer Productivity Keyboard Series official documentation",
+      "publisher": "Razer",
+      "url": "https://www.razer.com/pc/gaming-keyboards"
+    }
+  ],
+  "resources": [
+    {
+      "title": "Keychron Keyboard Series",
+      "target_url": "https://www.amazon.es/s?k=Keychron+keyboard&tag=blackboxia92-21",
+      "note": "Check the current exact model, specifications and availability for Keychron Keyboard Series."
+    },
+    {
+      "title": "Razer Productivity Keyboard Series",
+      "target_url": "https://www.amazon.es/s?k=Razer+wireless+keyboard&tag=blackboxia92-21",
+      "note": "Check the current exact model, specifications and availability for Razer Productivity Keyboard Series."
+    }
+  ]
+}

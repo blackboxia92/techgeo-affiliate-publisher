@@ -1,0 +1,162 @@
+{
+  "slug": "v3-productivity-mice-use-case-09",
+  "content_model": "v2",
+  "status": "reviewed",
+  "locale": "en",
+  "category": "consumer-product",
+  "topic": "productivity-mice",
+  "intent_type": "best-for",
+  "audience": "use-case-content creation",
+  "title": "Best productivity mice for content creation",
+  "meta_description": "Best productivity mice for content creation: a source-backed decision matrix using official documentation, stable compatibility facts and current Amazon ES destination li",
+  "eyebrow": "Productivity Mice decision guide",
+  "answer_first": "For content creation, begin with Razer Pro Click Series when you need ergonomic-oriented desktop workflows. Compare Keychron Mouse Series when you need multi-device desktop users.",
+  "intro": "This answer-first guide compares documented productivity mice options for content creation. It uses official manufacturer documentation, omits volatile price and stock claims, and keeps retailer destinations separate from the editorial decision.",
+  "verdict": "For content creation, begin with Razer Pro Click Series when you need ergonomic-oriented desktop workflows. Compare Keychron Mouse Series when you need multi-device desktop users.",
+  "updated_at": "2026-09-27",
+  "reviewed_by": "StackSignal technical editorial desk",
+  "criteria": [
+    {
+      "key": "model",
+      "label": "Product family",
+      "description": "The documented product family being compared."
+    },
+    {
+      "key": "interface",
+      "label": "Platform and connection",
+      "description": "The documented primary interface or ecosystem."
+    },
+    {
+      "key": "form",
+      "label": "Form factor",
+      "description": "The product form that affects the buying decision."
+    },
+    {
+      "key": "operations",
+      "label": "Ownership considerations",
+      "description": "Compatibility, maintenance and setup checks before purchase."
+    },
+    {
+      "key": "fit",
+      "label": "Decision fit",
+      "description": "The stated situation where the option is a sensible starting point."
+    },
+    {
+      "key": "intent",
+      "label": "Intent relevance",
+      "description": "Why this option belongs in this decision."
+    }
+  ],
+  "alternatives": [
+    {
+      "name": "Razer Pro Click Series",
+      "url": "https://www.razer.com/productivity",
+      "summary": "Ergonomic-oriented desktop workflows. Confirm the exact current model and regional compatibility in its official documentation.",
+      "specs": {
+        "model": "Razer Pro Click Series",
+        "interface": "Bluetooth and USB receiver",
+        "form": "Wireless productivity mouse",
+        "operations": "Verify hand fit, host software, connection mode and charging.",
+        "fit": "Ergonomic-oriented desktop workflows.",
+        "intent": "Relevant to content creation because it is documented as a wireless productivity mouse with bluetooth and usb receiver."
+      }
+    },
+    {
+      "name": "Keychron Mouse Series",
+      "url": "https://www.keychron.com/collections/mice",
+      "summary": "Multi-device desktop users. Confirm the exact current model and regional compatibility in its official documentation.",
+      "specs": {
+        "model": "Keychron Mouse Series",
+        "interface": "Bluetooth and USB receiver",
+        "form": "Wireless mouse",
+        "operations": "Check grip shape, operating-system support, remapping and connection mode.",
+        "fit": "Multi-device desktop users.",
+        "intent": "Relevant to content creation because it is documented as a wireless mouse with bluetooth and usb receiver."
+      }
+    },
+    {
+      "name": "Microsoft Surface Mouse Series",
+      "url": "https://www.microsoft.com/en-us/d/surface-mouse/",
+      "summary": "Simple Bluetooth office setups. Confirm the exact current model and regional compatibility in its official documentation.",
+      "specs": {
+        "model": "Microsoft Surface Mouse Series",
+        "interface": "Bluetooth wireless",
+        "form": "Wireless mouse",
+        "operations": "Verify Bluetooth host support, battery type and operating-system features.",
+        "fit": "Simple Bluetooth office setups.",
+        "intent": "Relevant to content creation because it is documented as a wireless mouse with bluetooth wireless."
+      }
+    },
+    {
+      "name": "Logitech MX Mouse Series",
+      "url": "https://www.logitech.com/en-us/mx/mx-for-business.html",
+      "summary": "Desktop productivity across one or more computers. Confirm the exact current model and regional compatibility in its official documentation.",
+      "specs": {
+        "model": "Logitech MX Mouse Series",
+        "interface": "Bluetooth and USB receiver",
+        "form": "Wireless productivity mouse",
+        "operations": "Check hand fit, multi-device switching, software and charging.",
+        "fit": "Desktop productivity across one or more computers.",
+        "intent": "Relevant to content creation because it is documented as a wireless productivity mouse with bluetooth and usb receiver."
+      }
+    }
+  ],
+  "faq": [
+    {
+      "question": "How should I choose productivity mice for content creation?",
+      "answer": "Start with the documented platform, physical form, setup and ongoing maintenance. Confirm exact model, regional compatibility and current listing details in the linked primary documentation before purchase."
+    },
+    {
+      "question": "Does this guide publish live price or stock?",
+      "answer": "No. Prices, bundles and availability change frequently, so StackSignal links to the current destination without freezing volatile commercial claims."
+    },
+    {
+      "question": "Are ratings or buyer-review claims used here?",
+      "answer": "No. This is a technical editorial synthesis of official documentation and does not claim an independently verified buyer-review dataset."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Razer Pro Click Series official documentation",
+      "publisher": "Razer",
+      "url": "https://www.razer.com/productivity"
+    },
+    {
+      "label": "Keychron Mouse Series official documentation",
+      "publisher": "Keychron",
+      "url": "https://www.keychron.com/collections/mice"
+    },
+    {
+      "label": "Microsoft Surface Mouse Series official documentation",
+      "publisher": "Microsoft",
+      "url": "https://www.microsoft.com/en-us/d/surface-mouse/"
+    },
+    {
+      "label": "Logitech MX Mouse Series official documentation",
+      "publisher": "Logitech",
+      "url": "https://www.logitech.com/en-us/mx/mx-for-business.html"
+    }
+  ],
+  "resources": [
+    {
+      "title": "Razer Pro Click Series",
+      "target_url": "https://www.amazon.es/s?k=Razer+Pro+Click+mouse&tag=blackboxia92-21",
+      "note": "Check the current exact model, specifications and availability for Razer Pro Click Series."
+    },
+    {
+      "title": "Keychron Mouse Series",
+      "target_url": "https://www.amazon.es/s?k=Keychron+wireless+mouse&tag=blackboxia92-21",
+      "note": "Check the current exact model, specifications and availability for Keychron Mouse Series."
+    },
+    {
+      "title": "Microsoft Surface Mouse Series",
+      "target_url": "https://www.amazon.es/s?k=Microsoft+Surface+mouse&tag=blackboxia92-21",
+      "note": "Check the current exact model, specifications and availability for Microsoft Surface Mouse Series."
+    },
+    {
+      "title": "Logitech MX Mouse Series",
+      "target_url": "https://www.amazon.es/s?k=Logitech+MX+mouse&tag=blackboxia92-21",
+      "note": "Check the current exact model, specifications and availability for Logitech MX Mouse Series."
+    }
+  ]
+}

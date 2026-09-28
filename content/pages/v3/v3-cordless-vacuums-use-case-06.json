@@ -1,0 +1,162 @@
+{
+  "slug": "v3-cordless-vacuums-use-case-06",
+  "content_model": "v2",
+  "status": "reviewed",
+  "locale": "en",
+  "category": "consumer-product",
+  "topic": "cordless-vacuums",
+  "intent_type": "best-for",
+  "audience": "use-case-large homes",
+  "title": "Best cordless vacuums for large homes",
+  "meta_description": "Best cordless vacuums for large homes: a source-backed decision matrix using official documentation, stable compatibility facts and current Amazon ES destination links.",
+  "eyebrow": "Cordless Vacuums decision guide",
+  "answer_first": "For large homes, begin with Tineco Floor Care Series when you need homes evaluating cordless floor-care workflows. Compare Bosch Unlimited Series when you need users considering shared battery and appliance ecosystems.",
+  "intro": "This answer-first guide compares documented cordless vacuums options for large homes. It uses official manufacturer documentation, omits volatile price and stock claims, and keeps retailer destinations separate from the editorial decision.",
+  "verdict": "For large homes, begin with Tineco Floor Care Series when you need homes evaluating cordless floor-care workflows. Compare Bosch Unlimited Series when you need users considering shared battery and appliance ecosystems.",
+  "updated_at": "2026-09-27",
+  "reviewed_by": "StackSignal technical editorial desk",
+  "criteria": [
+    {
+      "key": "model",
+      "label": "Product family",
+      "description": "The documented product family being compared."
+    },
+    {
+      "key": "interface",
+      "label": "Platform and connection",
+      "description": "The documented primary interface or ecosystem."
+    },
+    {
+      "key": "form",
+      "label": "Form factor",
+      "description": "The product form that affects the buying decision."
+    },
+    {
+      "key": "operations",
+      "label": "Ownership considerations",
+      "description": "Compatibility, maintenance and setup checks before purchase."
+    },
+    {
+      "key": "fit",
+      "label": "Decision fit",
+      "description": "The stated situation where the option is a sensible starting point."
+    },
+    {
+      "key": "intent",
+      "label": "Intent relevance",
+      "description": "Why this option belongs in this decision."
+    }
+  ],
+  "alternatives": [
+    {
+      "name": "Tineco Floor Care Series",
+      "url": "https://www.tineco.com/collections/vacuum-cleaners",
+      "summary": "Homes evaluating cordless floor-care workflows. Confirm the exact current model and regional compatibility in its official documentation.",
+      "specs": {
+        "model": "Tineco Floor Care Series",
+        "interface": "Battery-powered floor care",
+        "form": "Cordless vacuum",
+        "operations": "Verify wet/dry capability, cleaning cycles, filters and floor compatibility.",
+        "fit": "Homes evaluating cordless floor-care workflows.",
+        "intent": "Relevant to large homes because it is documented as a cordless vacuum with battery-powered floor care."
+      }
+    },
+    {
+      "name": "Bosch Unlimited Series",
+      "url": "https://www.bosch-home.com/",
+      "summary": "Users considering shared battery and appliance ecosystems. Confirm the exact current model and regional compatibility in its official documentation.",
+      "specs": {
+        "model": "Bosch Unlimited Series",
+        "interface": "Battery-powered suction system",
+        "form": "Cordless stick vacuum",
+        "operations": "Check battery ecosystem, tools, filters and regional service options.",
+        "fit": "Users considering shared battery and appliance ecosystems.",
+        "intent": "Relevant to large homes because it is documented as a cordless stick vacuum with battery-powered suction system."
+      }
+    },
+    {
+      "name": "Dyson Cordless Vacuum Series",
+      "url": "https://www.dyson.com/vacuum-cleaners/cordless",
+      "summary": "Frequent multi-surface cleaning without a cord. Confirm the exact current model and regional compatibility in its official documentation.",
+      "specs": {
+        "model": "Dyson Cordless Vacuum Series",
+        "interface": "Battery-powered suction system",
+        "form": "Cordless stick vacuum",
+        "operations": "Compare floor heads, filtration maintenance, battery replacement and weight.",
+        "fit": "Frequent multi-surface cleaning without a cord.",
+        "intent": "Relevant to large homes because it is documented as a cordless stick vacuum with battery-powered suction system."
+      }
+    },
+    {
+      "name": "Shark Cordless Vacuum Series",
+      "url": "https://www.sharkclean.com/page/vacuums",
+      "summary": "Flexible cleaning with accessory options. Confirm the exact current model and regional compatibility in its official documentation.",
+      "specs": {
+        "model": "Shark Cordless Vacuum Series",
+        "interface": "Battery-powered suction system",
+        "form": "Cordless stick vacuum",
+        "operations": "Check brush-roll design, filter washing, battery availability and storage.",
+        "fit": "Flexible cleaning with accessory options.",
+        "intent": "Relevant to large homes because it is documented as a cordless stick vacuum with battery-powered suction system."
+      }
+    }
+  ],
+  "faq": [
+    {
+      "question": "How should I choose cordless vacuums for large homes?",
+      "answer": "Start with the documented platform, physical form, setup and ongoing maintenance. Confirm exact model, regional compatibility and current listing details in the linked primary documentation before purchase."
+    },
+    {
+      "question": "Does this guide publish live price or stock?",
+      "answer": "No. Prices, bundles and availability change frequently, so StackSignal links to the current destination without freezing volatile commercial claims."
+    },
+    {
+      "question": "Are ratings or buyer-review claims used here?",
+      "answer": "No. This is a technical editorial synthesis of official documentation and does not claim an independently verified buyer-review dataset."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Tineco Floor Care Series official documentation",
+      "publisher": "Tineco",
+      "url": "https://www.tineco.com/collections/vacuum-cleaners"
+    },
+    {
+      "label": "Bosch Unlimited Series official documentation",
+      "publisher": "Bosch",
+      "url": "https://www.bosch-home.com/"
+    },
+    {
+      "label": "Dyson Cordless Vacuum Series official documentation",
+      "publisher": "Dyson",
+      "url": "https://www.dyson.com/vacuum-cleaners/cordless"
+    },
+    {
+      "label": "Shark Cordless Vacuum Series official documentation",
+      "publisher": "SharkNinja",
+      "url": "https://www.sharkclean.com/page/vacuums"
+    }
+  ],
+  "resources": [
+    {
+      "title": "Tineco Floor Care Series",
+      "target_url": "https://www.amazon.es/s?k=Tineco+cordless+vacuum&tag=blackboxia92-21",
+      "note": "Check the current exact model, specifications and availability for Tineco Floor Care Series."
+    },
+    {
+      "title": "Bosch Unlimited Series",
+      "target_url": "https://www.amazon.es/s?k=Bosch+Unlimited+cordless+vacuum&tag=blackboxia92-21",
+      "note": "Check the current exact model, specifications and availability for Bosch Unlimited Series."
+    },
+    {
+      "title": "Dyson Cordless Vacuum Series",
+      "target_url": "https://www.amazon.es/s?k=Dyson+cordless+vacuum&tag=blackboxia92-21",
+      "note": "Check the current exact model, specifications and availability for Dyson Cordless Vacuum Series."
+    },
+    {
+      "title": "Shark Cordless Vacuum Series",
+      "target_url": "https://www.amazon.es/s?k=Shark+cordless+vacuum&tag=blackboxia92-21",
+      "note": "Check the current exact model, specifications and availability for Shark Cordless Vacuum Series."
+    }
+  ]
+}

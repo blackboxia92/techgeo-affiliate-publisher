@@ -1,0 +1,116 @@
+{
+  "slug": "v3-coffee-machines-vs-02",
+  "content_model": "v2",
+  "status": "reviewed",
+  "locale": "en",
+  "category": "consumer-product",
+  "topic": "coffee-machines",
+  "intent_type": "comparison",
+  "audience": "vs-direct comparison",
+  "title": "Nespresso Original System vs Philips LatteGo Series: which coffee machines fits your setup?",
+  "meta_description": "Nespresso Original System vs Philips LatteGo Series: which coffee machines fits your setup?: a source-backed decision matrix using official documentation, stable compatib",
+  "eyebrow": "Coffee Machines decision guide",
+  "answer_first": "Start with Nespresso Original System when you need short espresso-style drinks in a compact capsule system. Start with Philips LatteGo Series when you need households comparing bean-to-cup workflows. Verify the exact current model before buying.",
+  "intro": "This answer-first guide compares documented coffee machines options for direct comparison. It uses official manufacturer documentation, omits volatile price and stock claims, and keeps retailer destinations separate from the editorial decision.",
+  "verdict": "Start with Nespresso Original System when you need short espresso-style drinks in a compact capsule system. Start with Philips LatteGo Series when you need households comparing bean-to-cup workflows. Verify the exact current model before buying.",
+  "updated_at": "2026-09-27",
+  "reviewed_by": "StackSignal technical editorial desk",
+  "criteria": [
+    {
+      "key": "model",
+      "label": "Product family",
+      "description": "The documented product family being compared."
+    },
+    {
+      "key": "interface",
+      "label": "Platform and connection",
+      "description": "The documented primary interface or ecosystem."
+    },
+    {
+      "key": "form",
+      "label": "Form factor",
+      "description": "The product form that affects the buying decision."
+    },
+    {
+      "key": "operations",
+      "label": "Ownership considerations",
+      "description": "Compatibility, maintenance and setup checks before purchase."
+    },
+    {
+      "key": "fit",
+      "label": "Decision fit",
+      "description": "The stated situation where the option is a sensible starting point."
+    },
+    {
+      "key": "intent",
+      "label": "Intent relevance",
+      "description": "Why this option belongs in this decision."
+    }
+  ],
+  "alternatives": [
+    {
+      "name": "Nespresso Original System",
+      "url": "https://www.nespresso.com/es/es/maquinas-de-cafe",
+      "summary": "Short espresso-style drinks in a compact capsule system. Confirm the exact current model and regional compatibility in its official documentation.",
+      "specs": {
+        "model": "Nespresso Original System",
+        "interface": "Capsule pressure brewing",
+        "form": "Countertop coffee machine",
+        "operations": "Verify capsule system, water access, descaling and regional voltage.",
+        "fit": "Short espresso-style drinks in a compact capsule system.",
+        "intent": "Relevant to direct comparison because it is documented as a countertop coffee machine with capsule pressure brewing."
+      }
+    },
+    {
+      "name": "Philips LatteGo Series",
+      "url": "https://www.home.id/",
+      "summary": "Households comparing bean-to-cup workflows. Confirm the exact current model and regional compatibility in its official documentation.",
+      "specs": {
+        "model": "Philips LatteGo Series",
+        "interface": "Bean-to-cup espresso brewing",
+        "form": "Automatic coffee machine",
+        "operations": "Verify milk-system cleaning, grinder adjustment and consumable access.",
+        "fit": "Households comparing bean-to-cup workflows.",
+        "intent": "Relevant to direct comparison because it is documented as a automatic coffee machine with bean-to-cup espresso brewing."
+      }
+    }
+  ],
+  "faq": [
+    {
+      "question": "How should I choose coffee machines for direct comparison?",
+      "answer": "Start with the documented platform, physical form, setup and ongoing maintenance. Confirm exact model, regional compatibility and current listing details in the linked primary documentation before purchase."
+    },
+    {
+      "question": "Does this guide publish live price or stock?",
+      "answer": "No. Prices, bundles and availability change frequently, so StackSignal links to the current destination without freezing volatile commercial claims."
+    },
+    {
+      "question": "Are ratings or buyer-review claims used here?",
+      "answer": "No. This is a technical editorial synthesis of official documentation and does not claim an independently verified buyer-review dataset."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Nespresso Original System official documentation",
+      "publisher": "Nespresso",
+      "url": "https://www.nespresso.com/es/es/maquinas-de-cafe"
+    },
+    {
+      "label": "Philips LatteGo Series official documentation",
+      "publisher": "Philips",
+      "url": "https://www.home.id/"
+    }
+  ],
+  "resources": [
+    {
+      "title": "Nespresso Original System",
+      "target_url": "https://www.amazon.es/s?k=Nespresso+Original+coffee+machine&tag=blackboxia92-21",
+      "note": "Check the current exact model, specifications and availability for Nespresso Original System."
+    },
+    {
+      "title": "Philips LatteGo Series",
+      "target_url": "https://www.amazon.es/s?k=Philips+LatteGo+coffee+machine&tag=blackboxia92-21",
+      "note": "Check the current exact model, specifications and availability for Philips LatteGo Series."
+    }
+  ]
+}

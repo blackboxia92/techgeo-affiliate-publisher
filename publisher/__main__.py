@@ -12,6 +12,7 @@ from .indexnow import notify_indexnow
 from .ingest import compare_normalized_snapshots, ingest_awin_enhanced, ingest_google_books, ingest_openfoodfacts
 from .mass_catalog import generate_mass_catalog
 from .weekly import generate_weekly_pages
+from .intent_factory import generate_intent_batch
 
 
 def parser() -> argparse.ArgumentParser:
@@ -49,6 +50,9 @@ def parser() -> argparse.ArgumentParser:
     consumer.add_argument("--catalog", type=Path, default=Path("content/products_catalog.json"))
     consumer.add_argument("--output", type=Path, default=Path("content/pages"))
     consumer.add_argument("--total", type=int, default=4000)
+
+    intents = commands.add_parser("v3-intents", help="Generate the bounded source-backed V3 intent batch")
+    intents.add_argument("--output", type=Path, default=Path("content/pages"))
 
     notify = commands.add_parser("notify", help="Submit changed reviewed URLs to IndexNow")
     notify.add_argument("--state", type=Path, default=Path(os.getenv("DATABASE_PATH", "data/state.sqlite3")))
@@ -124,6 +128,9 @@ def main() -> int:
             total=args.total,
         )
         print(json.dumps(report.__dict__ | {"catalog": str(report.catalog), "output": str(report.output)}, indent=2))
+        return 0
+    if args.command == "v3-intents":
+        print(json.dumps({"generated": generate_intent_batch(pages_root=args.output), "output": str(args.output / "v3")}, indent=2))
         return 0
     if args.command == "build":
         report = build_site(

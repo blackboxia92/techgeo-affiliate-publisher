@@ -311,7 +311,10 @@ def _related_pages(page: Page, pages: list[Page], limit: int = 3) -> list[Page]:
     return [item[-1] for item in sorted(candidates, reverse=True)[:limit]]
 
 
-def _catalog_section(page: Page) -> tuple[str, str]:
+def _catalog_section(page: Page, raw: Mapping[str, object] | None = None) -> tuple[str, str]:
+    topic = str((raw or {}).get("topic") or "").strip()
+    if topic:
+        return f"/topics/{topic}/", topic.replace("-", " ").title()
     if page.catalog_origin == "mass-products-v1":
         return "/catalog/mass-products/", "Commercial catalog"
     if page.catalog_origin == "consumer-products-v1":
@@ -448,7 +451,7 @@ def build_site(
             content_hash = hashlib.sha256(
                 json.dumps(substantive_content, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
             ).hexdigest()
-            section_url, section_label = _catalog_section(page)
+            section_url, section_label = _catalog_section(page, raw)
             model = adapt_legacy_page(page, raw)
             if raw.get("content_model") == "v2" and page.indexable:
                 eligibility = is_publishable(
@@ -550,6 +553,26 @@ def build_site(
                 encoding="utf-8",
             )
             hub_rows.append({"public_url": f"{base_url}/topics/ci-cd/", "lastmod": max(page.updated_at for page in ci_cd_pages)})
+        topic_groups: dict[str, list[Page]] = {}
+        for page, raw in render_pages:
+            topic = str(raw.get("topic") or "").strip()
+            if page.indexable and topic:
+                topic_groups.setdefault(topic, []).append(page)
+        for topic, subset in sorted(topic_groups.items()):
+            topic_destination = output_dir / "topics" / topic / "index.html"
+            topic_destination.parent.mkdir(parents=True, exist_ok=True)
+            label = topic.replace("-", " ").title()
+            topic_destination.write_text(
+                hub_template.render(
+                    pages=sorted(subset, key=lambda page: page.title),
+                    title=f"{label} decision guides",
+                    description=f"Source-backed, answer-first {label.lower()} comparisons and buying guides.",
+                    canonical_url=f"{base_url}/topics/{topic}/",
+                    site_name="StackSignal",
+                ),
+                encoding="utf-8",
+            )
+            hub_rows.append({"public_url": f"{base_url}/topics/{topic}/", "lastmod": max(page.updated_at for page in subset)})
         catalog_template = environment.get_template("catalog.html")
         catalog_destination = output_dir / "catalog" / "index.html"
         mass_pages = [page for page in commercial_pages if page.catalog_origin == "mass-products-v1"]

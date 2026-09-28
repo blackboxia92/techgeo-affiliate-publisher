@@ -1,0 +1,116 @@
+{
+  "slug": "v3-usb-microphones-vs-01",
+  "content_model": "v2",
+  "status": "reviewed",
+  "locale": "en",
+  "category": "consumer-product",
+  "topic": "usb-microphones",
+  "intent_type": "comparison",
+  "audience": "vs-direct comparison",
+  "title": "Elgato Wave Series vs Rode NT-USB Series: which USB microphones fits your setup?",
+  "meta_description": "Elgato Wave Series vs Rode NT-USB Series: which USB microphones fits your setup?: a source-backed decision matrix using official documentation, stable compatibility facts",
+  "eyebrow": "Usb Microphones decision guide",
+  "answer_first": "Start with Elgato Wave Series when you need streaming, calls and desktop recording. Start with Rode NT-USB Series when you need voice recording and remote communication. Verify the exact current model before buying.",
+  "intro": "This answer-first guide compares documented USB microphones options for direct comparison. It uses official manufacturer documentation, omits volatile price and stock claims, and keeps retailer destinations separate from the editorial decision.",
+  "verdict": "Start with Elgato Wave Series when you need streaming, calls and desktop recording. Start with Rode NT-USB Series when you need voice recording and remote communication. Verify the exact current model before buying.",
+  "updated_at": "2026-09-27",
+  "reviewed_by": "StackSignal technical editorial desk",
+  "criteria": [
+    {
+      "key": "model",
+      "label": "Product family",
+      "description": "The documented product family being compared."
+    },
+    {
+      "key": "interface",
+      "label": "Platform and connection",
+      "description": "The documented primary interface or ecosystem."
+    },
+    {
+      "key": "form",
+      "label": "Form factor",
+      "description": "The product form that affects the buying decision."
+    },
+    {
+      "key": "operations",
+      "label": "Ownership considerations",
+      "description": "Compatibility, maintenance and setup checks before purchase."
+    },
+    {
+      "key": "fit",
+      "label": "Decision fit",
+      "description": "The stated situation where the option is a sensible starting point."
+    },
+    {
+      "key": "intent",
+      "label": "Intent relevance",
+      "description": "Why this option belongs in this decision."
+    }
+  ],
+  "alternatives": [
+    {
+      "name": "Elgato Wave Series",
+      "url": "https://www.elgato.com/us/en/s/microphones",
+      "summary": "Streaming, calls and desktop recording. Confirm the exact current model and regional compatibility in its official documentation.",
+      "specs": {
+        "model": "Elgato Wave Series",
+        "interface": "USB audio",
+        "form": "Desktop USB microphone",
+        "operations": "Check host software, monitoring, boom mounting and recording workflow.",
+        "fit": "Streaming, calls and desktop recording.",
+        "intent": "Relevant to direct comparison because it is documented as a desktop usb microphone with usb audio."
+      }
+    },
+    {
+      "name": "Rode NT-USB Series",
+      "url": "https://rode.com/en/microphones/usb",
+      "summary": "Voice recording and remote communication. Confirm the exact current model and regional compatibility in its official documentation.",
+      "specs": {
+        "model": "Rode NT-USB Series",
+        "interface": "USB audio",
+        "form": "Desktop USB microphone",
+        "operations": "Verify host compatibility, monitoring, mounting and pickup pattern.",
+        "fit": "Voice recording and remote communication.",
+        "intent": "Relevant to direct comparison because it is documented as a desktop usb microphone with usb audio."
+      }
+    }
+  ],
+  "faq": [
+    {
+      "question": "How should I choose USB microphones for direct comparison?",
+      "answer": "Start with the documented platform, physical form, setup and ongoing maintenance. Confirm exact model, regional compatibility and current listing details in the linked primary documentation before purchase."
+    },
+    {
+      "question": "Does this guide publish live price or stock?",
+      "answer": "No. Prices, bundles and availability change frequently, so StackSignal links to the current destination without freezing volatile commercial claims."
+    },
+    {
+      "question": "Are ratings or buyer-review claims used here?",
+      "answer": "No. This is a technical editorial synthesis of official documentation and does not claim an independently verified buyer-review dataset."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Elgato Wave Series official documentation",
+      "publisher": "Elgato",
+      "url": "https://www.elgato.com/us/en/s/microphones"
+    },
+    {
+      "label": "Rode NT-USB Series official documentation",
+      "publisher": "RØDE",
+      "url": "https://rode.com/en/microphones/usb"
+    }
+  ],
+  "resources": [
+    {
+      "title": "Elgato Wave Series",
+      "target_url": "https://www.amazon.es/s?k=Elgato+Wave+microphone&tag=blackboxia92-21",
+      "note": "Check the current exact model, specifications and availability for Elgato Wave Series."
+    },
+    {
+      "title": "Rode NT-USB Series",
+      "target_url": "https://www.amazon.es/s?k=Rode+NT+USB+microphone&tag=blackboxia92-21",
+      "note": "Check the current exact model, specifications and availability for Rode NT-USB Series."
+    }
+  ]
+}

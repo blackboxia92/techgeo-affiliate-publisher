@@ -1,0 +1,116 @@
+{
+  "slug": "v3-productivity-mice-vs-03",
+  "content_model": "v2",
+  "status": "reviewed",
+  "locale": "en",
+  "category": "consumer-product",
+  "topic": "productivity-mice",
+  "intent_type": "comparison",
+  "audience": "vs-direct comparison",
+  "title": "Logitech MX Mouse Series vs Microsoft Surface Mouse Series: which productivity mice fits your setup?",
+  "meta_description": "Logitech MX Mouse Series vs Microsoft Surface Mouse Series: which productivity mice fits your setup?: a source-backed decision matrix using official documentation, stable",
+  "eyebrow": "Productivity Mice decision guide",
+  "answer_first": "Start with Logitech MX Mouse Series when you need desktop productivity across one or more computers. Start with Microsoft Surface Mouse Series when you need simple bluetooth office setups. Verify the exact current model before buying.",
+  "intro": "This answer-first guide compares documented productivity mice options for direct comparison. It uses official manufacturer documentation, omits volatile price and stock claims, and keeps retailer destinations separate from the editorial decision.",
+  "verdict": "Start with Logitech MX Mouse Series when you need desktop productivity across one or more computers. Start with Microsoft Surface Mouse Series when you need simple bluetooth office setups. Verify the exact current model before buying.",
+  "updated_at": "2026-09-27",
+  "reviewed_by": "StackSignal technical editorial desk",
+  "criteria": [
+    {
+      "key": "model",
+      "label": "Product family",
+      "description": "The documented product family being compared."
+    },
+    {
+      "key": "interface",
+      "label": "Platform and connection",
+      "description": "The documented primary interface or ecosystem."
+    },
+    {
+      "key": "form",
+      "label": "Form factor",
+      "description": "The product form that affects the buying decision."
+    },
+    {
+      "key": "operations",
+      "label": "Ownership considerations",
+      "description": "Compatibility, maintenance and setup checks before purchase."
+    },
+    {
+      "key": "fit",
+      "label": "Decision fit",
+      "description": "The stated situation where the option is a sensible starting point."
+    },
+    {
+      "key": "intent",
+      "label": "Intent relevance",
+      "description": "Why this option belongs in this decision."
+    }
+  ],
+  "alternatives": [
+    {
+      "name": "Logitech MX Mouse Series",
+      "url": "https://www.logitech.com/en-us/mx/mx-for-business.html",
+      "summary": "Desktop productivity across one or more computers. Confirm the exact current model and regional compatibility in its official documentation.",
+      "specs": {
+        "model": "Logitech MX Mouse Series",
+        "interface": "Bluetooth and USB receiver",
+        "form": "Wireless productivity mouse",
+        "operations": "Check hand fit, multi-device switching, software and charging.",
+        "fit": "Desktop productivity across one or more computers.",
+        "intent": "Relevant to direct comparison because it is documented as a wireless productivity mouse with bluetooth and usb receiver."
+      }
+    },
+    {
+      "name": "Microsoft Surface Mouse Series",
+      "url": "https://www.microsoft.com/en-us/d/surface-mouse/",
+      "summary": "Simple Bluetooth office setups. Confirm the exact current model and regional compatibility in its official documentation.",
+      "specs": {
+        "model": "Microsoft Surface Mouse Series",
+        "interface": "Bluetooth wireless",
+        "form": "Wireless mouse",
+        "operations": "Verify Bluetooth host support, battery type and operating-system features.",
+        "fit": "Simple Bluetooth office setups.",
+        "intent": "Relevant to direct comparison because it is documented as a wireless mouse with bluetooth wireless."
+      }
+    }
+  ],
+  "faq": [
+    {
+      "question": "How should I choose productivity mice for direct comparison?",
+      "answer": "Start with the documented platform, physical form, setup and ongoing maintenance. Confirm exact model, regional compatibility and current listing details in the linked primary documentation before purchase."
+    },
+    {
+      "question": "Does this guide publish live price or stock?",
+      "answer": "No. Prices, bundles and availability change frequently, so StackSignal links to the current destination without freezing volatile commercial claims."
+    },
+    {
+      "question": "Are ratings or buyer-review claims used here?",
+      "answer": "No. This is a technical editorial synthesis of official documentation and does not claim an independently verified buyer-review dataset."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Logitech MX Mouse Series official documentation",
+      "publisher": "Logitech",
+      "url": "https://www.logitech.com/en-us/mx/mx-for-business.html"
+    },
+    {
+      "label": "Microsoft Surface Mouse Series official documentation",
+      "publisher": "Microsoft",
+      "url": "https://www.microsoft.com/en-us/d/surface-mouse/"
+    }
+  ],
+  "resources": [
+    {
+      "title": "Logitech MX Mouse Series",
+      "target_url": "https://www.amazon.es/s?k=Logitech+MX+mouse&tag=blackboxia92-21",
+      "note": "Check the current exact model, specifications and availability for Logitech MX Mouse Series."
+    },
+    {
+      "title": "Microsoft Surface Mouse Series",
+      "target_url": "https://www.amazon.es/s?k=Microsoft+Surface+mouse&tag=blackboxia92-21",
+      "note": "Check the current exact model, specifications and availability for Microsoft Surface Mouse Series."
+    }
+  ]
+}

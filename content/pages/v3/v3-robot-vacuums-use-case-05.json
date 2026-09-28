@@ -1,0 +1,162 @@
+{
+  "slug": "v3-robot-vacuums-use-case-05",
+  "content_model": "v2",
+  "status": "reviewed",
+  "locale": "en",
+  "category": "consumer-product",
+  "topic": "robot-vacuums",
+  "intent_type": "best-for",
+  "audience": "use-case-small apartments",
+  "title": "Best robot vacuums for small apartments",
+  "meta_description": "Best robot vacuums for small apartments: a source-backed decision matrix using official documentation, stable compatibility facts and current Amazon ES destination links.",
+  "eyebrow": "Robot Vacuums decision guide",
+  "answer_first": "For small apartments, begin with iRobot Roomba Series when you need scheduled floor maintenance with minimal handling. Compare Dreame Robot Vacuum Series when you need homes comparing vacuuming and mopping automation.",
+  "intro": "This answer-first guide compares documented robot vacuums options for small apartments. It uses official manufacturer documentation, omits volatile price and stock claims, and keeps retailer destinations separate from the editorial decision.",
+  "verdict": "For small apartments, begin with iRobot Roomba Series when you need scheduled floor maintenance with minimal handling. Compare Dreame Robot Vacuum Series when you need homes comparing vacuuming and mopping automation.",
+  "updated_at": "2026-09-27",
+  "reviewed_by": "StackSignal technical editorial desk",
+  "criteria": [
+    {
+      "key": "model",
+      "label": "Product family",
+      "description": "The documented product family being compared."
+    },
+    {
+      "key": "interface",
+      "label": "Platform and connection",
+      "description": "The documented primary interface or ecosystem."
+    },
+    {
+      "key": "form",
+      "label": "Form factor",
+      "description": "The product form that affects the buying decision."
+    },
+    {
+      "key": "operations",
+      "label": "Ownership considerations",
+      "description": "Compatibility, maintenance and setup checks before purchase."
+    },
+    {
+      "key": "fit",
+      "label": "Decision fit",
+      "description": "The stated situation where the option is a sensible starting point."
+    },
+    {
+      "key": "intent",
+      "label": "Intent relevance",
+      "description": "Why this option belongs in this decision."
+    }
+  ],
+  "alternatives": [
+    {
+      "name": "iRobot Roomba Series",
+      "url": "https://www.irobot.com/en_US/roomba.html",
+      "summary": "Scheduled floor maintenance with minimal handling. Confirm the exact current model and regional compatibility in its official documentation.",
+      "specs": {
+        "model": "iRobot Roomba Series",
+        "interface": "Wi-Fi connected autonomous cleaning",
+        "form": "Robot vacuum",
+        "operations": "Verify navigation features, mapping privacy, dock space and app support.",
+        "fit": "Scheduled floor maintenance with minimal handling.",
+        "intent": "Relevant to small apartments because it is documented as a robot vacuum with wi-fi connected autonomous cleaning."
+      }
+    },
+    {
+      "name": "Dreame Robot Vacuum Series",
+      "url": "https://global.dreametech.com/collections/robot-vacuum",
+      "summary": "Homes comparing vacuuming and mopping automation. Confirm the exact current model and regional compatibility in its official documentation.",
+      "specs": {
+        "model": "Dreame Robot Vacuum Series",
+        "interface": "Wi-Fi connected vacuum and mop platform",
+        "form": "Robot vacuum",
+        "operations": "Check dock maintenance, obstacle handling, mop care and consumables.",
+        "fit": "Homes comparing vacuuming and mopping automation.",
+        "intent": "Relevant to small apartments because it is documented as a robot vacuum with wi-fi connected vacuum and mop platform."
+      }
+    },
+    {
+      "name": "eufy Robot Vacuum Series",
+      "url": "https://www.eufy.com/collections/robot-vacuum",
+      "summary": "Routine automated floor cleaning. Confirm the exact current model and regional compatibility in its official documentation.",
+      "specs": {
+        "model": "eufy Robot Vacuum Series",
+        "interface": "Wi-Fi connected cleaning platform",
+        "form": "Robot vacuum",
+        "operations": "Verify navigation mode, dock requirements, app control and replacement parts.",
+        "fit": "Routine automated floor cleaning.",
+        "intent": "Relevant to small apartments because it is documented as a robot vacuum with wi-fi connected cleaning platform."
+      }
+    },
+    {
+      "name": "Roborock Robot Vacuum Series",
+      "url": "https://global.roborock.com/pages/robot-vacuums",
+      "summary": "Automated vacuuming with detailed mapping. Confirm the exact current model and regional compatibility in its official documentation.",
+      "specs": {
+        "model": "Roborock Robot Vacuum Series",
+        "interface": "Wi-Fi connected vacuum and mop platform",
+        "form": "Robot vacuum",
+        "operations": "Compare dock functions, mapping controls, consumables and floor suitability.",
+        "fit": "Automated vacuuming with detailed mapping.",
+        "intent": "Relevant to small apartments because it is documented as a robot vacuum with wi-fi connected vacuum and mop platform."
+      }
+    }
+  ],
+  "faq": [
+    {
+      "question": "How should I choose robot vacuums for small apartments?",
+      "answer": "Start with the documented platform, physical form, setup and ongoing maintenance. Confirm exact model, regional compatibility and current listing details in the linked primary documentation before purchase."
+    },
+    {
+      "question": "Does this guide publish live price or stock?",
+      "answer": "No. Prices, bundles and availability change frequently, so StackSignal links to the current destination without freezing volatile commercial claims."
+    },
+    {
+      "question": "Are ratings or buyer-review claims used here?",
+      "answer": "No. This is a technical editorial synthesis of official documentation and does not claim an independently verified buyer-review dataset."
+    }
+  ],
+  "sources": [
+    {
+      "label": "iRobot Roomba Series official documentation",
+      "publisher": "iRobot",
+      "url": "https://www.irobot.com/en_US/roomba.html"
+    },
+    {
+      "label": "Dreame Robot Vacuum Series official documentation",
+      "publisher": "Dreame",
+      "url": "https://global.dreametech.com/collections/robot-vacuum"
+    },
+    {
+      "label": "eufy Robot Vacuum Series official documentation",
+      "publisher": "eufy",
+      "url": "https://www.eufy.com/collections/robot-vacuum"
+    },
+    {
+      "label": "Roborock Robot Vacuum Series official documentation",
+      "publisher": "Roborock",
+      "url": "https://global.roborock.com/pages/robot-vacuums"
+    }
+  ],
+  "resources": [
+    {
+      "title": "iRobot Roomba Series",
+      "target_url": "https://www.amazon.es/s?k=iRobot+Roomba+robot+vacuum&tag=blackboxia92-21",
+      "note": "Check the current exact model, specifications and availability for iRobot Roomba Series."
+    },
+    {
+      "title": "Dreame Robot Vacuum Series",
+      "target_url": "https://www.amazon.es/s?k=Dreame+robot+vacuum&tag=blackboxia92-21",
+      "note": "Check the current exact model, specifications and availability for Dreame Robot Vacuum Series."
+    },
+    {
+      "title": "eufy Robot Vacuum Series",
+      "target_url": "https://www.amazon.es/s?k=eufy+robot+vacuum&tag=blackboxia92-21",
+      "note": "Check the current exact model, specifications and availability for eufy Robot Vacuum Series."
+    },
+    {
+      "title": "Roborock Robot Vacuum Series",
+      "target_url": "https://www.amazon.es/s?k=Roborock+robot+vacuum&tag=blackboxia92-21",
+      "note": "Check the current exact model, specifications and availability for Roborock Robot Vacuum Series."
+    }
+  ]
+}
