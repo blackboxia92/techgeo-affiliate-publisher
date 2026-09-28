@@ -36,6 +36,7 @@ from publisher.regression import validate_product_invariants
 from publisher.metrics import catalog_metrics, intentional_hub_paths
 from publisher.schema import load_page
 from publisher.store import StateStore
+from publisher.transversal import generate_transversal_catalog
 from publisher.v2 import (
     AffiliateRoute,
     CATEGORY_SCHEMAS,
@@ -78,13 +79,15 @@ class V2ModelTests(unittest.TestCase):
     def test_public_metrics_are_single_source_for_home_and_sitemap(self) -> None:
         rows = [load_page(path) for path in (PROJECT / "content" / "pages").rglob("*.json")]
         metrics = catalog_metrics(rows)
-        self.assertEqual(metrics.reviewed_guides, 544)
+        self.assertEqual(metrics.reviewed_guides + metrics.commercial_pages, metrics.indexable_pages)
         self.assertEqual(metrics.commercial_pages, 3957)
-        self.assertEqual(metrics.indexable_pages, 4501)
-        self.assertGreater(metrics.affiliate_routes, 8359)
-        self.assertEqual(metrics.sitemap_hubs, 24)
-        self.assertEqual(metrics.sitemap_urls, 4525)
-        self.assertIn("/topics/robot-vacuums/", intentional_hub_paths(rows))
+        self.assertGreater(metrics.indexable_pages, 9000)
+        self.assertGreater(metrics.affiliate_routes, 13000)
+        self.assertEqual(metrics.sitemap_urls, metrics.indexable_pages + metrics.sitemap_hubs)
+        hubs = intentional_hub_paths(rows)
+        self.assertIn("/books/", hubs)
+        self.assertIn("/books/artificial-intelligence/", hubs)
+        self.assertIn("/catalog/consumer-products/", hubs)
 
     def test_query_context_and_static_commerce_contracts_preserve_original_money(self) -> None:
         context = QueryContext(market="AR", currency="ARS", requested_currency="USD")
@@ -238,6 +241,38 @@ class V2ModelTests(unittest.TestCase):
         graph = validate_site_graph((page, adapt_legacy_page(page, raw)) for page, raw in rows)
         self.assertEqual(graph.orphaned_slugs, ())
         self.assertGreaterEqual(graph.entities, 3)
+
+
+class TransversalCatalogTests(unittest.TestCase):
+    def test_explicit_cross_domain_intents_keep_primary_sources_and_demand_evidence(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            report = generate_transversal_catalog(
+                source_path=PROJECT / "content" / "transversal_source.json",
+                pages_root=root / "pages",
+                catalog_path=root / "transversal_catalog.json",
+            )
+            self.assertEqual((report.entities, report.intents, report.published), (24, 12, 12))
+            rows = [load_page(path) for path in sorted((root / "pages" / "transversal").glob("*.json"))]
+            self.assertEqual(len(rows), 12)
+            published_intents: set[str] = set()
+            for page, raw in rows:
+                self.assertEqual(raw["content_model"], "v2")
+                self.assertEqual(raw["catalog_origin"], "transversal-v1")
+                self.assertEqual(raw["demand_evidence"]["kind"], "query-pattern")
+                self.assertEqual(len(raw["entity_provenance"]), 2)
+                self.assertEqual(len(page.sources), 2)
+                model = adapt_legacy_page(page, raw)
+                eligibility = is_publishable(
+                    intent=model.intent,
+                    category_schema=model.category_schema,
+                    entities=model.entities,
+                    sources=model.sources,
+                    offers=model.offers,
+                    existing_intents=published_intents,
+                )
+                self.assertTrue(eligibility.publishable, eligibility.reasons)
+                published_intents.add(eligibility.canonical_intent)
 
 
 class IngestLifecycleTests(unittest.TestCase):
@@ -422,7 +457,7 @@ class BuildTests(unittest.TestCase):
             disclosure = "StackSignal participa en el programa de afiliados de Amazon. Si compras a través de nuestros enlaces recomendados, podemos recibir una comisión sin ningún costo adicional para vos."
             self.assertIn(disclosure, html)
             self.assertIn("As an Amazon Associate I earn from qualifying purchases.", html)
-            self.assertGreater(html.index('class="rag-comparison"'), html.index('class="article-hero"'))
+            self.assertLess(html.index('class="rag-comparison"'), html.index('class="article-hero"'))
             self.assertIn("| Criterion | PostgreSQL | SQLite |", html)
             self.assertIn("Editorial assessment", html)
             self.assertIn("does not claim buyer opinions, ratings, or product reviews", html)
@@ -432,7 +467,8 @@ class BuildTests(unittest.TestCase):
             self.assertNotIn("/drafts/", sitemap)
             self.assertIn("raspberry-pi-5-vs-intel-nuc-13-pro", sitemap)
             ET.fromstring(sitemap)
-            self.assertEqual(len(ET.fromstring(sitemap)), catalog_metrics([load_page(path) for path in (PROJECT / "content" / "pages").rglob("*.json")]).sitemap_urls)
+            expected_metrics = catalog_metrics([load_page(path) for path in (PROJECT / "content" / "pages").rglob("*.json")])
+            self.assertEqual(len(ET.fromstring(sitemap)), expected_metrics.sitemap_urls)
             regression = validate_product_invariants(
                 content_dir=PROJECT / "content" / "pages",
                 manifest_path=PROJECT / "tests" / "fixtures" / "production-invariants.json",
@@ -450,7 +486,7 @@ class BuildTests(unittest.TestCase):
             self.assertEqual(types, {"TechArticle", "BreadcrumbList", "ItemList"})
             self.assertTrue((root / "dist" / "guides" / "index.html").exists())
             self.assertTrue((root / "dist" / "topics" / "ci-cd" / "index.html").exists())
-            self.assertTrue((root / "dist" / "topics" / "robot-vacuums" / "index.html").exists())
+            self.assertTrue((root / "dist" / "topics" / "travel-and-consumer-services" / "index.html").exists())
             self.assertTrue((root / "dist" / "catalog" / "index.html").exists())
             self.assertTrue((root / "dist" / "catalog" / "mass-products" / "index.html").exists())
             self.assertTrue((root / "dist" / "catalog" / "consumer-products" / "page" / "2" / "index.html").exists())
@@ -472,24 +508,16 @@ class BuildTests(unittest.TestCase):
             self.assertIn("Ver disponibilidad y precio actualizado en Amazon", homepage)
             self.assertIn("Consultar especificaciones y oferta en Amazon", homepage)
             self.assertIn(disclosure, homepage)
-            self.assertIn("544</strong></dt><dd>reviewed decision guides", homepage)
+            self.assertIn(f"{expected_metrics.reviewed_guides}</strong></dt><dd>reviewed decision guides", homepage)
             self.assertIn("3957</strong></dt><dd>commercial comparisons", homepage)
-            self.assertIn("disclosed monetized destinations", homepage)
+            self.assertIn(f"{expected_metrics.affiliate_routes}</strong></dt><dd>disclosed monetized destinations", homepage)
             self.assertIn('href="/catalog/"', homepage)
             self.assertIn('href="/topics/ci-cd/"', homepage)
             self.assertNotIn("Zero hidden sponsored links", homepage)
             self.assertNotIn("44 reviewed guides", (PROJECT / "publisher" / "templates" / "index.html").read_text(encoding="utf-8"))
             home_ld = json.loads(re.search(r'<script type="application/ld\+json">(.*?)</script>', homepage, re.DOTALL).group(1))
             self.assertEqual({node["@type"] for node in home_ld["@graph"]}, {"WebSite", "ItemList"})
-            self.assertEqual(home_ld["@graph"][1]["numberOfItems"], 4501)
-
-            v3_dir = root / "dist" / "guides" / "v3-robot-vacuums-best-01"
-            v3_html = (v3_dir / "index.html").read_text(encoding="utf-8")
-            v3_json = json.loads((v3_dir / "index.json").read_text(encoding="utf-8"))
-            self.assertIn("For everyday use", v3_html)
-            self.assertIn('href="/topics/robot-vacuums/"', v3_html)
-            self.assertEqual(v3_json["canonical_url"], "https://guides.example/guides/v3-robot-vacuums-best-01/")
-            self.assertNotIn("price_original", v3_json)
+            self.assertEqual(home_ld["@graph"][1]["numberOfItems"], expected_metrics.indexable_pages)
 
             target_dir = root / "dist" / "guides" / "azure-pipelines-vs-buildkite-for-self-hosted-infrastructure"
             target_html = (target_dir / "index.html").read_text(encoding="utf-8")

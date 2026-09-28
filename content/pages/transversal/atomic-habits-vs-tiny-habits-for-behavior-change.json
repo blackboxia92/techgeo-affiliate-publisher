@@ -1,0 +1,151 @@
+{
+  "catalog_origin": "transversal-v1",
+  "catalog_entry_id": "transversal-0007",
+  "content_model": "v2",
+  "slug": "atomic-habits-vs-tiny-habits-for-behavior-change",
+  "status": "reviewed",
+  "locale": "en",
+  "category": "software",
+  "transversal_family": "books and media",
+  "intent_type": "comparison",
+  "canonical_intent": "software:comparison:entity-atomic-habits--entity-tiny-habits:audience=readers-choosing-a-behavior-change-book",
+  "audience": "readers choosing a behavior change book",
+  "demand_evidence": {
+    "kind": "query-pattern",
+    "query": "Atomic Habits vs Tiny Habits",
+    "observed_at": "2026-09-27",
+    "note": "The titles form a direct alternatives query around an enduring consumer book decision."
+  },
+  "publication_role": {
+    "kind": "direct-monetization",
+    "merchant": "amazon.es",
+    "route_type": "affiliate-search",
+    "cluster": "books-and-media",
+    "note": "A current Amazon ES search route is present for the exact title or model; editorial facts remain merchant-agnostic."
+  },
+  "entity_provenance": [
+    {
+      "entity_id": "atomic-habits",
+      "entity_type": "book",
+      "source": {
+        "label": "Atomic Habits book page",
+        "publisher": "James Clear",
+        "url": "https://jamesclear.com/atomic-habits"
+      },
+      "facts_verified_at": "2026-09-27"
+    },
+    {
+      "entity_id": "tiny-habits",
+      "entity_type": "book",
+      "source": {
+        "label": "Tiny Habits book page",
+        "publisher": "BJ Fogg",
+        "url": "https://tinyhabits.com/book/"
+      },
+      "facts_verified_at": "2026-09-27"
+    }
+  ],
+  "title": "Atomic Habits vs Tiny Habits for behavior change",
+  "meta_description": "Atomic Habits vs Tiny Habits for readers choosing a behavior change book: documented workflows, constraints, and a source-backed decision summary.",
+  "eyebrow": "books and media comparison",
+  "intro": "This source-backed comparison addresses the observed query pattern “Atomic Habits vs Tiny Habits” for readers choosing a behavior change book. It compares stable, documented workflows and constraints rather than volatile prices, inventory, ratings, or reviews.",
+  "verdict": "Choose Atomic Habits for an accessible general framework for habit change. Choose Tiny Habits for an approach explicitly built around small actions and prompts. Review each author’s description and confirm the edition and format that fit the reader’s use case.",
+  "updated_at": "2026-09-28",
+  "reviewed_by": "StackSignal editorial research desk",
+  "criteria": [
+    {
+      "key": "model",
+      "label": "Option",
+      "description": "Named book, product, or service being evaluated."
+    },
+    {
+      "key": "workflow",
+      "label": "Primary workflow",
+      "description": "The documented job or workflow the option supports."
+    },
+    {
+      "key": "constraints",
+      "label": "Decision constraints",
+      "description": "Compatibility, ownership, or implementation limits to verify."
+    },
+    {
+      "key": "fit",
+      "label": "Best fit",
+      "description": "The stated use case for which the option is the stronger fit."
+    }
+  ],
+  "alternatives": [
+    {
+      "name": "Atomic Habits",
+      "url": "https://jamesclear.com/atomic-habits",
+      "summary": "A behavior-change book by James Clear that presents a framework for making small habit changes.",
+      "specs": {
+        "model": "Atomic Habits",
+        "workflow": "Use a behavior-change framework to design and review small habit changes.",
+        "constraints": "Confirm edition, preferred format, and whether a general behavior framework matches the reader’s goal.",
+        "fit": "Readers looking for an accessible general framework for habit change."
+      }
+    },
+    {
+      "name": "Tiny Habits",
+      "url": "https://tinyhabits.com/book/",
+      "summary": "A behavior-design book by BJ Fogg that presents the Tiny Habits method and related exercises.",
+      "specs": {
+        "model": "Tiny Habits",
+        "workflow": "Apply a behavior-design method that starts with small actions and prompts.",
+        "constraints": "Confirm edition, preferred format, and whether the method’s exercise-led approach matches the reader’s goal.",
+        "fit": "Readers who want a behavior-design method built around deliberately small actions."
+      }
+    }
+  ],
+  "faq": [
+    {
+      "question": "What query pattern justified this Atomic Habits vs Tiny Habits comparison?",
+      "answer": "The editorial backlog records the recurring query pattern “Atomic Habits vs Tiny Habits” (query-pattern observed 2026-09-27). The titles form a direct alternatives query around an enduring consumer book decision. This is a qualitative signal, not a claimed search-volume figure."
+    },
+    {
+      "question": "Does this comparison include live price, availability, ratings, or a discount claim?",
+      "answer": "No. Those values vary by plan, region, seller, edition, and time. The comparison links to primary documentation and, where relevant, an Amazon ES search route for the current listing."
+    },
+    {
+      "question": "How should a reader make the final choice?",
+      "answer": "Start with the documented workflow and constraints: Atomic Habits is described for Readers looking for an accessible general framework for habit change; Tiny Habits is described for Readers who want a behavior-design method built around deliberately small actions. Confirm current account, device, plan, regional, and edition details in the cited primary sources."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Atomic Habits book page",
+      "publisher": "James Clear",
+      "url": "https://jamesclear.com/atomic-habits"
+    },
+    {
+      "label": "Tiny Habits book page",
+      "publisher": "BJ Fogg",
+      "url": "https://tinyhabits.com/book/"
+    }
+  ],
+  "resources": [
+    {
+      "title": "Atomic Habits",
+      "target_url": "https://www.amazon.es/s?k=Atomic+Habits+James+Clear&tag=blackboxia92-21",
+      "note": "Check the current Amazon ES listing for the exact edition or model of Atomic Habits; no price, rating, or stock claim is made here."
+    },
+    {
+      "title": "Tiny Habits",
+      "target_url": "https://www.amazon.es/s?k=Tiny+Habits+BJ+Fogg&tag=blackboxia92-21",
+      "note": "Check the current Amazon ES listing for the exact edition or model of Tiny Habits; no price, rating, or stock claim is made here."
+    }
+  ],
+  "buyer_consensus": {
+    "status": "No buyer-review dataset is claimed; this is a primary-source editorial synthesis.",
+    "pros": [
+      "A behavior-change book by James Clear that presents a framework for making small habit changes.",
+      "A behavior-design book by BJ Fogg that presents the Tiny Habits method and related exercises."
+    ],
+    "cons": [
+      "Confirm edition, preferred format, and whether a general behavior framework matches the reader’s goal.",
+      "Confirm edition, preferred format, and whether the method’s exercise-led approach matches the reader’s goal."
+    ],
+    "verdict": "Choose Atomic Habits for an accessible general framework for habit change. Choose Tiny Habits for an approach explicitly built around small actions and prompts. Review each author’s description and confirm the edition and format that fit the reader’s use case."
+  }
+}

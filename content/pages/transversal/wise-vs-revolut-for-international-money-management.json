@@ -1,0 +1,138 @@
+{
+  "catalog_origin": "transversal-v1",
+  "catalog_entry_id": "transversal-0010",
+  "content_model": "v2",
+  "slug": "wise-vs-revolut-for-international-money-management",
+  "status": "reviewed",
+  "locale": "en",
+  "category": "software",
+  "transversal_family": "travel and consumer services",
+  "intent_type": "comparison",
+  "canonical_intent": "software:comparison:entity-revolut--entity-wise:audience=people-evaluating-international-money-and-multi-currency-tools",
+  "audience": "people evaluating international money and multi-currency tools",
+  "demand_evidence": {
+    "kind": "query-pattern",
+    "query": "Wise vs Revolut international money transfer",
+    "observed_at": "2026-09-27",
+    "note": "The named financial-service comparison is purchase-adjacent but is deliberately not treated as personal financial advice."
+  },
+  "publication_role": {
+    "kind": "demand-cluster",
+    "cluster": "travel and consumer services",
+    "note": "An explicit observed decision-query pattern contributes to a commercial comparison cluster without asserting a current merchant route."
+  },
+  "entity_provenance": [
+    {
+      "entity_id": "wise",
+      "entity_type": "consumer-service",
+      "source": {
+        "label": "Wise help centre",
+        "publisher": "Wise",
+        "url": "https://wise.com/help/"
+      },
+      "facts_verified_at": "2026-09-27"
+    },
+    {
+      "entity_id": "revolut",
+      "entity_type": "consumer-service",
+      "source": {
+        "label": "Revolut help centre",
+        "publisher": "Revolut",
+        "url": "https://help.revolut.com/"
+      },
+      "facts_verified_at": "2026-09-27"
+    }
+  ],
+  "title": "Wise vs Revolut for international money management",
+  "meta_description": "Wise vs Revolut for people evaluating international money and multi-currency tools: documented workflows, constraints, and a source-backed decision summary.",
+  "eyebrow": "travel and consumer services comparison",
+  "intro": "This source-backed comparison addresses the observed query pattern “Wise vs Revolut international money transfer” for people evaluating international money and multi-currency tools. It compares stable, documented workflows and constraints rather than volatile prices, inventory, ratings, or reviews.",
+  "verdict": "Choose the provider whose current country eligibility and documented transfer or multi-currency workflow match the user’s location and task. Verify regulated entity, verification requirements, fees, route availability, and feature eligibility directly with the provider; this is not personal financial advice.",
+  "updated_at": "2026-09-28",
+  "reviewed_by": "StackSignal editorial research desk",
+  "criteria": [
+    {
+      "key": "model",
+      "label": "Option",
+      "description": "Named book, product, or service being evaluated."
+    },
+    {
+      "key": "workflow",
+      "label": "Primary workflow",
+      "description": "The documented job or workflow the option supports."
+    },
+    {
+      "key": "constraints",
+      "label": "Decision constraints",
+      "description": "Compatibility, ownership, or implementation limits to verify."
+    },
+    {
+      "key": "fit",
+      "label": "Best fit",
+      "description": "The stated use case for which the option is the stronger fit."
+    }
+  ],
+  "alternatives": [
+    {
+      "name": "Wise",
+      "url": "https://wise.com/help/",
+      "summary": "A money-transfer and multi-currency service with a public help centre for accounts, transfers, cards, and availability.",
+      "specs": {
+        "model": "Wise",
+        "workflow": "Manage supported transfers and multi-currency account features through the provider’s documented service.",
+        "constraints": "Confirm country availability, verification, fees, transfer routes, and regulated features for the user’s location.",
+        "fit": "People who need to evaluate supported cross-border money and multi-currency workflows."
+      }
+    },
+    {
+      "name": "Revolut",
+      "url": "https://help.revolut.com/",
+      "summary": "A financial app with a public help centre covering accounts, cards, transfers, supported features, and regional service terms.",
+      "specs": {
+        "model": "Revolut",
+        "workflow": "Use the app’s supported account, card, exchange, or transfer features where they are available.",
+        "constraints": "Confirm legal entity, country availability, verification, plan terms, fees, and product eligibility for the user’s location.",
+        "fit": "People comparing app-based financial features available in their particular market."
+      }
+    }
+  ],
+  "faq": [
+    {
+      "question": "What query pattern justified this Wise vs Revolut comparison?",
+      "answer": "The editorial backlog records the recurring query pattern “Wise vs Revolut international money transfer” (query-pattern observed 2026-09-27). The named financial-service comparison is purchase-adjacent but is deliberately not treated as personal financial advice. This is a qualitative signal, not a claimed search-volume figure."
+    },
+    {
+      "question": "Does this comparison include live price, availability, ratings, or a discount claim?",
+      "answer": "No. Those values vary by plan, region, seller, edition, and time. The comparison links to primary documentation and, where relevant, an Amazon ES search route for the current listing."
+    },
+    {
+      "question": "How should a reader make the final choice?",
+      "answer": "Start with the documented workflow and constraints: Wise is described for People who need to evaluate supported cross-border money and multi-currency workflows; Revolut is described for People comparing app-based financial features available in their particular market. Confirm current account, device, plan, regional, and edition details in the cited primary sources."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Wise help centre",
+      "publisher": "Wise",
+      "url": "https://wise.com/help/"
+    },
+    {
+      "label": "Revolut help centre",
+      "publisher": "Revolut",
+      "url": "https://help.revolut.com/"
+    }
+  ],
+  "resources": [],
+  "buyer_consensus": {
+    "status": "No buyer-review dataset is claimed; this is a primary-source editorial synthesis.",
+    "pros": [
+      "A money-transfer and multi-currency service with a public help centre for accounts, transfers, cards, and availability.",
+      "A financial app with a public help centre covering accounts, cards, transfers, supported features, and regional service terms."
+    ],
+    "cons": [
+      "Confirm country availability, verification, fees, transfer routes, and regulated features for the user’s location.",
+      "Confirm legal entity, country availability, verification, plan terms, fees, and product eligibility for the user’s location."
+    ],
+    "verdict": "Choose the provider whose current country eligibility and documented transfer or multi-currency workflow match the user’s location and task. Verify regulated entity, verification requirements, fees, route availability, and feature eligibility directly with the provider; this is not personal financial advice."
+  }
+}

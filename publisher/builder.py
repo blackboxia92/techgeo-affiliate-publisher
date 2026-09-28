@@ -9,6 +9,7 @@ import tracemalloc
 from dataclasses import dataclass
 from pathlib import Path
 from time import perf_counter
+from typing import Mapping
 from urllib.parse import urlparse
 from xml.sax.saxutils import escape
 
@@ -75,8 +76,8 @@ def _canonical_base(value: str) -> str:
     return value
 
 
-def _json_ld(page: Page, public_url: str, site_name: str) -> str:
-    section_path, section_label = _catalog_section(page)
+def _json_ld(page: Page, public_url: str, site_name: str, raw: dict[str, object] | None = None) -> str:
+    section_path, section_label = _catalog_section(page, raw)
     site_url = public_url.rsplit("/guides/", 1)[0] + "/"
     product_nodes = []
     if page.is_commercial:
@@ -216,7 +217,7 @@ def _markdown_document(
         "#### Contras",
         "",
         *[
-            f"- **{item.name}:** {item.specs.get('operations', 'Validate maintenance, security, and support requirements before adoption.')}"
+            f"- **{item.name}:** {item.specs.get('operations', item.specs.get('constraints', 'Validate maintenance, security, and support requirements before adoption.'))}"
             for item in page.alternatives
         ],
         "",
@@ -251,6 +252,7 @@ def _json_document(
     public_url: str,
     criteria: tuple[Criterion, ...],
     model: LegacyPageModel,
+    raw: dict[str, object] | None = None,
 ) -> str:
     """Write a non-canonical, machine-readable view from the same Page object as HTML."""
     payload = {
@@ -276,7 +278,7 @@ def _json_document(
         },
         "pros": [{"name": item.name, "text": item.summary} for item in page.alternatives],
         "cons": [
-            {"name": item.name, "text": item.specs.get("operations", "Not separately specified.")}
+            {"name": item.name, "text": item.specs.get("operations", item.specs.get("constraints", "Not separately specified."))}
             for item in page.alternatives
         ],
         "sources": [
@@ -291,6 +293,9 @@ def _json_document(
         ],
         "outbound_urls": sorted({item.url for item in page.alternatives} | {source.url for source in page.sources}),
     }
+    if raw and raw.get("content_model") == "v2":
+        payload["demand_evidence"] = raw.get("demand_evidence")
+        payload["entity_provenance"] = raw.get("entity_provenance")
     return json.dumps(payload, ensure_ascii=False, indent=2) + "\n"
 
 
@@ -306,9 +311,23 @@ def _related_pages(page: Page, pages: list[Page], limit: int = 3) -> list[Page]:
         if candidate.slug == page.slug:
             continue
         shared = len(current_names & {item.name.casefold() for item in candidate.alternatives})
-        if shared:
+        same_transversal_family = (
+            page.catalog_origin == "transversal-v1"
+            and candidate.catalog_origin == "transversal-v1"
+            and page.eyebrow == candidate.eyebrow
+        )
+        same_book_topic = (
+            page.catalog_origin == "open-library-books-v1"
+            and candidate.catalog_origin == "open-library-books-v1"
+            and page.eyebrow == candidate.eyebrow
+        )
+        if shared or same_transversal_family or same_book_topic:
             candidates.append((shared, candidate.updated_at, candidate.slug, candidate))
     return [item[-1] for item in sorted(candidates, reverse=True)[:limit]]
+
+
+def _topic_slug(value: str) -> str:
+    return "".join(character if character.isalnum() else "-" for character in value.casefold()).strip("-")
 
 
 def _catalog_section(page: Page, raw: Mapping[str, object] | None = None) -> tuple[str, str]:
@@ -319,7 +338,41 @@ def _catalog_section(page: Page, raw: Mapping[str, object] | None = None) -> tup
         return "/catalog/mass-products/", "Commercial catalog"
     if page.catalog_origin == "consumer-products-v1":
         return "/catalog/consumer-products/", "Consumer catalog"
+    if page.catalog_origin == "transversal-v1":
+        family = str((raw or {}).get("transversal_family") or "Cross-domain decision guides")
+        return f"/topics/{_topic_slug(family)}/", family.title()
+    if page.catalog_origin == "open-library-books-v1":
+        # Sparse discovery themes deliberately do not get a public hub.  A
+        # stable category hub keeps every work page linked without emitting a
+        # breadcrumb to a route that was correctly withheld for lack of mass.
+        return "/books/", "Books"
     return "/guides/", "Guides"
+
+
+def _write_dependencies(output: Path, rows: list[tuple[Page, dict[str, object]]]) -> None:
+    """Emit the public-page dependency inventory used by incremental review.
+
+    It is generated from the same normalized V2 model rendered by the site, so
+    it cannot silently drift from entities, canonical intents, or provenance.
+    """
+    routes: dict[str, object] = {}
+    for page, raw in rows:
+        if not page.indexable:
+            continue
+        model = adapt_legacy_page(page, raw)
+        routes[f"/guides/{page.slug}/"] = {
+            "canonical_intent": model.intent.canonical_intent,
+            "category": model.category_schema.id,
+            "entities": sorted(entity.id for entity in model.entities),
+            "sources": sorted(source.url for source in model.sources),
+            "publication_role": raw.get("publication_role"),
+        }
+    destination = output / "_meta"
+    destination.mkdir(parents=True, exist_ok=True)
+    (destination / "dependencies.json").write_text(
+        json.dumps({"version": 1, "routes": routes}, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
 
 
 def _write_sitemaps(output: Path, rows: list[object], base_url: str) -> None:
@@ -475,7 +528,7 @@ def build_site(
                 amazon_url=amazon_url,
                 resource_url=model.resource_url,
                 recommendation_url=model.recommendation_url(),
-                json_ld=_json_ld(page, public_url, "StackSignal"),
+                json_ld=_json_ld(page, public_url, "StackSignal", raw),
                 markdown_table=_markdown_table(page, comparison_criteria),
                 comparison_criteria=comparison_criteria,
                 related_pages=_related_pages(
@@ -492,7 +545,7 @@ def build_site(
                 ), encoding="utf-8"
             )
             (destination.parent / "index.json").write_text(
-                _json_document(page, public_url, comparison_criteria, model), encoding="utf-8"
+                _json_document(page, public_url, comparison_criteria, model, raw), encoding="utf-8"
             )
             if store.upsert_page(
                 slug=page.slug,
@@ -573,6 +626,65 @@ def build_site(
                 encoding="utf-8",
             )
             hub_rows.append({"public_url": f"{base_url}/topics/{topic}/", "lastmod": max(page.updated_at for page in subset)})
+        transversal_groups: dict[str, list[Page]] = {}
+        for page, raw in render_pages:
+            family = raw.get("transversal_family")
+            if page.indexable and raw.get("catalog_origin") == "transversal-v1" and isinstance(family, str) and family:
+                transversal_groups.setdefault(family, []).append(page)
+        for family, family_pages in sorted(transversal_groups.items()):
+            topic = _topic_slug(family)
+            destination = output_dir / "topics" / topic / "index.html"
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            destination.write_text(
+                hub_template.render(
+                    pages=family_pages,
+                    title=family.title(),
+                    description="Source-backed, merchant-agnostic comparisons with explicit primary sources and observed query patterns.",
+                    canonical_url=f"{base_url}/topics/{topic}/",
+                    site_name="StackSignal",
+                ),
+                encoding="utf-8",
+            )
+            hub_rows.append({"public_url": f"{base_url}/topics/{topic}/", "lastmod": max(page.updated_at for page in family_pages)})
+        book_groups: dict[str, list[Page]] = {}
+        for page, raw in render_pages:
+            topic = raw.get("book_topic")
+            if page.indexable and raw.get("catalog_origin") == "open-library-books-v1" and isinstance(topic, str) and topic:
+                book_groups.setdefault(topic, []).append(page)
+        if book_groups:
+            books_destination = output_dir / "books" / "index.html"
+            books_destination.parent.mkdir(parents=True, exist_ok=True)
+            representatives = [
+                sorted(topic_pages, key=lambda item: (item.title.casefold(), item.slug))[0]
+                for _, topic_pages in sorted(book_groups.items())
+            ]
+            books_destination.write_text(
+                hub_template.render(
+                    pages=representatives,
+                    title="Book discovery records",
+                    description="Work-level bibliographic records organized by subject, with source trails and optional current-edition routes.",
+                    canonical_url=f"{base_url}/books/",
+                    site_name="StackSignal",
+                ),
+                encoding="utf-8",
+            )
+            hub_rows.append({"public_url": f"{base_url}/books/", "lastmod": max(page.updated_at for pages in book_groups.values() for page in pages)})
+        for topic, topic_pages in sorted(book_groups.items()):
+            if len(topic_pages) < 12:
+                continue
+            destination = output_dir / "books" / _topic_slug(topic) / "index.html"
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            destination.write_text(
+                hub_template.render(
+                    pages=sorted(topic_pages, key=lambda item: (item.title.casefold(), item.slug)),
+                    title=f"Books: {topic.replace('-', ' ').title()}",
+                    description="Work-level bibliographic identity records selected from an observable reader signal and linked to their primary sources.",
+                    canonical_url=f"{base_url}/books/{_topic_slug(topic)}/",
+                    site_name="StackSignal",
+                ),
+                encoding="utf-8",
+            )
+            hub_rows.append({"public_url": f"{base_url}/books/{_topic_slug(topic)}/", "lastmod": max(page.updated_at for page in topic_pages)})
         catalog_template = environment.get_template("catalog.html")
         catalog_destination = output_dir / "catalog" / "index.html"
         mass_pages = [page for page in commercial_pages if page.catalog_origin == "mass-products-v1"]
@@ -627,6 +739,7 @@ def build_site(
         sitemap_rows: list[object] = list(store.indexable_pages()) + hub_rows
         _write_sitemaps(output_dir, sitemap_rows, base_url)
         _write_llms(output_dir, editorial_pages, base_url)
+        _write_dependencies(output_dir, render_pages)
         hubs_written_at = perf_counter()
 
     (output_dir / "robots.txt").write_text(

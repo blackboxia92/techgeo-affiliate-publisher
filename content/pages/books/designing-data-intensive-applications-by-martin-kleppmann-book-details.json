@@ -1,0 +1,129 @@
+{
+  "catalog_origin": "open-library-books-v1",
+  "catalog_entry_id": "open-library:OL19293745W",
+  "content_model": "v2",
+  "intent_type": "entity",
+  "slug": "designing-data-intensive-applications-by-martin-kleppmann-book-details",
+  "status": "reviewed",
+  "locale": "en",
+  "category": "book",
+  "book_topic": "data-systems",
+  "canonical_intent": "book:entity:book-ol19293745w:topic=data-systems",
+  "demand_evidence": {
+    "kind": "reader-signal-and-query-pattern",
+    "query": "best books for data systems",
+    "observed_at": "2026-09-28",
+    "note": "Open Library's monthly ratings dump records 3 reader-rating events for this work. That is a selection signal, not a quality score or search-volume claim."
+  },
+  "publication_role": {
+    "kind": "direct-monetization",
+    "merchant": "amazon.es",
+    "route_type": "affiliate-search",
+    "cluster": "books/data-systems",
+    "note": "The work-level identity record has an Amazon ES search route for the exact title and author while its facts remain merchant-agnostic."
+  },
+  "entity_provenance": [
+    {
+      "entity_id": "book:OL19293745W",
+      "entity_type": "bibliographic-work",
+      "work_id": "OL19293745W",
+      "author_id": "OL7477772A",
+      "source": {
+        "publisher": "Open Library",
+        "url": "https://openlibrary.org/works/OL19293745W"
+      },
+      "facts_verified_at": "2026-09-28"
+    }
+  ],
+  "title": "Designing Data-Intensive Applications by Martin Kleppmann: work-level book details",
+  "meta_description": "Work-level bibliographic details for Designing Data-Intensive Applications by Martin Kleppmann: Open Library ID, author, subjects, and edition-selection guidance without ",
+  "eyebrow": "Books: data systems",
+  "intro": "Direct answer: Designing Data-Intensive Applications is an Open Library work-level record attributed to Martin Kleppmann, with subjects including Development; Web site development; Application software; Database management; Databases. This page identifies the work; it does not endorse a specific edition.",
+  "verdict": "Use this record to identify Designing Data-Intensive Applications before choosing an edition. Confirm the publisher, ISBN, translation, format, accessibility, and current availability on the exact edition page or retailer listing; none of those variable facts is asserted here.",
+  "updated_at": "2026-09-28",
+  "reviewed_by": "StackSignal bibliographic research desk",
+  "criteria": [
+    {
+      "key": "work_id",
+      "label": "Work identity",
+      "description": "Stable Open Library work identifier rather than an ISBN-specific product listing."
+    },
+    {
+      "key": "author",
+      "label": "Author",
+      "description": "Author identity linked to the corresponding Open Library author record."
+    },
+    {
+      "key": "subjects",
+      "label": "Recorded subjects",
+      "description": "Subjects supplied by the work-level Open Library record."
+    },
+    {
+      "key": "record_scope",
+      "label": "Record scope",
+      "description": "Work-level identity record; ISBN, publisher, language, and format are edition-specific."
+    },
+    {
+      "key": "selection_signal",
+      "label": "Discovery signal",
+      "description": "Reader-rating event count used only to select a bounded discovery corpus."
+    }
+  ],
+  "alternatives": [
+    {
+      "name": "Designing Data-Intensive Applications",
+      "url": "https://openlibrary.org/works/OL19293745W",
+      "summary": "A work-level Open Library record attributed to Martin Kleppmann and selected from a reader-signalled data systems discovery group.",
+      "specs": {
+        "work_id": "OL19293745W",
+        "author": "Martin Kleppmann",
+        "subjects": "Development; Web site development; Application software; Database management; Databases",
+        "record_scope": "Work-level bibliographic identity; edition-specific details are intentionally not collapsed into this record.",
+        "selection_signal": "3 Open Library reader-rating events in the monthly dump; not a quality score."
+      }
+    }
+  ],
+  "faq": [
+    {
+      "question": "What does this page identify about Designing Data-Intensive Applications?",
+      "answer": "It identifies the Open Library work record OL19293745W, its linked author record, recorded subjects, and work-level first-publication context. It deliberately does not collapse distinct ISBN editions into one offer."
+    },
+    {
+      "question": "Why is Designing Data-Intensive Applications included under data systems?",
+      "answer": "Open Library records subjects including Development; Web site development; Application software; Database management; Databases. The record was selected with an observable reader-rating count, while the stated query is a book-discovery pattern rather than a claimed search-volume measurement."
+    },
+    {
+      "question": "Does this page claim a current price, rating, stock status, publisher, or ISBN?",
+      "answer": "No. Those facts are edition- and market-specific. Check the cited work record and the exact current edition or retailer page before buying or citing a particular format."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Open Library work record",
+      "publisher": "Open Library",
+      "url": "https://openlibrary.org/works/OL19293745W"
+    },
+    {
+      "label": "Open Library author record",
+      "publisher": "Open Library",
+      "url": "https://openlibrary.org/authors/OL7477772A"
+    }
+  ],
+  "resources": [
+    {
+      "title": "Designing Data-Intensive Applications",
+      "target_url": "https://www.amazon.es/s?k=Designing+Data-Intensive+Applications+Martin+Kleppmann&tag=blackboxia92-21",
+      "note": "Amazon ES is an optional route to locate a current exact edition. Confirm ISBN, language, publisher, format, price, stock, and seller before purchase."
+    }
+  ],
+  "buyer_consensus": {
+    "status": "No buyer-review or rating claim is made. Open Library rating events are used only as a source-selection signal.",
+    "pros": [
+      "Work ID OL19293745W with recorded subjects and an author record."
+    ],
+    "cons": [
+      "Publisher, ISBN, format, translation, price, stock, and suitability remain edition-specific checks."
+    ],
+    "verdict": "A bibliographic identity record, not a product recommendation."
+  }
+}

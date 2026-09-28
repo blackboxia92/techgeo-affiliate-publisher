@@ -1,0 +1,129 @@
+{
+  "catalog_origin": "open-library-books-v1",
+  "catalog_entry_id": "open-library:OL44972W",
+  "content_model": "v2",
+  "intent_type": "entity",
+  "slug": "time-s-laughingstocks-and-other-verses-by-thomas-hardy-book-details",
+  "status": "reviewed",
+  "locale": "en",
+  "category": "book",
+  "book_topic": "poetry",
+  "canonical_intent": "book:entity:book-ol44972w:topic=poetry",
+  "demand_evidence": {
+    "kind": "reader-signal-and-query-pattern",
+    "query": "best poetry books",
+    "observed_at": "2026-09-28",
+    "note": "Open Library's monthly ratings dump records 3 reader-rating events for this work. That is a selection signal, not a quality score or search-volume claim."
+  },
+  "publication_role": {
+    "kind": "direct-monetization",
+    "merchant": "amazon.es",
+    "route_type": "affiliate-search",
+    "cluster": "books/poetry",
+    "note": "The work-level identity record has an Amazon ES search route for the exact title and author while its facts remain merchant-agnostic."
+  },
+  "entity_provenance": [
+    {
+      "entity_id": "book:OL44972W",
+      "entity_type": "bibliographic-work",
+      "work_id": "OL44972W",
+      "author_id": "OL18277A",
+      "source": {
+        "publisher": "Open Library",
+        "url": "https://openlibrary.org/works/OL44972W"
+      },
+      "facts_verified_at": "2026-09-28"
+    }
+  ],
+  "title": "Time's laughingstocks, and other verses by Thomas Hardy: work-level book details",
+  "meta_description": "Work-level bibliographic details for Time's laughingstocks, and other verses by Thomas Hardy: Open Library ID, author, subjects, and edition-selection guidance without pr",
+  "eyebrow": "Books: poetry",
+  "intro": "Direct answer: Time's laughingstocks, and other verses is an Open Library work-level record attributed to Thomas Hardy, with subjects including Poetry (poetic works by one author). This page identifies the work; it does not endorse a specific edition.",
+  "verdict": "Use this record to identify Time's laughingstocks, and other verses before choosing an edition. Confirm the publisher, ISBN, translation, format, accessibility, and current availability on the exact edition page or retailer listing; none of those variable facts is asserted here.",
+  "updated_at": "2026-09-28",
+  "reviewed_by": "StackSignal bibliographic research desk",
+  "criteria": [
+    {
+      "key": "work_id",
+      "label": "Work identity",
+      "description": "Stable Open Library work identifier rather than an ISBN-specific product listing."
+    },
+    {
+      "key": "author",
+      "label": "Author",
+      "description": "Author identity linked to the corresponding Open Library author record."
+    },
+    {
+      "key": "subjects",
+      "label": "Recorded subjects",
+      "description": "Subjects supplied by the work-level Open Library record."
+    },
+    {
+      "key": "record_scope",
+      "label": "Record scope",
+      "description": "Work-level identity record; ISBN, publisher, language, and format are edition-specific."
+    },
+    {
+      "key": "selection_signal",
+      "label": "Discovery signal",
+      "description": "Reader-rating event count used only to select a bounded discovery corpus."
+    }
+  ],
+  "alternatives": [
+    {
+      "name": "Time's laughingstocks, and other verses",
+      "url": "https://openlibrary.org/works/OL44972W",
+      "summary": "A work-level Open Library record attributed to Thomas Hardy and selected from a reader-signalled poetry discovery group.",
+      "specs": {
+        "work_id": "OL44972W",
+        "author": "Thomas Hardy",
+        "subjects": "Poetry (poetic works by one author)",
+        "record_scope": "Work-level bibliographic identity; edition-specific details are intentionally not collapsed into this record.",
+        "selection_signal": "3 Open Library reader-rating events in the monthly dump; not a quality score."
+      }
+    }
+  ],
+  "faq": [
+    {
+      "question": "What does this page identify about Time's laughingstocks, and other verses?",
+      "answer": "It identifies the Open Library work record OL44972W, its linked author record, recorded subjects, and work-level first-publication context. It deliberately does not collapse distinct ISBN editions into one offer."
+    },
+    {
+      "question": "Why is Time's laughingstocks, and other verses included under poetry?",
+      "answer": "Open Library records subjects including Poetry (poetic works by one author). The record was selected with an observable reader-rating count, while the stated query is a book-discovery pattern rather than a claimed search-volume measurement."
+    },
+    {
+      "question": "Does this page claim a current price, rating, stock status, publisher, or ISBN?",
+      "answer": "No. Those facts are edition- and market-specific. Check the cited work record and the exact current edition or retailer page before buying or citing a particular format."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Open Library work record",
+      "publisher": "Open Library",
+      "url": "https://openlibrary.org/works/OL44972W"
+    },
+    {
+      "label": "Open Library author record",
+      "publisher": "Open Library",
+      "url": "https://openlibrary.org/authors/OL18277A"
+    }
+  ],
+  "resources": [
+    {
+      "title": "Time's laughingstocks, and other verses",
+      "target_url": "https://www.amazon.es/s?k=Time%27s+laughingstocks%2C+and+other+verses+Thomas+Hardy&tag=blackboxia92-21",
+      "note": "Amazon ES is an optional route to locate a current exact edition. Confirm ISBN, language, publisher, format, price, stock, and seller before purchase."
+    }
+  ],
+  "buyer_consensus": {
+    "status": "No buyer-review or rating claim is made. Open Library rating events are used only as a source-selection signal.",
+    "pros": [
+      "Work ID OL44972W with recorded subjects and an author record."
+    ],
+    "cons": [
+      "Publisher, ISBN, format, translation, price, stock, and suitability remain edition-specific checks."
+    ],
+    "verdict": "A bibliographic identity record, not a product recommendation."
+  }
+}

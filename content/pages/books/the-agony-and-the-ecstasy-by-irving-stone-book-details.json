@@ -1,0 +1,129 @@
+{
+  "catalog_origin": "open-library-books-v1",
+  "catalog_entry_id": "open-library:OL112002W",
+  "content_model": "v2",
+  "intent_type": "entity",
+  "slug": "the-agony-and-the-ecstasy-by-irving-stone-book-details",
+  "status": "reviewed",
+  "locale": "en",
+  "category": "book",
+  "book_topic": "biography",
+  "canonical_intent": "book:entity:book-ol112002w:topic=biography",
+  "demand_evidence": {
+    "kind": "reader-signal-and-query-pattern",
+    "query": "best biographies to read",
+    "observed_at": "2026-09-28",
+    "note": "Open Library's monthly ratings dump records 12 reader-rating events for this work. That is a selection signal, not a quality score or search-volume claim."
+  },
+  "publication_role": {
+    "kind": "direct-monetization",
+    "merchant": "amazon.es",
+    "route_type": "affiliate-search",
+    "cluster": "books/biography",
+    "note": "The work-level identity record has an Amazon ES search route for the exact title and author while its facts remain merchant-agnostic."
+  },
+  "entity_provenance": [
+    {
+      "entity_id": "book:OL112002W",
+      "entity_type": "bibliographic-work",
+      "work_id": "OL112002W",
+      "author_id": "OL2645050A",
+      "source": {
+        "publisher": "Open Library",
+        "url": "https://openlibrary.org/works/OL112002W"
+      },
+      "facts_verified_at": "2026-09-28"
+    }
+  ],
+  "title": "The Agony and the Ecstasy by Irving Stone: work-level book details",
+  "meta_description": "Work-level bibliographic details for The Agony and the Ecstasy by Irving Stone: Open Library ID, author, subjects, and edition-selection guidance without price or rating ",
+  "eyebrow": "Books: biography",
+  "intro": "Direct answer: The Agony and the Ecstasy is an Open Library work-level record attributed to Irving Stone, with subjects including Fiction; Artists; Biography; Biographical fiction; American fiction (fictional works by one author). This page identifies the work; it does not endorse a specific edition.",
+  "verdict": "Use this record to identify The Agony and the Ecstasy before choosing an edition. Confirm the publisher, ISBN, translation, format, accessibility, and current availability on the exact edition page or retailer listing; none of those variable facts is asserted here.",
+  "updated_at": "2026-09-28",
+  "reviewed_by": "StackSignal bibliographic research desk",
+  "criteria": [
+    {
+      "key": "work_id",
+      "label": "Work identity",
+      "description": "Stable Open Library work identifier rather than an ISBN-specific product listing."
+    },
+    {
+      "key": "author",
+      "label": "Author",
+      "description": "Author identity linked to the corresponding Open Library author record."
+    },
+    {
+      "key": "subjects",
+      "label": "Recorded subjects",
+      "description": "Subjects supplied by the work-level Open Library record."
+    },
+    {
+      "key": "record_scope",
+      "label": "Record scope",
+      "description": "Work-level identity record; ISBN, publisher, language, and format are edition-specific."
+    },
+    {
+      "key": "selection_signal",
+      "label": "Discovery signal",
+      "description": "Reader-rating event count used only to select a bounded discovery corpus."
+    }
+  ],
+  "alternatives": [
+    {
+      "name": "The Agony and the Ecstasy",
+      "url": "https://openlibrary.org/works/OL112002W",
+      "summary": "A work-level Open Library record attributed to Irving Stone and selected from a reader-signalled biography discovery group.",
+      "specs": {
+        "work_id": "OL112002W",
+        "author": "Irving Stone",
+        "subjects": "Fiction; Artists; Biography; Biographical fiction; American fiction (fictional works by one author)",
+        "record_scope": "Work-level bibliographic identity; edition-specific details are intentionally not collapsed into this record.",
+        "selection_signal": "12 Open Library reader-rating events in the monthly dump; not a quality score."
+      }
+    }
+  ],
+  "faq": [
+    {
+      "question": "What does this page identify about The Agony and the Ecstasy?",
+      "answer": "It identifies the Open Library work record OL112002W, its linked author record, recorded subjects, and work-level first-publication context. It deliberately does not collapse distinct ISBN editions into one offer."
+    },
+    {
+      "question": "Why is The Agony and the Ecstasy included under biography?",
+      "answer": "Open Library records subjects including Fiction; Artists; Biography; Biographical fiction; American fiction (fictional works by one author). The record was selected with an observable reader-rating count, while the stated query is a book-discovery pattern rather than a claimed search-volume measurement."
+    },
+    {
+      "question": "Does this page claim a current price, rating, stock status, publisher, or ISBN?",
+      "answer": "No. Those facts are edition- and market-specific. Check the cited work record and the exact current edition or retailer page before buying or citing a particular format."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Open Library work record",
+      "publisher": "Open Library",
+      "url": "https://openlibrary.org/works/OL112002W"
+    },
+    {
+      "label": "Open Library author record",
+      "publisher": "Open Library",
+      "url": "https://openlibrary.org/authors/OL2645050A"
+    }
+  ],
+  "resources": [
+    {
+      "title": "The Agony and the Ecstasy",
+      "target_url": "https://www.amazon.es/s?k=The+Agony+and+the+Ecstasy+Irving+Stone&tag=blackboxia92-21",
+      "note": "Amazon ES is an optional route to locate a current exact edition. Confirm ISBN, language, publisher, format, price, stock, and seller before purchase."
+    }
+  ],
+  "buyer_consensus": {
+    "status": "No buyer-review or rating claim is made. Open Library rating events are used only as a source-selection signal.",
+    "pros": [
+      "Work ID OL112002W with recorded subjects and an author record."
+    ],
+    "cons": [
+      "Publisher, ISBN, format, translation, price, stock, and suitability remain edition-specific checks."
+    ],
+    "verdict": "A bibliographic identity record, not a product recommendation."
+  }
+}

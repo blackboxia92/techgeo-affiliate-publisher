@@ -60,7 +60,7 @@
       <p class="consensus-note">This is an editorial synthesis of the cited primary documentation. It does not claim buyer opinions, ratings, or product reviews.</p>
       <div class="consensus-grid">
         <div><h3>Pros</h3><ul>{% for alternative in page.alternatives %}<li><strong>{{ alternative.name }}:</strong> {{ alternative.summary }}</li>{% endfor %}</ul></div>
-        <div><h3>Contras</h3><ul>{% for alternative in page.alternatives %}<li><strong>{{ alternative.name }}:</strong> {{ alternative.specs.get('operations', 'Requiere validar implementación, mantenimiento y soporte antes de adoptarlo.') }}</li>{% endfor %}</ul></div>
+        <div><h3>Contras</h3><ul>{% for alternative in page.alternatives %}<li><strong>{{ alternative.name }}:</strong> {{ alternative.specs.get('operations', alternative.specs.get('constraints', 'Requiere validar implementación, mantenimiento y soporte antes de adoptarlo.')) }}</li>{% endfor %}</ul></div>
       </div>
       <div class="consensus-verdict"><strong>Veredicto:</strong> {{ page.verdict }}</div>
     </section>

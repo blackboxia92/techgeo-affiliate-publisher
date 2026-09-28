@@ -1,0 +1,138 @@
+{
+  "catalog_origin": "transversal-v1",
+  "catalog_entry_id": "transversal-0009",
+  "content_model": "v2",
+  "slug": "xbox-game-pass-vs-playstation-plus-for-console-subscriptions",
+  "status": "reviewed",
+  "locale": "en",
+  "category": "software",
+  "transversal_family": "gaming and media",
+  "intent_type": "comparison",
+  "canonical_intent": "software:comparison:entity-playstation-plus--entity-xbox-game-pass:audience=players-choosing-a-console-game-subscription",
+  "audience": "players choosing a console game subscription",
+  "demand_evidence": {
+    "kind": "query-pattern",
+    "query": "Xbox Game Pass vs PlayStation Plus",
+    "observed_at": "2026-09-27",
+    "note": "The platform-subscription comparison is a stable decision pattern even as catalog titles and plan terms change."
+  },
+  "publication_role": {
+    "kind": "demand-cluster",
+    "cluster": "gaming and media",
+    "note": "An explicit observed decision-query pattern contributes to a commercial comparison cluster without asserting a current merchant route."
+  },
+  "entity_provenance": [
+    {
+      "entity_id": "xbox-game-pass",
+      "entity_type": "media-service",
+      "source": {
+        "label": "Xbox Game Pass official page",
+        "publisher": "Microsoft Xbox",
+        "url": "https://www.xbox.com/en-US/xbox-game-pass"
+      },
+      "facts_verified_at": "2026-09-27"
+    },
+    {
+      "entity_id": "playstation-plus",
+      "entity_type": "media-service",
+      "source": {
+        "label": "PlayStation Plus official page",
+        "publisher": "Sony Interactive Entertainment",
+        "url": "https://www.playstation.com/en-us/ps-plus/"
+      },
+      "facts_verified_at": "2026-09-27"
+    }
+  ],
+  "title": "Xbox Game Pass vs PlayStation Plus for console subscriptions",
+  "meta_description": "Xbox Game Pass vs PlayStation Plus for players choosing a console game subscription: documented workflows, constraints, and a source-backed decision summary.",
+  "eyebrow": "gaming and media comparison",
+  "intro": "This source-backed comparison addresses the observed query pattern “Xbox Game Pass vs PlayStation Plus” for players choosing a console game subscription. It compares stable, documented workflows and constraints rather than volatile prices, inventory, ratings, or reviews.",
+  "verdict": "Choose the subscription that matches the player’s primary console ecosystem and the current tier benefits they actually need. Game catalogs, regions, access rules, and plan terms change, so confirm them directly with Xbox or PlayStation before subscribing.",
+  "updated_at": "2026-09-28",
+  "reviewed_by": "StackSignal editorial research desk",
+  "criteria": [
+    {
+      "key": "model",
+      "label": "Option",
+      "description": "Named book, product, or service being evaluated."
+    },
+    {
+      "key": "workflow",
+      "label": "Primary workflow",
+      "description": "The documented job or workflow the option supports."
+    },
+    {
+      "key": "constraints",
+      "label": "Decision constraints",
+      "description": "Compatibility, ownership, or implementation limits to verify."
+    },
+    {
+      "key": "fit",
+      "label": "Best fit",
+      "description": "The stated use case for which the option is the stronger fit."
+    }
+  ],
+  "alternatives": [
+    {
+      "name": "Xbox Game Pass",
+      "url": "https://www.xbox.com/en-US/xbox-game-pass",
+      "summary": "A game subscription service whose official page describes membership plans and included platform benefits.",
+      "specs": {
+        "model": "Xbox Game Pass",
+        "workflow": "Access eligible games and membership benefits through the selected Xbox Game Pass plan.",
+        "constraints": "Confirm device access, catalog availability, plan terms, region, and multiplayer requirements before subscribing.",
+        "fit": "Players who want to evaluate the Xbox ecosystem and subscription catalog on supported devices."
+      }
+    },
+    {
+      "name": "PlayStation Plus",
+      "url": "https://www.playstation.com/en-us/ps-plus/",
+      "summary": "A PlayStation subscription service whose official page describes its membership tiers and platform benefits.",
+      "specs": {
+        "model": "PlayStation Plus",
+        "workflow": "Access eligible games and membership benefits through the selected PlayStation Plus tier.",
+        "constraints": "Confirm console access, catalog availability, tier benefits, region, and online multiplayer terms before subscribing.",
+        "fit": "Players who primarily use the PlayStation ecosystem and want to compare its membership tiers."
+      }
+    }
+  ],
+  "faq": [
+    {
+      "question": "What query pattern justified this Xbox Game Pass vs PlayStation Plus comparison?",
+      "answer": "The editorial backlog records the recurring query pattern “Xbox Game Pass vs PlayStation Plus” (query-pattern observed 2026-09-27). The platform-subscription comparison is a stable decision pattern even as catalog titles and plan terms change. This is a qualitative signal, not a claimed search-volume figure."
+    },
+    {
+      "question": "Does this comparison include live price, availability, ratings, or a discount claim?",
+      "answer": "No. Those values vary by plan, region, seller, edition, and time. The comparison links to primary documentation and, where relevant, an Amazon ES search route for the current listing."
+    },
+    {
+      "question": "How should a reader make the final choice?",
+      "answer": "Start with the documented workflow and constraints: Xbox Game Pass is described for Players who want to evaluate the Xbox ecosystem and subscription catalog on supported devices; PlayStation Plus is described for Players who primarily use the PlayStation ecosystem and want to compare its membership tiers. Confirm current account, device, plan, regional, and edition details in the cited primary sources."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Xbox Game Pass official page",
+      "publisher": "Microsoft Xbox",
+      "url": "https://www.xbox.com/en-US/xbox-game-pass"
+    },
+    {
+      "label": "PlayStation Plus official page",
+      "publisher": "Sony Interactive Entertainment",
+      "url": "https://www.playstation.com/en-us/ps-plus/"
+    }
+  ],
+  "resources": [],
+  "buyer_consensus": {
+    "status": "No buyer-review dataset is claimed; this is a primary-source editorial synthesis.",
+    "pros": [
+      "A game subscription service whose official page describes membership plans and included platform benefits.",
+      "A PlayStation subscription service whose official page describes its membership tiers and platform benefits."
+    ],
+    "cons": [
+      "Confirm device access, catalog availability, plan terms, region, and multiplayer requirements before subscribing.",
+      "Confirm console access, catalog availability, tier benefits, region, and online multiplayer terms before subscribing."
+    ],
+    "verdict": "Choose the subscription that matches the player’s primary console ecosystem and the current tier benefits they actually need. Game catalogs, regions, access rules, and plan terms change, so confirm them directly with Xbox or PlayStation before subscribing."
+  }
+}

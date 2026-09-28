@@ -1,0 +1,129 @@
+{
+  "catalog_origin": "open-library-books-v1",
+  "catalog_entry_id": "open-library:OL457760W",
+  "content_model": "v2",
+  "intent_type": "entity",
+  "slug": "voskresen-e-by-book-details",
+  "status": "reviewed",
+  "locale": "en",
+  "category": "book",
+  "book_topic": "classics",
+  "canonical_intent": "book:entity:book-ol457760w:topic=classics",
+  "demand_evidence": {
+    "kind": "reader-signal-and-query-pattern",
+    "query": "best classic books",
+    "observed_at": "2026-09-28",
+    "note": "Open Library's monthly ratings dump records 14 reader-rating events for this work. That is a selection signal, not a quality score or search-volume claim."
+  },
+  "publication_role": {
+    "kind": "direct-monetization",
+    "merchant": "amazon.es",
+    "route_type": "affiliate-search",
+    "cluster": "books/classics",
+    "note": "The work-level identity record has an Amazon ES search route for the exact title and author while its facts remain merchant-agnostic."
+  },
+  "entity_provenance": [
+    {
+      "entity_id": "book:OL457760W",
+      "entity_type": "bibliographic-work",
+      "work_id": "OL457760W",
+      "author_id": "OL26783A",
+      "source": {
+        "publisher": "Open Library",
+        "url": "https://openlibrary.org/works/OL457760W"
+      },
+      "facts_verified_at": "2026-09-28"
+    }
+  ],
+  "title": "Voskresenīe by Лев Толстой: work-level book details",
+  "meta_description": "Work-level bibliographic details for Voskresenīe by Лев Толстой: Open Library ID, author, subjects, and edition-selection guidance without price or rating claims.",
+  "eyebrow": "Books: classics",
+  "intro": "Direct answer: Voskresenīe is an Open Library work-level record attributed to Лев Толстой, with subjects including Continental european fiction (fictional works by one author); Fiction, general; Fiction, historical, general; Russia (federation), fiction; Atonement -- Fiction. This page identifies the work; it does not endorse a specific edition.",
+  "verdict": "Use this record to identify Voskresenīe before choosing an edition. Confirm the publisher, ISBN, translation, format, accessibility, and current availability on the exact edition page or retailer listing; none of those variable facts is asserted here.",
+  "updated_at": "2026-09-28",
+  "reviewed_by": "StackSignal bibliographic research desk",
+  "criteria": [
+    {
+      "key": "work_id",
+      "label": "Work identity",
+      "description": "Stable Open Library work identifier rather than an ISBN-specific product listing."
+    },
+    {
+      "key": "author",
+      "label": "Author",
+      "description": "Author identity linked to the corresponding Open Library author record."
+    },
+    {
+      "key": "subjects",
+      "label": "Recorded subjects",
+      "description": "Subjects supplied by the work-level Open Library record."
+    },
+    {
+      "key": "record_scope",
+      "label": "Record scope",
+      "description": "Work-level identity record; ISBN, publisher, language, and format are edition-specific."
+    },
+    {
+      "key": "selection_signal",
+      "label": "Discovery signal",
+      "description": "Reader-rating event count used only to select a bounded discovery corpus."
+    }
+  ],
+  "alternatives": [
+    {
+      "name": "Voskresenīe",
+      "url": "https://openlibrary.org/works/OL457760W",
+      "summary": "A work-level Open Library record attributed to Лев Толстой and selected from a reader-signalled classics discovery group.",
+      "specs": {
+        "work_id": "OL457760W",
+        "author": "Лев Толстой",
+        "subjects": "Continental european fiction (fictional works by one author); Fiction, general; Fiction, historical, general; Russia (federation), fiction; Atonement -- Fiction",
+        "record_scope": "Work-level bibliographic identity; edition-specific details are intentionally not collapsed into this record.",
+        "selection_signal": "14 Open Library reader-rating events in the monthly dump; not a quality score."
+      }
+    }
+  ],
+  "faq": [
+    {
+      "question": "What does this page identify about Voskresenīe?",
+      "answer": "It identifies the Open Library work record OL457760W, its linked author record, recorded subjects, and work-level first-publication context. It deliberately does not collapse distinct ISBN editions into one offer."
+    },
+    {
+      "question": "Why is Voskresenīe included under classics?",
+      "answer": "Open Library records subjects including Continental european fiction (fictional works by one author); Fiction, general; Fiction, historical, general; Russia (federation), fiction; Atonement -- Fiction. The record was selected with an observable reader-rating count, while the stated query is a book-discovery pattern rather than a claimed search-volume measurement."
+    },
+    {
+      "question": "Does this page claim a current price, rating, stock status, publisher, or ISBN?",
+      "answer": "No. Those facts are edition- and market-specific. Check the cited work record and the exact current edition or retailer page before buying or citing a particular format."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Open Library work record",
+      "publisher": "Open Library",
+      "url": "https://openlibrary.org/works/OL457760W"
+    },
+    {
+      "label": "Open Library author record",
+      "publisher": "Open Library",
+      "url": "https://openlibrary.org/authors/OL26783A"
+    }
+  ],
+  "resources": [
+    {
+      "title": "Voskresenīe",
+      "target_url": "https://www.amazon.es/s?k=Voskresen%C4%ABe+%D0%9B%D0%B5%D0%B2+%D0%A2%D0%BE%D0%BB%D1%81%D1%82%D0%BE%D0%B9&tag=blackboxia92-21",
+      "note": "Amazon ES is an optional route to locate a current exact edition. Confirm ISBN, language, publisher, format, price, stock, and seller before purchase."
+    }
+  ],
+  "buyer_consensus": {
+    "status": "No buyer-review or rating claim is made. Open Library rating events are used only as a source-selection signal.",
+    "pros": [
+      "Work ID OL457760W with recorded subjects and an author record."
+    ],
+    "cons": [
+      "Publisher, ISBN, format, translation, price, stock, and suitability remain edition-specific checks."
+    ],
+    "verdict": "A bibliographic identity record, not a product recommendation."
+  }
+}

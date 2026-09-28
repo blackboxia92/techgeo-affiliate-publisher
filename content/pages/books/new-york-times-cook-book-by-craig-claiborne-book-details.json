@@ -1,0 +1,129 @@
+{
+  "catalog_origin": "open-library-books-v1",
+  "catalog_entry_id": "open-library:OL54838W",
+  "content_model": "v2",
+  "intent_type": "entity",
+  "slug": "new-york-times-cook-book-by-craig-claiborne-book-details",
+  "status": "reviewed",
+  "locale": "en",
+  "category": "book",
+  "book_topic": "cooking",
+  "canonical_intent": "book:entity:book-ol54838w:topic=cooking",
+  "demand_evidence": {
+    "kind": "reader-signal-and-query-pattern",
+    "query": "best books for cooking",
+    "observed_at": "2026-09-28",
+    "note": "Open Library's monthly ratings dump records 3 reader-rating events for this work. That is a selection signal, not a quality score or search-volume claim."
+  },
+  "publication_role": {
+    "kind": "direct-monetization",
+    "merchant": "amazon.es",
+    "route_type": "affiliate-search",
+    "cluster": "books/cooking",
+    "note": "The work-level identity record has an Amazon ES search route for the exact title and author while its facts remain merchant-agnostic."
+  },
+  "entity_provenance": [
+    {
+      "entity_id": "book:OL54838W",
+      "entity_type": "bibliographic-work",
+      "work_id": "OL54838W",
+      "author_id": "OL19599A",
+      "source": {
+        "publisher": "Open Library",
+        "url": "https://openlibrary.org/works/OL54838W"
+      },
+      "facts_verified_at": "2026-09-28"
+    }
+  ],
+  "title": "New York Times Cook Book by Craig Claiborne: work-level book details",
+  "meta_description": "Work-level bibliographic details for New York Times Cook Book by Craig Claiborne: Open Library ID, author, subjects, and edition-selection guidance without price or ratin",
+  "eyebrow": "Books: cooking",
+  "intro": "Direct answer: New York Times Cook Book is an Open Library work-level record attributed to Craig Claiborne, with subjects including American Cookery; International Cookery; American Cooking; International cooking; Cookery, International. This page identifies the work; it does not endorse a specific edition.",
+  "verdict": "Use this record to identify New York Times Cook Book before choosing an edition. Confirm the publisher, ISBN, translation, format, accessibility, and current availability on the exact edition page or retailer listing; none of those variable facts is asserted here.",
+  "updated_at": "2026-09-28",
+  "reviewed_by": "StackSignal bibliographic research desk",
+  "criteria": [
+    {
+      "key": "work_id",
+      "label": "Work identity",
+      "description": "Stable Open Library work identifier rather than an ISBN-specific product listing."
+    },
+    {
+      "key": "author",
+      "label": "Author",
+      "description": "Author identity linked to the corresponding Open Library author record."
+    },
+    {
+      "key": "subjects",
+      "label": "Recorded subjects",
+      "description": "Subjects supplied by the work-level Open Library record."
+    },
+    {
+      "key": "record_scope",
+      "label": "Record scope",
+      "description": "Work-level identity record; ISBN, publisher, language, and format are edition-specific."
+    },
+    {
+      "key": "selection_signal",
+      "label": "Discovery signal",
+      "description": "Reader-rating event count used only to select a bounded discovery corpus."
+    }
+  ],
+  "alternatives": [
+    {
+      "name": "New York Times Cook Book",
+      "url": "https://openlibrary.org/works/OL54838W",
+      "summary": "A work-level Open Library record attributed to Craig Claiborne and selected from a reader-signalled cooking discovery group.",
+      "specs": {
+        "work_id": "OL54838W",
+        "author": "Craig Claiborne",
+        "subjects": "American Cookery; International Cookery; American Cooking; International cooking; Cookery, International",
+        "record_scope": "Work-level bibliographic identity; edition-specific details are intentionally not collapsed into this record.",
+        "selection_signal": "3 Open Library reader-rating events in the monthly dump; not a quality score."
+      }
+    }
+  ],
+  "faq": [
+    {
+      "question": "What does this page identify about New York Times Cook Book?",
+      "answer": "It identifies the Open Library work record OL54838W, its linked author record, recorded subjects, and work-level first-publication context. It deliberately does not collapse distinct ISBN editions into one offer."
+    },
+    {
+      "question": "Why is New York Times Cook Book included under cooking?",
+      "answer": "Open Library records subjects including American Cookery; International Cookery; American Cooking; International cooking; Cookery, International. The record was selected with an observable reader-rating count, while the stated query is a book-discovery pattern rather than a claimed search-volume measurement."
+    },
+    {
+      "question": "Does this page claim a current price, rating, stock status, publisher, or ISBN?",
+      "answer": "No. Those facts are edition- and market-specific. Check the cited work record and the exact current edition or retailer page before buying or citing a particular format."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Open Library work record",
+      "publisher": "Open Library",
+      "url": "https://openlibrary.org/works/OL54838W"
+    },
+    {
+      "label": "Open Library author record",
+      "publisher": "Open Library",
+      "url": "https://openlibrary.org/authors/OL19599A"
+    }
+  ],
+  "resources": [
+    {
+      "title": "New York Times Cook Book",
+      "target_url": "https://www.amazon.es/s?k=New+York+Times+Cook+Book+Craig+Claiborne&tag=blackboxia92-21",
+      "note": "Amazon ES is an optional route to locate a current exact edition. Confirm ISBN, language, publisher, format, price, stock, and seller before purchase."
+    }
+  ],
+  "buyer_consensus": {
+    "status": "No buyer-review or rating claim is made. Open Library rating events are used only as a source-selection signal.",
+    "pros": [
+      "Work ID OL54838W with recorded subjects and an author record."
+    ],
+    "cons": [
+      "Publisher, ISBN, format, translation, price, stock, and suitability remain edition-specific checks."
+    ],
+    "verdict": "A bibliographic identity record, not a product recommendation."
+  }
+}

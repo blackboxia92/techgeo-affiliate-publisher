@@ -1,0 +1,151 @@
+{
+  "catalog_origin": "transversal-v1",
+  "catalog_entry_id": "transversal-0006",
+  "content_model": "v2",
+  "slug": "designing-data-intensive-applications-vs-system-design-interview-for-system-design",
+  "status": "reviewed",
+  "locale": "en",
+  "category": "software",
+  "transversal_family": "books and media",
+  "intent_type": "comparison",
+  "canonical_intent": "software:comparison:entity-ddia--entity-system-design-interview:audience=engineers-choosing-a-system-design-learning-book",
+  "audience": "engineers choosing a system design learning book",
+  "demand_evidence": {
+    "kind": "query-pattern",
+    "query": "Designing Data-Intensive Applications vs System Design Interview",
+    "observed_at": "2026-09-27",
+    "note": "The book-versus-book form reflects an identifiable learning and purchase decision without claiming volume."
+  },
+  "publication_role": {
+    "kind": "direct-monetization",
+    "merchant": "amazon.es",
+    "route_type": "affiliate-search",
+    "cluster": "books-and-media",
+    "note": "A current Amazon ES search route is present for the exact title or model; editorial facts remain merchant-agnostic."
+  },
+  "entity_provenance": [
+    {
+      "entity_id": "ddia",
+      "entity_type": "book",
+      "source": {
+        "label": "Designing Data-Intensive Applications publisher page",
+        "publisher": "O’Reilly Media",
+        "url": "https://www.oreilly.com/library/view/designing-data-intensive-applications/9781491903063/"
+      },
+      "facts_verified_at": "2026-09-27"
+    },
+    {
+      "entity_id": "system-design-interview",
+      "entity_type": "book",
+      "source": {
+        "label": "System Design Interview book overview",
+        "publisher": "ByteByteGo",
+        "url": "https://bytebytego.com/"
+      },
+      "facts_verified_at": "2026-09-27"
+    }
+  ],
+  "title": "Designing Data-Intensive Applications vs System Design Interview for system design",
+  "meta_description": "Designing Data-Intensive Applications vs System Design Interview: documented workflows, constraints, fit, and primary-source decision guidance for a considered choice.",
+  "eyebrow": "books and media comparison",
+  "intro": "This source-backed comparison addresses the observed query pattern “Designing Data-Intensive Applications vs System Design Interview” for engineers choosing a system design learning book. It compares stable, documented workflows and constraints rather than volatile prices, inventory, ratings, or reviews.",
+  "verdict": "Choose Designing Data-Intensive Applications for a broad conceptual foundation in data systems. Choose System Design Interview for structured interview-practice framing. Check the exact edition, format, scope, and prerequisite knowledge at the cited publisher or author source before buying.",
+  "updated_at": "2026-09-28",
+  "reviewed_by": "StackSignal editorial research desk",
+  "criteria": [
+    {
+      "key": "model",
+      "label": "Option",
+      "description": "Named book, product, or service being evaluated."
+    },
+    {
+      "key": "workflow",
+      "label": "Primary workflow",
+      "description": "The documented job or workflow the option supports."
+    },
+    {
+      "key": "constraints",
+      "label": "Decision constraints",
+      "description": "Compatibility, ownership, or implementation limits to verify."
+    },
+    {
+      "key": "fit",
+      "label": "Best fit",
+      "description": "The stated use case for which the option is the stronger fit."
+    }
+  ],
+  "alternatives": [
+    {
+      "name": "Designing Data-Intensive Applications",
+      "url": "https://www.oreilly.com/library/view/designing-data-intensive-applications/9781491903063/",
+      "summary": "A technical book from O’Reilly focused on the principles behind reliable, scalable, and maintainable data systems.",
+      "specs": {
+        "model": "Designing Data-Intensive Applications",
+        "workflow": "Study concepts and trade-offs behind data systems, storage, replication, and stream processing.",
+        "constraints": "Confirm the edition, publication date, depth, and prerequisite knowledge before buying a copy.",
+        "fit": "Engineers who want a broad conceptual foundation for data-intensive system design."
+      }
+    },
+    {
+      "name": "System Design Interview",
+      "url": "https://bytebytego.com/",
+      "summary": "A system-design interview book series presented by ByteByteGo as a preparation-oriented learning resource.",
+      "specs": {
+        "model": "System Design Interview",
+        "workflow": "Practice system-design interview framing through curated problems and solution discussions.",
+        "constraints": "Confirm the volume, target level, format, and the specific interview scope before buying.",
+        "fit": "Readers who want structured practice for system-design interview conversations."
+      }
+    }
+  ],
+  "faq": [
+    {
+      "question": "What query pattern justified this Designing Data-Intensive Applications vs System Design Interview comparison?",
+      "answer": "The editorial backlog records the recurring query pattern “Designing Data-Intensive Applications vs System Design Interview” (query-pattern observed 2026-09-27). The book-versus-book form reflects an identifiable learning and purchase decision without claiming volume. This is a qualitative signal, not a claimed search-volume figure."
+    },
+    {
+      "question": "Does this comparison include live price, availability, ratings, or a discount claim?",
+      "answer": "No. Those values vary by plan, region, seller, edition, and time. The comparison links to primary documentation and, where relevant, an Amazon ES search route for the current listing."
+    },
+    {
+      "question": "How should a reader make the final choice?",
+      "answer": "Start with the documented workflow and constraints: Designing Data-Intensive Applications is described for Engineers who want a broad conceptual foundation for data-intensive system design; System Design Interview is described for Readers who want structured practice for system-design interview conversations. Confirm current account, device, plan, regional, and edition details in the cited primary sources."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Designing Data-Intensive Applications publisher page",
+      "publisher": "O’Reilly Media",
+      "url": "https://www.oreilly.com/library/view/designing-data-intensive-applications/9781491903063/"
+    },
+    {
+      "label": "System Design Interview book overview",
+      "publisher": "ByteByteGo",
+      "url": "https://bytebytego.com/"
+    }
+  ],
+  "resources": [
+    {
+      "title": "Designing Data-Intensive Applications",
+      "target_url": "https://www.amazon.es/s?k=Designing+Data-Intensive+Applications+Martin+Kleppmann&tag=blackboxia92-21",
+      "note": "Check the current Amazon ES listing for the exact edition or model of Designing Data-Intensive Applications; no price, rating, or stock claim is made here."
+    },
+    {
+      "title": "System Design Interview",
+      "target_url": "https://www.amazon.es/s?k=System+Design+Interview+Alex+Xu&tag=blackboxia92-21",
+      "note": "Check the current Amazon ES listing for the exact edition or model of System Design Interview; no price, rating, or stock claim is made here."
+    }
+  ],
+  "buyer_consensus": {
+    "status": "No buyer-review dataset is claimed; this is a primary-source editorial synthesis.",
+    "pros": [
+      "A technical book from O’Reilly focused on the principles behind reliable, scalable, and maintainable data systems.",
+      "A system-design interview book series presented by ByteByteGo as a preparation-oriented learning resource."
+    ],
+    "cons": [
+      "Confirm the edition, publication date, depth, and prerequisite knowledge before buying a copy.",
+      "Confirm the volume, target level, format, and the specific interview scope before buying."
+    ],
+    "verdict": "Choose Designing Data-Intensive Applications for a broad conceptual foundation in data systems. Choose System Design Interview for structured interview-practice framing. Check the exact edition, format, scope, and prerequisite knowledge at the cited publisher or author source before buying."
+  }
+}

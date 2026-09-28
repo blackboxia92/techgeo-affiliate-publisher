@@ -1,0 +1,138 @@
+{
+  "catalog_origin": "transversal-v1",
+  "catalog_entry_id": "transversal-0011",
+  "content_model": "v2",
+  "slug": "spotify-premium-vs-youtube-music-premium-for-music-streaming",
+  "status": "reviewed",
+  "locale": "en",
+  "category": "software",
+  "transversal_family": "gaming and media",
+  "intent_type": "comparison",
+  "canonical_intent": "software:comparison:entity-spotify-premium--entity-youtube-music-premium:audience=listeners-choosing-a-music-subscription",
+  "audience": "listeners choosing a music subscription",
+  "demand_evidence": {
+    "kind": "query-pattern",
+    "query": "Spotify Premium vs YouTube Music Premium",
+    "observed_at": "2026-09-27",
+    "note": "The named subscription comparison is an enduring consumer-service choice while benefits remain time-sensitive."
+  },
+  "publication_role": {
+    "kind": "demand-cluster",
+    "cluster": "gaming and media",
+    "note": "An explicit observed decision-query pattern contributes to a commercial comparison cluster without asserting a current merchant route."
+  },
+  "entity_provenance": [
+    {
+      "entity_id": "spotify-premium",
+      "entity_type": "media-service",
+      "source": {
+        "label": "Spotify Premium plans help",
+        "publisher": "Spotify",
+        "url": "https://support.spotify.com/us/article/premium-plans/"
+      },
+      "facts_verified_at": "2026-09-27"
+    },
+    {
+      "entity_id": "youtube-music-premium",
+      "entity_type": "media-service",
+      "source": {
+        "label": "YouTube Music Premium help",
+        "publisher": "Google",
+        "url": "https://support.google.com/youtubemusic/answer/6313535"
+      },
+      "facts_verified_at": "2026-09-27"
+    }
+  ],
+  "title": "Spotify Premium vs YouTube Music Premium for music streaming",
+  "meta_description": "Spotify Premium vs YouTube Music Premium for listeners choosing a music subscription: documented workflows, constraints, and a source-backed decision summary.",
+  "eyebrow": "gaming and media comparison",
+  "intro": "This source-backed comparison addresses the observed query pattern “Spotify Premium vs YouTube Music Premium” for listeners choosing a music subscription. It compares stable, documented workflows and constraints rather than volatile prices, inventory, ratings, or reviews.",
+  "verdict": "Choose the service whose supported applications and current membership benefits match the listening routine. Plans, family eligibility, regional availability, and specific features vary, so check the provider’s current terms before subscribing.",
+  "updated_at": "2026-09-28",
+  "reviewed_by": "StackSignal editorial research desk",
+  "criteria": [
+    {
+      "key": "model",
+      "label": "Option",
+      "description": "Named book, product, or service being evaluated."
+    },
+    {
+      "key": "workflow",
+      "label": "Primary workflow",
+      "description": "The documented job or workflow the option supports."
+    },
+    {
+      "key": "constraints",
+      "label": "Decision constraints",
+      "description": "Compatibility, ownership, or implementation limits to verify."
+    },
+    {
+      "key": "fit",
+      "label": "Best fit",
+      "description": "The stated use case for which the option is the stronger fit."
+    }
+  ],
+  "alternatives": [
+    {
+      "name": "Spotify Premium",
+      "url": "https://support.spotify.com/us/article/premium-plans/",
+      "summary": "A music subscription service with help documentation for Premium plans and account-level service information.",
+      "specs": {
+        "model": "Spotify Premium",
+        "workflow": "Listen through the selected Spotify plan and supported applications.",
+        "constraints": "Confirm plan availability, account eligibility, family rules, audio features, and region-specific terms before subscribing.",
+        "fit": "Listeners who already value Spotify’s supported apps and music-service workflow."
+      }
+    },
+    {
+      "name": "YouTube Music Premium",
+      "url": "https://support.google.com/youtubemusic/answer/6313535",
+      "summary": "A music subscription offering documented by Google through its YouTube Music help materials.",
+      "specs": {
+        "model": "YouTube Music Premium",
+        "workflow": "Use the selected YouTube Music membership through supported Google and YouTube Music applications.",
+        "constraints": "Confirm plan availability, account eligibility, family rules, regional terms, and current membership benefits before subscribing.",
+        "fit": "Listeners who want to evaluate YouTube Music’s supported membership and app workflow."
+      }
+    }
+  ],
+  "faq": [
+    {
+      "question": "What query pattern justified this Spotify Premium vs YouTube Music Premium comparison?",
+      "answer": "The editorial backlog records the recurring query pattern “Spotify Premium vs YouTube Music Premium” (query-pattern observed 2026-09-27). The named subscription comparison is an enduring consumer-service choice while benefits remain time-sensitive. This is a qualitative signal, not a claimed search-volume figure."
+    },
+    {
+      "question": "Does this comparison include live price, availability, ratings, or a discount claim?",
+      "answer": "No. Those values vary by plan, region, seller, edition, and time. The comparison links to primary documentation and, where relevant, an Amazon ES search route for the current listing."
+    },
+    {
+      "question": "How should a reader make the final choice?",
+      "answer": "Start with the documented workflow and constraints: Spotify Premium is described for Listeners who already value Spotify’s supported apps and music-service workflow; YouTube Music Premium is described for Listeners who want to evaluate YouTube Music’s supported membership and app workflow. Confirm current account, device, plan, regional, and edition details in the cited primary sources."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Spotify Premium plans help",
+      "publisher": "Spotify",
+      "url": "https://support.spotify.com/us/article/premium-plans/"
+    },
+    {
+      "label": "YouTube Music Premium help",
+      "publisher": "Google",
+      "url": "https://support.google.com/youtubemusic/answer/6313535"
+    }
+  ],
+  "resources": [],
+  "buyer_consensus": {
+    "status": "No buyer-review dataset is claimed; this is a primary-source editorial synthesis.",
+    "pros": [
+      "A music subscription service with help documentation for Premium plans and account-level service information.",
+      "A music subscription offering documented by Google through its YouTube Music help materials."
+    ],
+    "cons": [
+      "Confirm plan availability, account eligibility, family rules, audio features, and region-specific terms before subscribing.",
+      "Confirm plan availability, account eligibility, family rules, regional terms, and current membership benefits before subscribing."
+    ],
+    "verdict": "Choose the service whose supported applications and current membership benefits match the listening routine. Plans, family eligibility, regional availability, and specific features vary, so check the provider’s current terms before subscribing."
+  }
+}

@@ -1,0 +1,138 @@
+{
+  "catalog_origin": "transversal-v1",
+  "catalog_entry_id": "transversal-0012",
+  "content_model": "v2",
+  "slug": "duolingo-vs-babbel-for-language-learning",
+  "status": "reviewed",
+  "locale": "en",
+  "category": "software",
+  "transversal_family": "software and services",
+  "intent_type": "comparison",
+  "canonical_intent": "software:comparison:entity-babbel--entity-duolingo:audience=learners-choosing-an-app-based-language-learning-service",
+  "audience": "learners choosing an app-based language learning service",
+  "demand_evidence": {
+    "kind": "query-pattern",
+    "query": "Duolingo vs Babbel language learning",
+    "observed_at": "2026-09-27",
+    "note": "The product names form a clear alternatives query for a consumer education-service decision."
+  },
+  "publication_role": {
+    "kind": "demand-cluster",
+    "cluster": "software and services",
+    "note": "An explicit observed decision-query pattern contributes to a commercial comparison cluster without asserting a current merchant route."
+  },
+  "entity_provenance": [
+    {
+      "entity_id": "duolingo",
+      "entity_type": "online-service",
+      "source": {
+        "label": "Duolingo official site",
+        "publisher": "Duolingo",
+        "url": "https://www.duolingo.com/"
+      },
+      "facts_verified_at": "2026-09-27"
+    },
+    {
+      "entity_id": "babbel",
+      "entity_type": "online-service",
+      "source": {
+        "label": "Babbel official site",
+        "publisher": "Babbel",
+        "url": "https://www.babbel.com/"
+      },
+      "facts_verified_at": "2026-09-27"
+    }
+  ],
+  "title": "Duolingo vs Babbel for language learning",
+  "meta_description": "Duolingo vs Babbel for learners choosing an app-based language learning service: documented workflows, constraints, and a source-backed decision summary.",
+  "eyebrow": "software and services comparison",
+  "intro": "This source-backed comparison addresses the observed query pattern “Duolingo vs Babbel language learning” for learners choosing an app-based language learning service. It compares stable, documented workflows and constraints rather than volatile prices, inventory, ratings, or reviews.",
+  "verdict": "Choose the service whose documented lesson format and available language pair fit the learner’s routine. Confirm course availability, region, platform support, and current subscription terms before selecting a paid plan.",
+  "updated_at": "2026-09-28",
+  "reviewed_by": "StackSignal editorial research desk",
+  "criteria": [
+    {
+      "key": "model",
+      "label": "Option",
+      "description": "Named book, product, or service being evaluated."
+    },
+    {
+      "key": "workflow",
+      "label": "Primary workflow",
+      "description": "The documented job or workflow the option supports."
+    },
+    {
+      "key": "constraints",
+      "label": "Decision constraints",
+      "description": "Compatibility, ownership, or implementation limits to verify."
+    },
+    {
+      "key": "fit",
+      "label": "Best fit",
+      "description": "The stated use case for which the option is the stronger fit."
+    }
+  ],
+  "alternatives": [
+    {
+      "name": "Duolingo",
+      "url": "https://www.duolingo.com/",
+      "summary": "A language-learning service that presents guided lessons and supported learning products through its official site.",
+      "specs": {
+        "model": "Duolingo",
+        "workflow": "Complete guided language-learning lessons through supported Duolingo products.",
+        "constraints": "Confirm course availability, language pair, device support, subscription terms, and learning format before choosing it.",
+        "fit": "Learners looking for a guided app-based language practice routine."
+      }
+    },
+    {
+      "name": "Babbel",
+      "url": "https://www.babbel.com/",
+      "summary": "A language-learning service that presents lessons and learning plans through its official site and applications.",
+      "specs": {
+        "model": "Babbel",
+        "workflow": "Follow structured language lessons through Babbel’s supported learning products.",
+        "constraints": "Confirm course availability, language pair, device support, subscription terms, and lesson format before choosing it.",
+        "fit": "Learners who want structured language lessons and supported study plans."
+      }
+    }
+  ],
+  "faq": [
+    {
+      "question": "What query pattern justified this Duolingo vs Babbel comparison?",
+      "answer": "The editorial backlog records the recurring query pattern “Duolingo vs Babbel language learning” (query-pattern observed 2026-09-27). The product names form a clear alternatives query for a consumer education-service decision. This is a qualitative signal, not a claimed search-volume figure."
+    },
+    {
+      "question": "Does this comparison include live price, availability, ratings, or a discount claim?",
+      "answer": "No. Those values vary by plan, region, seller, edition, and time. The comparison links to primary documentation and, where relevant, an Amazon ES search route for the current listing."
+    },
+    {
+      "question": "How should a reader make the final choice?",
+      "answer": "Start with the documented workflow and constraints: Duolingo is described for Learners looking for a guided app-based language practice routine; Babbel is described for Learners who want structured language lessons and supported study plans. Confirm current account, device, plan, regional, and edition details in the cited primary sources."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Duolingo official site",
+      "publisher": "Duolingo",
+      "url": "https://www.duolingo.com/"
+    },
+    {
+      "label": "Babbel official site",
+      "publisher": "Babbel",
+      "url": "https://www.babbel.com/"
+    }
+  ],
+  "resources": [],
+  "buyer_consensus": {
+    "status": "No buyer-review dataset is claimed; this is a primary-source editorial synthesis.",
+    "pros": [
+      "A language-learning service that presents guided lessons and supported learning products through its official site.",
+      "A language-learning service that presents lessons and learning plans through its official site and applications."
+    ],
+    "cons": [
+      "Confirm course availability, language pair, device support, subscription terms, and learning format before choosing it.",
+      "Confirm course availability, language pair, device support, subscription terms, and lesson format before choosing it."
+    ],
+    "verdict": "Choose the service whose documented lesson format and available language pair fit the learner’s routine. Confirm course availability, region, platform support, and current subscription terms before selecting a paid plan."
+  }
+}

@@ -2,6 +2,13 @@
   "content_model": "v2",
   "category": "consumer-product",
   "intent_type": "entity",
+  "publication_role": {
+    "kind": "direct-monetization",
+    "merchant": "walmart",
+    "route_type": "affiliate-product",
+    "cluster": "consumer-product/tire-fitment",
+    "note": "The reviewed fit-check serves a current disclosed retailer route while the vehicle-fit decision remains grounded in the cited NHTSA guidance."
+  },
   "slug": "mastercraft-stratus-as-235-50r18-97v-fit-check",
   "status": "reviewed",
   "locale": "en",

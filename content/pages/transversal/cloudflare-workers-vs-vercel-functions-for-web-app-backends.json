@@ -1,0 +1,138 @@
+{
+  "catalog_origin": "transversal-v1",
+  "catalog_entry_id": "transversal-0002",
+  "content_model": "v2",
+  "slug": "cloudflare-workers-vs-vercel-functions-for-web-app-backends",
+  "status": "reviewed",
+  "locale": "en",
+  "category": "software",
+  "transversal_family": "software and APIs",
+  "intent_type": "comparison",
+  "canonical_intent": "software:comparison:entity-cloudflare-workers--entity-vercel-functions:audience=web-application-teams-selecting-a-serverless-backend-runtime",
+  "audience": "web application teams selecting a serverless backend runtime",
+  "demand_evidence": {
+    "kind": "query-pattern",
+    "query": "Cloudflare Workers vs Vercel Functions",
+    "observed_at": "2026-09-27",
+    "note": "The comparison is a recurring vendor and architecture choice rather than a price-led query."
+  },
+  "publication_role": {
+    "kind": "demand-cluster",
+    "cluster": "software and APIs",
+    "note": "An explicit observed decision-query pattern contributes to a commercial comparison cluster without asserting a current merchant route."
+  },
+  "entity_provenance": [
+    {
+      "entity_id": "cloudflare-workers",
+      "entity_type": "online-service",
+      "source": {
+        "label": "Cloudflare Workers runtime documentation",
+        "publisher": "Cloudflare",
+        "url": "https://developers.cloudflare.com/workers/reference/how-workers-works/"
+      },
+      "facts_verified_at": "2026-09-27"
+    },
+    {
+      "entity_id": "vercel-functions",
+      "entity_type": "online-service",
+      "source": {
+        "label": "Vercel Functions documentation",
+        "publisher": "Vercel",
+        "url": "https://vercel.com/docs/functions"
+      },
+      "facts_verified_at": "2026-09-27"
+    }
+  ],
+  "title": "Cloudflare Workers vs Vercel Functions for web app backends",
+  "meta_description": "Cloudflare Workers vs Vercel Functions: documented workflows, constraints, fit, and primary-source decision guidance for a considered choice.",
+  "eyebrow": "software and APIs comparison",
+  "intro": "This source-backed comparison addresses the observed query pattern “Cloudflare Workers vs Vercel Functions” for web application teams selecting a serverless backend runtime. It compares stable, documented workflows and constraints rather than volatile prices, inventory, ratings, or reviews.",
+  "verdict": "Choose Cloudflare Workers when the documented edge-runtime model and platform bindings fit the application. Choose Vercel Functions when the application is already organized around Vercel deployment workflows. Validate runtime compatibility, locations, limits, and data dependencies with the current provider documentation.",
+  "updated_at": "2026-09-28",
+  "reviewed_by": "StackSignal editorial research desk",
+  "criteria": [
+    {
+      "key": "model",
+      "label": "Option",
+      "description": "Named book, product, or service being evaluated."
+    },
+    {
+      "key": "workflow",
+      "label": "Primary workflow",
+      "description": "The documented job or workflow the option supports."
+    },
+    {
+      "key": "constraints",
+      "label": "Decision constraints",
+      "description": "Compatibility, ownership, or implementation limits to verify."
+    },
+    {
+      "key": "fit",
+      "label": "Best fit",
+      "description": "The stated use case for which the option is the stronger fit."
+    }
+  ],
+  "alternatives": [
+    {
+      "name": "Cloudflare Workers",
+      "url": "https://developers.cloudflare.com/workers/reference/how-workers-works/",
+      "summary": "A serverless runtime documented as executing request handlers across Cloudflare’s network.",
+      "specs": {
+        "model": "Cloudflare Workers",
+        "workflow": "Deploy request-handling code to the Workers runtime using the platform’s supported APIs.",
+        "constraints": "Confirm runtime compatibility, bindings, limits, observability, and data-location requirements for the workload.",
+        "fit": "Edge-oriented applications that benefit from Cloudflare platform integrations."
+      }
+    },
+    {
+      "name": "Vercel Functions",
+      "url": "https://vercel.com/docs/functions",
+      "summary": "A function deployment model documented within Vercel’s application delivery platform.",
+      "specs": {
+        "model": "Vercel Functions",
+        "workflow": "Deploy server-side functions alongside a Vercel application project.",
+        "constraints": "Confirm runtime, duration, region, framework integration, and current plan limits before relying on it.",
+        "fit": "Application teams already using Vercel’s project and deployment workflow."
+      }
+    }
+  ],
+  "faq": [
+    {
+      "question": "What query pattern justified this Cloudflare Workers vs Vercel Functions comparison?",
+      "answer": "The editorial backlog records the recurring query pattern “Cloudflare Workers vs Vercel Functions” (query-pattern observed 2026-09-27). The comparison is a recurring vendor and architecture choice rather than a price-led query. This is a qualitative signal, not a claimed search-volume figure."
+    },
+    {
+      "question": "Does this comparison include live price, availability, ratings, or a discount claim?",
+      "answer": "No. Those values vary by plan, region, seller, edition, and time. The comparison links to primary documentation and, where relevant, an Amazon ES search route for the current listing."
+    },
+    {
+      "question": "How should a reader make the final choice?",
+      "answer": "Start with the documented workflow and constraints: Cloudflare Workers is described for Edge-oriented applications that benefit from Cloudflare platform integrations; Vercel Functions is described for Application teams already using Vercel’s project and deployment workflow. Confirm current account, device, plan, regional, and edition details in the cited primary sources."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Cloudflare Workers runtime documentation",
+      "publisher": "Cloudflare",
+      "url": "https://developers.cloudflare.com/workers/reference/how-workers-works/"
+    },
+    {
+      "label": "Vercel Functions documentation",
+      "publisher": "Vercel",
+      "url": "https://vercel.com/docs/functions"
+    }
+  ],
+  "resources": [],
+  "buyer_consensus": {
+    "status": "No buyer-review dataset is claimed; this is a primary-source editorial synthesis.",
+    "pros": [
+      "A serverless runtime documented as executing request handlers across Cloudflare’s network.",
+      "A function deployment model documented within Vercel’s application delivery platform."
+    ],
+    "cons": [
+      "Confirm runtime compatibility, bindings, limits, observability, and data-location requirements for the workload.",
+      "Confirm runtime, duration, region, framework integration, and current plan limits before relying on it."
+    ],
+    "verdict": "Choose Cloudflare Workers when the documented edge-runtime model and platform bindings fit the application. Choose Vercel Functions when the application is already organized around Vercel deployment workflows. Validate runtime compatibility, locations, limits, and data dependencies with the current provider documentation."
+  }
+}

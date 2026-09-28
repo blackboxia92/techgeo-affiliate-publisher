@@ -1,0 +1,129 @@
+{
+  "catalog_origin": "open-library-books-v1",
+  "catalog_entry_id": "open-library:OL104852W",
+  "content_model": "v2",
+  "intent_type": "entity",
+  "slug": "introducci-n-a-la-literatura-norteamericana-by-jorge-luis-borges-book-details",
+  "status": "reviewed",
+  "locale": "en",
+  "category": "book",
+  "book_topic": "history",
+  "canonical_intent": "book:entity:book-ol104852w:topic=history",
+  "demand_evidence": {
+    "kind": "reader-signal-and-query-pattern",
+    "query": "best books for history",
+    "observed_at": "2026-09-28",
+    "note": "Open Library's monthly ratings dump records 5 reader-rating events for this work. That is a selection signal, not a quality score or search-volume claim."
+  },
+  "publication_role": {
+    "kind": "direct-monetization",
+    "merchant": "amazon.es",
+    "route_type": "affiliate-search",
+    "cluster": "books/history",
+    "note": "The work-level identity record has an Amazon ES search route for the exact title and author while its facts remain merchant-agnostic."
+  },
+  "entity_provenance": [
+    {
+      "entity_id": "book:OL104852W",
+      "entity_type": "bibliographic-work",
+      "work_id": "OL104852W",
+      "author_id": "OL18928A",
+      "source": {
+        "publisher": "Open Library",
+        "url": "https://openlibrary.org/works/OL104852W"
+      },
+      "facts_verified_at": "2026-09-28"
+    }
+  ],
+  "title": "Introducción a la literatura norteamericana by Jorge Luis Borges: work-level book details",
+  "meta_description": "Work-level bibliographic details for Introducción a la literatura norteamericana by Jorge Luis Borges: Open Library ID, author, subjects, and edition-selection guidance w",
+  "eyebrow": "Books: history",
+  "intro": "Direct answer: Introducción a la literatura norteamericana is an Open Library work-level record attributed to Jorge Luis Borges, with subjects including History and criticism; American literature; American literature -- History and criticism; Historia y crítica; Literatura estadounidense. This page identifies the work; it does not endorse a specific edition.",
+  "verdict": "Use this record to identify Introducción a la literatura norteamericana before choosing an edition. Confirm the publisher, ISBN, translation, format, accessibility, and current availability on the exact edition page or retailer listing; none of those variable facts is asserted here.",
+  "updated_at": "2026-09-28",
+  "reviewed_by": "StackSignal bibliographic research desk",
+  "criteria": [
+    {
+      "key": "work_id",
+      "label": "Work identity",
+      "description": "Stable Open Library work identifier rather than an ISBN-specific product listing."
+    },
+    {
+      "key": "author",
+      "label": "Author",
+      "description": "Author identity linked to the corresponding Open Library author record."
+    },
+    {
+      "key": "subjects",
+      "label": "Recorded subjects",
+      "description": "Subjects supplied by the work-level Open Library record."
+    },
+    {
+      "key": "record_scope",
+      "label": "Record scope",
+      "description": "Work-level identity record; ISBN, publisher, language, and format are edition-specific."
+    },
+    {
+      "key": "selection_signal",
+      "label": "Discovery signal",
+      "description": "Reader-rating event count used only to select a bounded discovery corpus."
+    }
+  ],
+  "alternatives": [
+    {
+      "name": "Introducción a la literatura norteamericana",
+      "url": "https://openlibrary.org/works/OL104852W",
+      "summary": "A work-level Open Library record attributed to Jorge Luis Borges and selected from a reader-signalled history discovery group.",
+      "specs": {
+        "work_id": "OL104852W",
+        "author": "Jorge Luis Borges",
+        "subjects": "History and criticism; American literature; American literature -- History and criticism; Historia y crítica; Literatura estadounidense",
+        "record_scope": "Work-level bibliographic identity; edition-specific details are intentionally not collapsed into this record.",
+        "selection_signal": "5 Open Library reader-rating events in the monthly dump; not a quality score."
+      }
+    }
+  ],
+  "faq": [
+    {
+      "question": "What does this page identify about Introducción a la literatura norteamericana?",
+      "answer": "It identifies the Open Library work record OL104852W, its linked author record, recorded subjects, and work-level first-publication context. It deliberately does not collapse distinct ISBN editions into one offer."
+    },
+    {
+      "question": "Why is Introducción a la literatura norteamericana included under history?",
+      "answer": "Open Library records subjects including History and criticism; American literature; American literature -- History and criticism; Historia y crítica; Literatura estadounidense. The record was selected with an observable reader-rating count, while the stated query is a book-discovery pattern rather than a claimed search-volume measurement."
+    },
+    {
+      "question": "Does this page claim a current price, rating, stock status, publisher, or ISBN?",
+      "answer": "No. Those facts are edition- and market-specific. Check the cited work record and the exact current edition or retailer page before buying or citing a particular format."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Open Library work record",
+      "publisher": "Open Library",
+      "url": "https://openlibrary.org/works/OL104852W"
+    },
+    {
+      "label": "Open Library author record",
+      "publisher": "Open Library",
+      "url": "https://openlibrary.org/authors/OL18928A"
+    }
+  ],
+  "resources": [
+    {
+      "title": "Introducción a la literatura norteamericana",
+      "target_url": "https://www.amazon.es/s?k=Introducci%C3%B3n+a+la+literatura+norteamericana+Jorge+Luis+Borges&tag=blackboxia92-21",
+      "note": "Amazon ES is an optional route to locate a current exact edition. Confirm ISBN, language, publisher, format, price, stock, and seller before purchase."
+    }
+  ],
+  "buyer_consensus": {
+    "status": "No buyer-review or rating claim is made. Open Library rating events are used only as a source-selection signal.",
+    "pros": [
+      "Work ID OL104852W with recorded subjects and an author record."
+    ],
+    "cons": [
+      "Publisher, ISBN, format, translation, price, stock, and suitability remain edition-specific checks."
+    ],
+    "verdict": "A bibliographic identity record, not a product recommendation."
+  }
+}

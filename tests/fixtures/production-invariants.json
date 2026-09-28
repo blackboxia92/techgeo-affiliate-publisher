@@ -1,14 +1,7 @@
 {
-  "reviewed_guides": 44,
   "commercial_pages": 3957,
   "legacy_indexable_pages": 4000,
   "legacy_affiliate_url_count": 8358,
   "legacy_indexable_url_sha256": "dd5029a903a2fc09b992485866e1da7acd64a24210fd08018c6a44d58acfc2aa",
-  "legacy_affiliate_url_sha256": "e35a85623f732fce1c855bf71979d6cc15e0a8f6421e390c751ce4ac593a24dd",
-  "indexable_pages": 4001,
-  "sitemap_urls": 4007,
-  "sitemap_hubs": 6,
-  "affiliate_url_count": 8359,
-  "indexable_url_sha256": "015b1986ea1d55684fb49d8a3cf55d817b88b1e81519f17826016e099021ce22",
-  "affiliate_url_sha256": "5ba6518ca8bd972de6da89b9c3bb2f9974dc1da95702011619dde6d46f9e59e3"
+  "legacy_affiliate_url_sha256": "e35a85623f732fce1c855bf71979d6cc15e0a8f6421e390c751ce4ac593a24dd"
 }

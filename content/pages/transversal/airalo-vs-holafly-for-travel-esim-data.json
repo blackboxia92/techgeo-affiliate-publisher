@@ -1,0 +1,138 @@
+{
+  "catalog_origin": "transversal-v1",
+  "catalog_entry_id": "transversal-0008",
+  "content_model": "v2",
+  "slug": "airalo-vs-holafly-for-travel-esim-data",
+  "status": "reviewed",
+  "locale": "en",
+  "category": "software",
+  "transversal_family": "travel and consumer services",
+  "intent_type": "comparison",
+  "canonical_intent": "software:comparison:entity-airalo--entity-holafly:audience=travelers-comparing-a-destination-specific-esim-data-service",
+  "audience": "travelers comparing a destination-specific eSIM data service",
+  "demand_evidence": {
+    "kind": "query-pattern",
+    "query": "Airalo vs Holafly travel eSIM",
+    "observed_at": "2026-09-27",
+    "note": "The named providers and travel use case indicate a time-sensitive but merchant-agnostic service choice."
+  },
+  "publication_role": {
+    "kind": "demand-cluster",
+    "cluster": "travel and consumer services",
+    "note": "An explicit observed decision-query pattern contributes to a commercial comparison cluster without asserting a current merchant route."
+  },
+  "entity_provenance": [
+    {
+      "entity_id": "airalo",
+      "entity_type": "consumer-service",
+      "source": {
+        "label": "Airalo help center",
+        "publisher": "Airalo",
+        "url": "https://www.airalo.com/help"
+      },
+      "facts_verified_at": "2026-09-27"
+    },
+    {
+      "entity_id": "holafly",
+      "entity_type": "consumer-service",
+      "source": {
+        "label": "Holafly eSIM FAQ",
+        "publisher": "Holafly",
+        "url": "https://esim.holafly.com/faq/"
+      },
+      "facts_verified_at": "2026-09-27"
+    }
+  ],
+  "title": "Airalo vs Holafly for travel eSIM data",
+  "meta_description": "Airalo eSIM vs Holafly eSIM for travelers comparing a destination-specific eSIM data service: documented workflows, constraints, and a source-backed decision summary.",
+  "eyebrow": "travel and consumer services comparison",
+  "intro": "This source-backed comparison addresses the observed query pattern “Airalo vs Holafly travel eSIM” for travelers comparing a destination-specific eSIM data service. It compares stable, documented workflows and constraints rather than volatile prices, inventory, ratings, or reviews.",
+  "verdict": "Choose the service whose documented destination package, device compatibility, activation timing, and hotspot conditions match the trip. Neither service should be selected from a static price or data claim: verify the current destination-specific terms in the official help materials before purchase.",
+  "updated_at": "2026-09-28",
+  "reviewed_by": "StackSignal editorial research desk",
+  "criteria": [
+    {
+      "key": "model",
+      "label": "Option",
+      "description": "Named book, product, or service being evaluated."
+    },
+    {
+      "key": "workflow",
+      "label": "Primary workflow",
+      "description": "The documented job or workflow the option supports."
+    },
+    {
+      "key": "constraints",
+      "label": "Decision constraints",
+      "description": "Compatibility, ownership, or implementation limits to verify."
+    },
+    {
+      "key": "fit",
+      "label": "Best fit",
+      "description": "The stated use case for which the option is the stronger fit."
+    }
+  ],
+  "alternatives": [
+    {
+      "name": "Airalo eSIM",
+      "url": "https://www.airalo.com/help",
+      "summary": "An eSIM travel-data service with a public help center covering installation, activation, top-ups, and service use.",
+      "specs": {
+        "model": "Airalo eSIM",
+        "workflow": "Purchase, install, activate, and manage a travel-data eSIM through the provider’s supported process.",
+        "constraints": "Confirm device compatibility, destination coverage, activation timing, data allowance, and tethering terms for the specific plan.",
+        "fit": "Travelers who want an eSIM data option and are prepared to check a destination-specific package."
+      }
+    },
+    {
+      "name": "Holafly eSIM",
+      "url": "https://esim.holafly.com/faq/",
+      "summary": "An eSIM travel-data service whose FAQ documents installation, compatibility, destinations, and plan use.",
+      "specs": {
+        "model": "Holafly eSIM",
+        "workflow": "Purchase and install a destination-specific eSIM following the provider’s activation guidance.",
+        "constraints": "Confirm device compatibility, supported destination, plan conditions, activation timing, and hotspot policy for the chosen package.",
+        "fit": "Travelers comparing a destination-specific eSIM package with clear pre-trip setup steps."
+      }
+    }
+  ],
+  "faq": [
+    {
+      "question": "What query pattern justified this Airalo eSIM vs Holafly eSIM comparison?",
+      "answer": "The editorial backlog records the recurring query pattern “Airalo vs Holafly travel eSIM” (query-pattern observed 2026-09-27). The named providers and travel use case indicate a time-sensitive but merchant-agnostic service choice. This is a qualitative signal, not a claimed search-volume figure."
+    },
+    {
+      "question": "Does this comparison include live price, availability, ratings, or a discount claim?",
+      "answer": "No. Those values vary by plan, region, seller, edition, and time. The comparison links to primary documentation and, where relevant, an Amazon ES search route for the current listing."
+    },
+    {
+      "question": "How should a reader make the final choice?",
+      "answer": "Start with the documented workflow and constraints: Airalo eSIM is described for Travelers who want an eSIM data option and are prepared to check a destination-specific package; Holafly eSIM is described for Travelers comparing a destination-specific eSIM package with clear pre-trip setup steps. Confirm current account, device, plan, regional, and edition details in the cited primary sources."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Airalo help center",
+      "publisher": "Airalo",
+      "url": "https://www.airalo.com/help"
+    },
+    {
+      "label": "Holafly eSIM FAQ",
+      "publisher": "Holafly",
+      "url": "https://esim.holafly.com/faq/"
+    }
+  ],
+  "resources": [],
+  "buyer_consensus": {
+    "status": "No buyer-review dataset is claimed; this is a primary-source editorial synthesis.",
+    "pros": [
+      "An eSIM travel-data service with a public help center covering installation, activation, top-ups, and service use.",
+      "An eSIM travel-data service whose FAQ documents installation, compatibility, destinations, and plan use."
+    ],
+    "cons": [
+      "Confirm device compatibility, destination coverage, activation timing, data allowance, and tethering terms for the specific plan.",
+      "Confirm device compatibility, supported destination, plan conditions, activation timing, and hotspot policy for the chosen package."
+    ],
+    "verdict": "Choose the service whose documented destination package, device compatibility, activation timing, and hotspot conditions match the trip. Neither service should be selected from a static price or data claim: verify the current destination-specific terms in the official help materials before purchase."
+  }
+}

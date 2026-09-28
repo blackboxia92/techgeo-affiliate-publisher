@@ -1,0 +1,138 @@
+{
+  "catalog_origin": "transversal-v1",
+  "catalog_entry_id": "transversal-0004",
+  "content_model": "v2",
+  "slug": "todoist-vs-ticktick-for-personal-task-management",
+  "status": "reviewed",
+  "locale": "en",
+  "category": "software",
+  "transversal_family": "software and services",
+  "intent_type": "comparison",
+  "canonical_intent": "software:comparison:entity-ticktick--entity-todoist:audience=individuals-choosing-a-personal-task-management-workflow",
+  "audience": "individuals choosing a personal task-management workflow",
+  "demand_evidence": {
+    "kind": "query-pattern",
+    "query": "Todoist vs TickTick",
+    "observed_at": "2026-09-27",
+    "note": "The named comparison is a durable software-selection query for personal productivity tools."
+  },
+  "publication_role": {
+    "kind": "demand-cluster",
+    "cluster": "software and services",
+    "note": "An explicit observed decision-query pattern contributes to a commercial comparison cluster without asserting a current merchant route."
+  },
+  "entity_provenance": [
+    {
+      "entity_id": "todoist",
+      "entity_type": "online-service",
+      "source": {
+        "label": "Todoist getting started guide",
+        "publisher": "Doist",
+        "url": "https://www.todoist.com/help/articles/introduction-to-todoist-qsSIIaL0M"
+      },
+      "facts_verified_at": "2026-09-27"
+    },
+    {
+      "entity_id": "ticktick",
+      "entity_type": "online-service",
+      "source": {
+        "label": "TickTick product overview",
+        "publisher": "TickTick",
+        "url": "https://ticktick.com/about"
+      },
+      "facts_verified_at": "2026-09-27"
+    }
+  ],
+  "title": "Todoist vs TickTick for personal task management",
+  "meta_description": "Todoist vs TickTick for individuals choosing a personal task-management workflow: documented workflows, constraints, and a source-backed decision summary.",
+  "eyebrow": "software and services comparison",
+  "intro": "This source-backed comparison addresses the observed query pattern “Todoist vs TickTick” for individuals choosing a personal task-management workflow. It compares stable, documented workflows and constraints rather than volatile prices, inventory, ratings, or reviews.",
+  "verdict": "Choose Todoist when project, date, filter, and recurring-task organization is the central workflow. Choose TickTick when its documented task, calendar, habit, and focus combination better fits the routine. Confirm current collaboration, sync, and plan features in each provider’s materials.",
+  "updated_at": "2026-09-28",
+  "reviewed_by": "StackSignal editorial research desk",
+  "criteria": [
+    {
+      "key": "model",
+      "label": "Option",
+      "description": "Named book, product, or service being evaluated."
+    },
+    {
+      "key": "workflow",
+      "label": "Primary workflow",
+      "description": "The documented job or workflow the option supports."
+    },
+    {
+      "key": "constraints",
+      "label": "Decision constraints",
+      "description": "Compatibility, ownership, or implementation limits to verify."
+    },
+    {
+      "key": "fit",
+      "label": "Best fit",
+      "description": "The stated use case for which the option is the stronger fit."
+    }
+  ],
+  "alternatives": [
+    {
+      "name": "Todoist",
+      "url": "https://www.todoist.com/help/articles/introduction-to-todoist-qsSIIaL0M",
+      "summary": "A task manager documented around projects, tasks, due dates, filters, and cross-platform organization.",
+      "specs": {
+        "model": "Todoist",
+        "workflow": "Capture and organize tasks into projects, dates, labels, filters, and recurring schedules.",
+        "constraints": "Confirm collaboration, calendar, automation, and platform requirements for the intended workflow.",
+        "fit": "People who want a structured task list and recurring task workflow."
+      }
+    },
+    {
+      "name": "TickTick",
+      "url": "https://ticktick.com/about",
+      "summary": "A task-management service that presents task, calendar, habit, and focus-oriented tools in its product overview.",
+      "specs": {
+        "model": "TickTick",
+        "workflow": "Manage tasks with calendar, reminder, habit, and focus features in supported clients.",
+        "constraints": "Confirm collaboration, platform sync, calendar behavior, and current plan features before choosing it.",
+        "fit": "People who want tasks and personal planning tools in one service."
+      }
+    }
+  ],
+  "faq": [
+    {
+      "question": "What query pattern justified this Todoist vs TickTick comparison?",
+      "answer": "The editorial backlog records the recurring query pattern “Todoist vs TickTick” (query-pattern observed 2026-09-27). The named comparison is a durable software-selection query for personal productivity tools. This is a qualitative signal, not a claimed search-volume figure."
+    },
+    {
+      "question": "Does this comparison include live price, availability, ratings, or a discount claim?",
+      "answer": "No. Those values vary by plan, region, seller, edition, and time. The comparison links to primary documentation and, where relevant, an Amazon ES search route for the current listing."
+    },
+    {
+      "question": "How should a reader make the final choice?",
+      "answer": "Start with the documented workflow and constraints: Todoist is described for People who want a structured task list and recurring task workflow; TickTick is described for People who want tasks and personal planning tools in one service. Confirm current account, device, plan, regional, and edition details in the cited primary sources."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Todoist getting started guide",
+      "publisher": "Doist",
+      "url": "https://www.todoist.com/help/articles/introduction-to-todoist-qsSIIaL0M"
+    },
+    {
+      "label": "TickTick product overview",
+      "publisher": "TickTick",
+      "url": "https://ticktick.com/about"
+    }
+  ],
+  "resources": [],
+  "buyer_consensus": {
+    "status": "No buyer-review dataset is claimed; this is a primary-source editorial synthesis.",
+    "pros": [
+      "A task manager documented around projects, tasks, due dates, filters, and cross-platform organization.",
+      "A task-management service that presents task, calendar, habit, and focus-oriented tools in its product overview."
+    ],
+    "cons": [
+      "Confirm collaboration, calendar, automation, and platform requirements for the intended workflow.",
+      "Confirm collaboration, platform sync, calendar behavior, and current plan features before choosing it."
+    ],
+    "verdict": "Choose Todoist when project, date, filter, and recurring-task organization is the central workflow. Choose TickTick when its documented task, calendar, habit, and focus combination better fits the routine. Confirm current collaboration, sync, and plan features in each provider’s materials."
+  }
+}

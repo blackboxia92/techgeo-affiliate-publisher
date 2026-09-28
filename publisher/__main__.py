@@ -10,9 +10,11 @@ from .builder import build_site, expand_catalog
 from .consumer_catalog import generate_consumer_catalog
 from .indexnow import notify_indexnow
 from .ingest import compare_normalized_snapshots, ingest_awin_enhanced, ingest_google_books, ingest_openfoodfacts
-from .mass_catalog import generate_mass_catalog
-from .weekly import generate_weekly_pages
 from .intent_factory import generate_intent_batch
+from .mass_catalog import generate_mass_catalog
+from .openlibrary_books import generate_openlibrary_books
+from .transversal import generate_transversal_catalog
+from .weekly import generate_weekly_pages
 
 
 def parser() -> argparse.ArgumentParser:
@@ -53,6 +55,24 @@ def parser() -> argparse.ArgumentParser:
 
     intents = commands.add_parser("v3-intents", help="Generate the bounded source-backed V3 intent batch")
     intents.add_argument("--output", type=Path, default=Path("content/pages"))
+
+    transversal = commands.add_parser(
+        "transversal",
+        help="Generate reviewed cross-domain pages from explicit entities, primary sources, and observed query patterns",
+    )
+    transversal.add_argument("--source", type=Path, default=Path("content/transversal_source.json"))
+    transversal.add_argument("--catalog", type=Path, default=Path("content/transversal_catalog.json"))
+    transversal.add_argument("--output", type=Path, default=Path("content/pages"))
+
+    books = commands.add_parser("open-library-books", help="Generate work-level bibliographic pages from authorized Open Library dumps")
+    books.add_argument("--works", type=Path, required=True)
+    books.add_argument("--authors", type=Path, required=True)
+    books.add_argument("--ratings", type=Path, required=True)
+    books.add_argument("--catalog", type=Path, default=Path("content/open_library_books_catalog.json"))
+    books.add_argument("--output", type=Path, default=Path("content/pages"))
+    books.add_argument("--total", type=int, default=4300)
+    books.add_argument("--minimum-ratings", type=int, default=3)
+
 
     notify = commands.add_parser("notify", help="Submit changed reviewed URLs to IndexNow")
     notify.add_argument("--state", type=Path, default=Path(os.getenv("DATABASE_PATH", "data/state.sqlite3")))
@@ -131,6 +151,26 @@ def main() -> int:
         return 0
     if args.command == "v3-intents":
         print(json.dumps({"generated": generate_intent_batch(pages_root=args.output), "output": str(args.output / "v3")}, indent=2))
+        return 0
+    if args.command == "transversal":
+        report = generate_transversal_catalog(
+            source_path=args.source,
+            pages_root=args.output,
+            catalog_path=args.catalog,
+        )
+        print(json.dumps(report.__dict__ | {"catalog": str(report.catalog), "output": str(report.output)}, indent=2))
+        return 0
+    if args.command == "open-library-books":
+        report = generate_openlibrary_books(
+            works_dump=args.works,
+            authors_dump=args.authors,
+            ratings_dump=args.ratings,
+            pages_root=args.output,
+            catalog_path=args.catalog,
+            total=args.total,
+            minimum_ratings=args.minimum_ratings,
+        )
+        print(json.dumps(report.__dict__ | {"catalog": str(report.catalog), "output": str(report.output)}, indent=2))
         return 0
     if args.command == "build":
         report = build_site(

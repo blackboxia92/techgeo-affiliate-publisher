@@ -8,6 +8,10 @@ from .schema import Page
 from .v2 import adapt_legacy_page, category_for_page
 
 
+def _topic_slug(value: str) -> str:
+    return "".join(character if character.isalnum() else "-" for character in value.casefold()).strip("-")
+
+
 @dataclass(frozen=True)
 class CatalogMetrics:
     """Counts with explicit units; no presentation code owns its own totals."""
@@ -39,6 +43,22 @@ def intentional_hub_paths(rows: Iterable[tuple[Page, Mapping[str, object]]]) -> 
         paths.append("/topics/ci-cd/")
     topics = sorted({str(raw.get("topic")) for _, raw in indexable if raw.get("topic")})
     paths.extend(f"/topics/{topic}/" for topic in topics)
+    transversal_families = {
+        str(raw["transversal_family"])
+        for page, raw in indexable
+        if raw.get("catalog_origin") == "transversal-v1" and raw.get("transversal_family")
+    }
+    paths.extend(f"/topics/{_topic_slug(family)}/" for family in sorted(transversal_families))
+    book_topics: dict[str, int] = {}
+    for page, raw in indexable:
+        topic = raw.get("book_topic")
+        if page.catalog_origin == "open-library-books-v1" and isinstance(topic, str) and topic:
+            book_topics[topic] = book_topics.get(topic, 0) + 1
+    if book_topics:
+        paths.append("/books/")
+    # A topic becomes a public hub only once it can support useful discovery;
+    # a singleton bibliographic record is linked through /guides/, not a hub.
+    paths.extend(f"/books/{topic}/" for topic, count in sorted(book_topics.items()) if count >= 12)
     commercial = [page for page, _ in indexable if page.is_commercial]
     if commercial:
         paths.append("/catalog/")

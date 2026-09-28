@@ -1,0 +1,129 @@
+{
+  "catalog_origin": "open-library-books-v1",
+  "catalog_entry_id": "open-library:OL2713289W",
+  "content_model": "v2",
+  "intent_type": "entity",
+  "slug": "scaphandre-et-le-papillon-by-jean-dominique-bauby-book-details",
+  "status": "reviewed",
+  "locale": "en",
+  "category": "book",
+  "book_topic": "health",
+  "canonical_intent": "book:entity:book-ol2713289w:topic=health",
+  "demand_evidence": {
+    "kind": "reader-signal-and-query-pattern",
+    "query": "best books for health",
+    "observed_at": "2026-09-28",
+    "note": "Open Library's monthly ratings dump records 6 reader-rating events for this work. That is a selection signal, not a quality score or search-volume claim."
+  },
+  "publication_role": {
+    "kind": "direct-monetization",
+    "merchant": "amazon.es",
+    "route_type": "affiliate-search",
+    "cluster": "books/health",
+    "note": "The work-level identity record has an Amazon ES search route for the exact title and author while its facts remain merchant-agnostic."
+  },
+  "entity_provenance": [
+    {
+      "entity_id": "book:OL2713289W",
+      "entity_type": "bibliographic-work",
+      "work_id": "OL2713289W",
+      "author_id": "OL396890A",
+      "source": {
+        "publisher": "Open Library",
+        "url": "https://openlibrary.org/works/OL2713289W"
+      },
+      "facts_verified_at": "2026-09-28"
+    }
+  ],
+  "title": "Scaphandre et le papillon by Jean-Dominique Bauby: work-level book details",
+  "meta_description": "Work-level bibliographic details for Scaphandre et le papillon by Jean-Dominique Bauby: Open Library ID, author, subjects, and edition-selection guidance without price or",
+  "eyebrow": "Books: health",
+  "intro": "Direct answer: Scaphandre et le papillon is an Open Library work-level record attributed to Jean-Dominique Bauby, with subjects including Biography; Cerebrovascular Accident; Cerebrovascular disease; Health; Paralytics. This page identifies the work; it does not endorse a specific edition.",
+  "verdict": "Use this record to identify Scaphandre et le papillon before choosing an edition. Confirm the publisher, ISBN, translation, format, accessibility, and current availability on the exact edition page or retailer listing; none of those variable facts is asserted here.",
+  "updated_at": "2026-09-28",
+  "reviewed_by": "StackSignal bibliographic research desk",
+  "criteria": [
+    {
+      "key": "work_id",
+      "label": "Work identity",
+      "description": "Stable Open Library work identifier rather than an ISBN-specific product listing."
+    },
+    {
+      "key": "author",
+      "label": "Author",
+      "description": "Author identity linked to the corresponding Open Library author record."
+    },
+    {
+      "key": "subjects",
+      "label": "Recorded subjects",
+      "description": "Subjects supplied by the work-level Open Library record."
+    },
+    {
+      "key": "record_scope",
+      "label": "Record scope",
+      "description": "Work-level identity record; ISBN, publisher, language, and format are edition-specific."
+    },
+    {
+      "key": "selection_signal",
+      "label": "Discovery signal",
+      "description": "Reader-rating event count used only to select a bounded discovery corpus."
+    }
+  ],
+  "alternatives": [
+    {
+      "name": "Scaphandre et le papillon",
+      "url": "https://openlibrary.org/works/OL2713289W",
+      "summary": "A work-level Open Library record attributed to Jean-Dominique Bauby and selected from a reader-signalled health discovery group.",
+      "specs": {
+        "work_id": "OL2713289W",
+        "author": "Jean-Dominique Bauby",
+        "subjects": "Biography; Cerebrovascular Accident; Cerebrovascular disease; Health; Paralytics",
+        "record_scope": "Work-level bibliographic identity; edition-specific details are intentionally not collapsed into this record.",
+        "selection_signal": "6 Open Library reader-rating events in the monthly dump; not a quality score."
+      }
+    }
+  ],
+  "faq": [
+    {
+      "question": "What does this page identify about Scaphandre et le papillon?",
+      "answer": "It identifies the Open Library work record OL2713289W, its linked author record, recorded subjects, and work-level first-publication context. It deliberately does not collapse distinct ISBN editions into one offer."
+    },
+    {
+      "question": "Why is Scaphandre et le papillon included under health?",
+      "answer": "Open Library records subjects including Biography; Cerebrovascular Accident; Cerebrovascular disease; Health; Paralytics. The record was selected with an observable reader-rating count, while the stated query is a book-discovery pattern rather than a claimed search-volume measurement."
+    },
+    {
+      "question": "Does this page claim a current price, rating, stock status, publisher, or ISBN?",
+      "answer": "No. Those facts are edition- and market-specific. Check the cited work record and the exact current edition or retailer page before buying or citing a particular format."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Open Library work record",
+      "publisher": "Open Library",
+      "url": "https://openlibrary.org/works/OL2713289W"
+    },
+    {
+      "label": "Open Library author record",
+      "publisher": "Open Library",
+      "url": "https://openlibrary.org/authors/OL396890A"
+    }
+  ],
+  "resources": [
+    {
+      "title": "Scaphandre et le papillon",
+      "target_url": "https://www.amazon.es/s?k=Scaphandre+et+le+papillon+Jean-Dominique+Bauby&tag=blackboxia92-21",
+      "note": "Amazon ES is an optional route to locate a current exact edition. Confirm ISBN, language, publisher, format, price, stock, and seller before purchase."
+    }
+  ],
+  "buyer_consensus": {
+    "status": "No buyer-review or rating claim is made. Open Library rating events are used only as a source-selection signal.",
+    "pros": [
+      "Work ID OL2713289W with recorded subjects and an author record."
+    ],
+    "cons": [
+      "Publisher, ISBN, format, translation, price, stock, and suitability remain edition-specific checks."
+    ],
+    "verdict": "A bibliographic identity record, not a product recommendation."
+  }
+}

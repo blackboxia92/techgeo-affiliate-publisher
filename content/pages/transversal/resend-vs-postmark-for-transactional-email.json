@@ -1,0 +1,138 @@
+{
+  "catalog_origin": "transversal-v1",
+  "catalog_entry_id": "transversal-0001",
+  "content_model": "v2",
+  "slug": "resend-vs-postmark-for-transactional-email",
+  "status": "reviewed",
+  "locale": "en",
+  "category": "software",
+  "transversal_family": "software and APIs",
+  "intent_type": "comparison",
+  "canonical_intent": "software:comparison:entity-postmark--entity-resend:audience=application-teams-choosing-a-transactional-email-api",
+  "audience": "application teams choosing a transactional email API",
+  "demand_evidence": {
+    "kind": "query-pattern",
+    "query": "Resend vs Postmark transactional email API",
+    "observed_at": "2026-09-27",
+    "note": "The exact vendor-versus-vendor formulation maps to a purchase-adjacent developer-tool decision."
+  },
+  "publication_role": {
+    "kind": "demand-cluster",
+    "cluster": "software and APIs",
+    "note": "An explicit observed decision-query pattern contributes to a commercial comparison cluster without asserting a current merchant route."
+  },
+  "entity_provenance": [
+    {
+      "entity_id": "resend",
+      "entity_type": "online-service",
+      "source": {
+        "label": "Resend email API documentation",
+        "publisher": "Resend",
+        "url": "https://resend.com/docs/send-with-nodejs"
+      },
+      "facts_verified_at": "2026-09-27"
+    },
+    {
+      "entity_id": "postmark",
+      "entity_type": "online-service",
+      "source": {
+        "label": "Postmark API overview",
+        "publisher": "Postmark",
+        "url": "https://postmarkapp.com/developer/api/overview"
+      },
+      "facts_verified_at": "2026-09-27"
+    }
+  ],
+  "title": "Resend vs Postmark for transactional email: documented workflow comparison",
+  "meta_description": "Resend vs Postmark for application teams choosing a transactional email API: documented workflows, constraints, and a source-backed decision summary.",
+  "eyebrow": "software and APIs comparison",
+  "intro": "This source-backed comparison addresses the observed query pattern “Resend vs Postmark transactional email API” for application teams choosing a transactional email API. It compares stable, documented workflows and constraints rather than volatile prices, inventory, ratings, or reviews.",
+  "verdict": "Choose Resend when an API-first application-email workflow is the primary fit. Choose Postmark when server and message-stream organization better matches the delivery operation. In either case, validate current sending, domain, compliance, and account requirements in the cited documentation before launch.",
+  "updated_at": "2026-09-28",
+  "reviewed_by": "StackSignal editorial research desk",
+  "criteria": [
+    {
+      "key": "model",
+      "label": "Option",
+      "description": "Named book, product, or service being evaluated."
+    },
+    {
+      "key": "workflow",
+      "label": "Primary workflow",
+      "description": "The documented job or workflow the option supports."
+    },
+    {
+      "key": "constraints",
+      "label": "Decision constraints",
+      "description": "Compatibility, ownership, or implementation limits to verify."
+    },
+    {
+      "key": "fit",
+      "label": "Best fit",
+      "description": "The stated use case for which the option is the stronger fit."
+    }
+  ],
+  "alternatives": [
+    {
+      "name": "Resend",
+      "url": "https://resend.com/docs/send-with-nodejs",
+      "summary": "An email-delivery service whose public documentation centers on sending transactional email through its API.",
+      "specs": {
+        "model": "Resend",
+        "workflow": "Transactional email sent through a developer API and SDK workflow.",
+        "constraints": "Confirm domain verification, sending limits, regional needs, and the current plan before production use.",
+        "fit": "Teams that want an API-first workflow for application email."
+      }
+    },
+    {
+      "name": "Postmark",
+      "url": "https://postmarkapp.com/developer/api/overview",
+      "summary": "A transactional-email service documented around server-based delivery, templates, and API endpoints.",
+      "specs": {
+        "model": "Postmark",
+        "workflow": "Transactional email sent through server APIs and message streams.",
+        "constraints": "Confirm sender signatures, stream design, retention expectations, and current account limits before adoption.",
+        "fit": "Teams that separate transactional message streams and delivery operations."
+      }
+    }
+  ],
+  "faq": [
+    {
+      "question": "What query pattern justified this Resend vs Postmark comparison?",
+      "answer": "The editorial backlog records the recurring query pattern “Resend vs Postmark transactional email API” (query-pattern observed 2026-09-27). The exact vendor-versus-vendor formulation maps to a purchase-adjacent developer-tool decision. This is a qualitative signal, not a claimed search-volume figure."
+    },
+    {
+      "question": "Does this comparison include live price, availability, ratings, or a discount claim?",
+      "answer": "No. Those values vary by plan, region, seller, edition, and time. The comparison links to primary documentation and, where relevant, an Amazon ES search route for the current listing."
+    },
+    {
+      "question": "How should a reader make the final choice?",
+      "answer": "Start with the documented workflow and constraints: Resend is described for Teams that want an API-first workflow for application email; Postmark is described for Teams that separate transactional message streams and delivery operations. Confirm current account, device, plan, regional, and edition details in the cited primary sources."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Resend email API documentation",
+      "publisher": "Resend",
+      "url": "https://resend.com/docs/send-with-nodejs"
+    },
+    {
+      "label": "Postmark API overview",
+      "publisher": "Postmark",
+      "url": "https://postmarkapp.com/developer/api/overview"
+    }
+  ],
+  "resources": [],
+  "buyer_consensus": {
+    "status": "No buyer-review dataset is claimed; this is a primary-source editorial synthesis.",
+    "pros": [
+      "An email-delivery service whose public documentation centers on sending transactional email through its API.",
+      "A transactional-email service documented around server-based delivery, templates, and API endpoints."
+    ],
+    "cons": [
+      "Confirm domain verification, sending limits, regional needs, and the current plan before production use.",
+      "Confirm sender signatures, stream design, retention expectations, and current account limits before adoption."
+    ],
+    "verdict": "Choose Resend when an API-first application-email workflow is the primary fit. Choose Postmark when server and message-stream organization better matches the delivery operation. In either case, validate current sending, domain, compliance, and account requirements in the cited documentation before launch."
+  }
+}

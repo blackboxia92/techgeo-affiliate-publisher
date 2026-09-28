@@ -83,6 +83,23 @@ Para revisar un brief:
 
 Los borradores pueden renderizarse para revisión interna con `--include-drafts`; permanecen con `noindex,nofollow` y viven bajo `/drafts/`.
 
+## Expansión transversal curada
+
+`content/transversal_source.json` abre el corpus a software y APIs, libros, gaming/media, viajes y servicios de consumo sin convertir una lista de productos en miles de permutaciones. Cada comparación publicada debe declarar exactamente dos entidades nombradas, dos fuentes primarias, facts por entidad, un `canonical_intent` y una señal cualitativa de demanda (`query-pattern` o `serp-observation`). La señal registra el patrón observado y su fecha; nunca afirma volumen de búsqueda.
+
+Generar o volver a generar sólo ese lote no toca las páginas históricas ni sus rutas afiliadas:
+
+```powershell
+python -m publisher transversal `
+  --source content/transversal_source.json `
+  --catalog content/transversal_catalog.json `
+  --output content/pages
+```
+
+El comando reemplaza únicamente `content/pages/transversal/`. Sus páginas siguen siendo merchant-agnostic: la fuente factual es la documentación, editorial, autor o proveedor; una búsqueda Amazon ES se añade sólo para libros cuando es útil como `AffiliateRoute` y nunca aporta precio, stock, rating o especificaciones. El build publica hubs por macrofamilia bajo `/topics/` y escribe en el JSON derivado tanto `demand_evidence` como `entity_provenance`.
+
+Una expansión hacia 10k debe ampliar ese registro con entidades y consultas comprobadas, no aumentar la combinatoria. La regresión protege explícitamente las 4.000 rutas indexables previas y sus destinos afiliados, mientras permite sumar entradas V2 elegibles.
+
 ## Enlaces de Amazon
 
 Cada recurso admite un ASIN o ISBN-10:

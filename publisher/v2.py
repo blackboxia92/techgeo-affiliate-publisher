@@ -257,6 +257,23 @@ CATEGORY_SCHEMAS: Mapping[str, CategorySchema] = {
         )
     ),
     "software": CategorySchema("software", None),
+    # A deliberately small semantic mapping for work-level bibliographic
+    # records.  It reuses the V2 entity archetype rather than adding a book
+    # application or edition database.
+    "book": CategorySchema(
+        "book",
+        (
+            AttributeSchema("work_id", required=True, importance="core"),
+            AttributeSchema("author", required=True, importance="core"),
+            AttributeSchema("subjects", required=True, importance="core"),
+            AttributeSchema("record_scope", importance="supporting"),
+            AttributeSchema("selection_signal", importance="supporting"),
+        ),
+        minimum_entities=1,
+        minimum_sources=2,
+        minimum_comparable_fields=3,
+        allowed_intent_types=frozenset({"entity"}),
+    ),
     "robot-vacuum": CategorySchema(
         "robot-vacuum",
         (
@@ -341,6 +358,8 @@ def category_for_page(page: Page, raw: Mapping[str, Any] | None = None) -> str:
         return "hardware"
     if page.catalog_origin == "consumer-products-v1":
         return "consumer-product"
+    if page.catalog_origin == "open-library-books-v1":
+        return "book"
     return "software"
 
 
@@ -396,25 +415,45 @@ def adapt_legacy_page(page: Page, raw: Mapping[str, Any] | None = None) -> Legac
             id=f"source:{page.slug}:{position}",
             publisher=source.publisher,
             url=source.url,
-            source_type="legacy-primary",
+            source_type="official-primary" if (raw or {}).get("content_model") == "v2" else "legacy-primary",
             verified_at=page.updated_at,
         )
         for position, source in enumerate(page.sources, 1)
     )
+    source_ids_by_url = {source.url: source.id for source in sources}
+    provenance = (raw or {}).get("entity_provenance")
+    provenance_rows = provenance if isinstance(provenance, list) else []
     entities = tuple(
         Entity(
-            id=f"entity:{_identifier(alternative.name)}",
-            entity_type="product-or-service",
+            id=(
+                str(provenance_rows[position - 1].get("entity_id"))
+                if position <= len(provenance_rows)
+                and isinstance(provenance_rows[position - 1], Mapping)
+                and provenance_rows[position - 1].get("entity_id")
+                else f"entity:{_identifier(alternative.name)}"
+            ),
+            entity_type=(
+                str(provenance_rows[position - 1].get("entity_type"))
+                if position <= len(provenance_rows)
+                and isinstance(provenance_rows[position - 1], Mapping)
+                and provenance_rows[position - 1].get("entity_type")
+                else "product-or-service"
+            ),
             name=alternative.name,
             category=category,
             # Legacy specs retain their reviewed_at date, but do not claim a
             # per-field source that the old input never recorded.
             facts=tuple(
-                Fact(key=key, value=value, source_id=None, verified_at=page.updated_at)
+                Fact(
+                    key=key,
+                    value=value,
+                    source_id=source_ids_by_url.get(alternative.url) if (raw or {}).get("content_model") == "v2" else None,
+                    verified_at=page.updated_at,
+                )
                 for key, value in alternative.specs.items()
             ),
         )
-        for alternative in page.alternatives
+        for position, alternative in enumerate(page.alternatives, 1)
     )
     resource_entities: dict[str, str] = {entity.name.casefold(): entity.id for entity in entities}
     offers: list[Offer] = []
@@ -469,11 +508,12 @@ def adapt_legacy_page(page: Page, raw: Mapping[str, Any] | None = None) -> Legac
         )
     intent_type = str((raw or {}).get("intent_type") or "comparison")
     qualifier = str((raw or {}).get("audience") or (raw or {}).get("canonical_intent") or page.slug)
+    canonical_from_source = (raw or {}).get("canonical_intent")
     intent = Intent(
         kind=intent_type,
         entity_ids=tuple(entity.id for entity in entities),
         qualifier=qualifier,
-        canonical_intent=canonical_intent_key(
+        canonical_intent=str(canonical_from_source) if canonical_from_source else canonical_intent_key(
             category=category,
             intent_type=intent_type,
             entity_ids=(entity.id for entity in entities),

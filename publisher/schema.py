@@ -223,16 +223,29 @@ def load_page(path: Path) -> tuple[Page, dict[str, Any]]:
         answer_first=_text(raw["answer_first"], "answer_first", 40)
         if raw.get("answer_first") else None,
     )
-    _validate_page(page)
+    intent_type = _text(raw.get("intent_type", "comparison"), "intent_type")
+    if status == "reviewed" and raw.get("content_model") == "v2":
+        role = raw.get("publication_role")
+        if not isinstance(role, dict):
+            raise ContentError("reviewed V2 pages require an explicit publication_role")
+        kind = _text(role.get("kind"), "publication_role.kind")
+        if kind not in {"direct-monetization", "future-monetization", "demand-cluster", "semantic-infrastructure"}:
+            raise ContentError("publication_role.kind is not recognized")
+        if kind == "direct-monetization" and not resources:
+            raise ContentError("direct-monetization pages require an affiliate or merchant route")
+        if kind != "direct-monetization" and not _text(role.get("cluster"), "publication_role.cluster", 3):
+            raise ContentError("non-direct V2 pages require a commercial cluster")
+    _validate_page(page, intent_type=intent_type)
     return page, raw
 
 
-def _validate_page(page: Page) -> None:
+def _validate_page(page: Page, *, intent_type: str = "comparison") -> None:
     keys = [criterion.key for criterion in page.criteria]
     if len(keys) != len(set(keys)):
         raise ContentError("criterion keys must be unique")
-    if len(page.alternatives) < 2:
-        raise ContentError("at least two alternatives are required")
+    minimum_alternatives = 1 if intent_type == "entity" else 2
+    if len(page.alternatives) < minimum_alternatives:
+        raise ContentError(f"{intent_type} pages require at least {minimum_alternatives} alternative")
     missing = [
         f"{alternative.name}:{key}"
         for alternative in page.alternatives

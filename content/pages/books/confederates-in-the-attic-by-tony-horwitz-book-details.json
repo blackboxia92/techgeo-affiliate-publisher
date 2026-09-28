@@ -1,0 +1,129 @@
+{
+  "catalog_origin": "open-library-books-v1",
+  "catalog_entry_id": "open-library:OL2692554W",
+  "content_model": "v2",
+  "intent_type": "entity",
+  "slug": "confederates-in-the-attic-by-tony-horwitz-book-details",
+  "status": "reviewed",
+  "locale": "en",
+  "category": "book",
+  "book_topic": "travel",
+  "canonical_intent": "book:entity:book-ol2692554w:topic=travel",
+  "demand_evidence": {
+    "kind": "reader-signal-and-query-pattern",
+    "query": "best books for travel",
+    "observed_at": "2026-09-28",
+    "note": "Open Library's monthly ratings dump records 8 reader-rating events for this work. That is a selection signal, not a quality score or search-volume claim."
+  },
+  "publication_role": {
+    "kind": "direct-monetization",
+    "merchant": "amazon.es",
+    "route_type": "affiliate-search",
+    "cluster": "books/travel",
+    "note": "The work-level identity record has an Amazon ES search route for the exact title and author while its facts remain merchant-agnostic."
+  },
+  "entity_provenance": [
+    {
+      "entity_id": "book:OL2692554W",
+      "entity_type": "bibliographic-work",
+      "work_id": "OL2692554W",
+      "author_id": "OL393477A",
+      "source": {
+        "publisher": "Open Library",
+        "url": "https://openlibrary.org/works/OL2692554W"
+      },
+      "facts_verified_at": "2026-09-28"
+    }
+  ],
+  "title": "Confederates In The Attic by Tony Horwitz: work-level book details",
+  "meta_description": "Work-level bibliographic details for Confederates In The Attic by Tony Horwitz: Open Library ID, author, subjects, and edition-selection guidance without price or rating ",
+  "eyebrow": "Books: travel",
+  "intro": "Direct answer: Confederates In The Attic is an Open Library work-level record attributed to Tony Horwitz, with subjects including Travel; Influence; United States Civil War, 1861-1865; History; United states, history, civil war, 1861-1865, influence. This page identifies the work; it does not endorse a specific edition.",
+  "verdict": "Use this record to identify Confederates In The Attic before choosing an edition. Confirm the publisher, ISBN, translation, format, accessibility, and current availability on the exact edition page or retailer listing; none of those variable facts is asserted here.",
+  "updated_at": "2026-09-28",
+  "reviewed_by": "StackSignal bibliographic research desk",
+  "criteria": [
+    {
+      "key": "work_id",
+      "label": "Work identity",
+      "description": "Stable Open Library work identifier rather than an ISBN-specific product listing."
+    },
+    {
+      "key": "author",
+      "label": "Author",
+      "description": "Author identity linked to the corresponding Open Library author record."
+    },
+    {
+      "key": "subjects",
+      "label": "Recorded subjects",
+      "description": "Subjects supplied by the work-level Open Library record."
+    },
+    {
+      "key": "record_scope",
+      "label": "Record scope",
+      "description": "Work-level identity record; ISBN, publisher, language, and format are edition-specific."
+    },
+    {
+      "key": "selection_signal",
+      "label": "Discovery signal",
+      "description": "Reader-rating event count used only to select a bounded discovery corpus."
+    }
+  ],
+  "alternatives": [
+    {
+      "name": "Confederates In The Attic",
+      "url": "https://openlibrary.org/works/OL2692554W",
+      "summary": "A work-level Open Library record attributed to Tony Horwitz and selected from a reader-signalled travel discovery group.",
+      "specs": {
+        "work_id": "OL2692554W",
+        "author": "Tony Horwitz",
+        "subjects": "Travel; Influence; United States Civil War, 1861-1865; History; United states, history, civil war, 1861-1865, influence",
+        "record_scope": "Work-level bibliographic identity; edition-specific details are intentionally not collapsed into this record.",
+        "selection_signal": "8 Open Library reader-rating events in the monthly dump; not a quality score."
+      }
+    }
+  ],
+  "faq": [
+    {
+      "question": "What does this page identify about Confederates In The Attic?",
+      "answer": "It identifies the Open Library work record OL2692554W, its linked author record, recorded subjects, and work-level first-publication context. It deliberately does not collapse distinct ISBN editions into one offer."
+    },
+    {
+      "question": "Why is Confederates In The Attic included under travel?",
+      "answer": "Open Library records subjects including Travel; Influence; United States Civil War, 1861-1865; History; United states, history, civil war, 1861-1865, influence. The record was selected with an observable reader-rating count, while the stated query is a book-discovery pattern rather than a claimed search-volume measurement."
+    },
+    {
+      "question": "Does this page claim a current price, rating, stock status, publisher, or ISBN?",
+      "answer": "No. Those facts are edition- and market-specific. Check the cited work record and the exact current edition or retailer page before buying or citing a particular format."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Open Library work record",
+      "publisher": "Open Library",
+      "url": "https://openlibrary.org/works/OL2692554W"
+    },
+    {
+      "label": "Open Library author record",
+      "publisher": "Open Library",
+      "url": "https://openlibrary.org/authors/OL393477A"
+    }
+  ],
+  "resources": [
+    {
+      "title": "Confederates In The Attic",
+      "target_url": "https://www.amazon.es/s?k=Confederates+In+The+Attic+Tony+Horwitz&tag=blackboxia92-21",
+      "note": "Amazon ES is an optional route to locate a current exact edition. Confirm ISBN, language, publisher, format, price, stock, and seller before purchase."
+    }
+  ],
+  "buyer_consensus": {
+    "status": "No buyer-review or rating claim is made. Open Library rating events are used only as a source-selection signal.",
+    "pros": [
+      "Work ID OL2692554W with recorded subjects and an author record."
+    ],
+    "cons": [
+      "Publisher, ISBN, format, translation, price, stock, and suitability remain edition-specific checks."
+    ],
+    "verdict": "A bibliographic identity record, not a product recommendation."
+  }
+}

@@ -54,9 +54,10 @@ def validate_product_invariants(
             legacy_affiliate_urls.extend(destinations)
 
     failures: list[str] = []
-    # These are immutable legacy invariants.  New reviewed V2 intent pages are
-    # intentionally allowed to grow, so total guide/sitemap/route counts are
-    # validated against the current build below instead of a frozen total.
+    # These are protected production invariants.  Aggregate totals are not
+    # immutable: reviewed V2 additions are expected to grow them.  Comparing
+    # the legacy route and affiliate digests keeps expansion from rewriting
+    # the existing commercial corpus or its outbound routes.
     for field, actual in (
         ("commercial_pages", metrics.commercial_pages),
         ("legacy_indexable_pages", len(legacy_indexable)),

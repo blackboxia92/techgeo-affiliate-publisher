@@ -1,0 +1,129 @@
+{
+  "catalog_origin": "open-library-books-v1",
+  "catalog_entry_id": "open-library:OL19361721W",
+  "content_model": "v2",
+  "intent_type": "entity",
+  "slug": "the-4-percent-universe-dark-matter-dark-energy-and-the-race-to-discover-the-rest-of-reality-by-richard-panek-book-details",
+  "status": "reviewed",
+  "locale": "en",
+  "category": "book",
+  "book_topic": "art",
+  "canonical_intent": "book:entity:book-ol19361721w:topic=art",
+  "demand_evidence": {
+    "kind": "reader-signal-and-query-pattern",
+    "query": "best books about art",
+    "observed_at": "2026-09-28",
+    "note": "Open Library's monthly ratings dump records 5 reader-rating events for this work. That is a selection signal, not a quality score or search-volume claim."
+  },
+  "publication_role": {
+    "kind": "direct-monetization",
+    "merchant": "amazon.es",
+    "route_type": "affiliate-search",
+    "cluster": "books/art",
+    "note": "The work-level identity record has an Amazon ES search route for the exact title and author while its facts remain merchant-agnostic."
+  },
+  "entity_provenance": [
+    {
+      "entity_id": "book:OL19361721W",
+      "entity_type": "bibliographic-work",
+      "work_id": "OL19361721W",
+      "author_id": "OL224936A",
+      "source": {
+        "publisher": "Open Library",
+        "url": "https://openlibrary.org/works/OL19361721W"
+      },
+      "facts_verified_at": "2026-09-28"
+    }
+  ],
+  "title": "The 4-Percent Universe: Dark Matter, Dark Energy, and the Race to Discover the Rest of Reality by Richard Panek: work-level book details",
+  "meta_description": "Work-level bibliographic details for The 4-Percent Universe: Dark Matter, Dark Energy, and the Race to Discover the Rest of Reality by Richard Panek: Open Library ID, aut",
+  "eyebrow": "Books: art",
+  "intro": "Direct answer: The 4-Percent Universe: Dark Matter, Dark Energy, and the Race to Discover the Rest of Reality is an Open Library work-level record attributed to Richard Panek, with subjects including Dark energy (Astronomy); Astrophysics; Dark matter (Astronomy); Physics; Cosmology. This page identifies the work; it does not endorse a specific edition.",
+  "verdict": "Use this record to identify The 4-Percent Universe: Dark Matter, Dark Energy, and the Race to Discover the Rest of Reality before choosing an edition. Confirm the publisher, ISBN, translation, format, accessibility, and current availability on the exact edition page or retailer listing; none of those variable facts is asserted here.",
+  "updated_at": "2026-09-28",
+  "reviewed_by": "StackSignal bibliographic research desk",
+  "criteria": [
+    {
+      "key": "work_id",
+      "label": "Work identity",
+      "description": "Stable Open Library work identifier rather than an ISBN-specific product listing."
+    },
+    {
+      "key": "author",
+      "label": "Author",
+      "description": "Author identity linked to the corresponding Open Library author record."
+    },
+    {
+      "key": "subjects",
+      "label": "Recorded subjects",
+      "description": "Subjects supplied by the work-level Open Library record."
+    },
+    {
+      "key": "record_scope",
+      "label": "Record scope",
+      "description": "Work-level identity record; ISBN, publisher, language, and format are edition-specific."
+    },
+    {
+      "key": "selection_signal",
+      "label": "Discovery signal",
+      "description": "Reader-rating event count used only to select a bounded discovery corpus."
+    }
+  ],
+  "alternatives": [
+    {
+      "name": "The 4-Percent Universe: Dark Matter, Dark Energy, and the Race to Discover the Rest of Reality",
+      "url": "https://openlibrary.org/works/OL19361721W",
+      "summary": "A work-level Open Library record attributed to Richard Panek and selected from a reader-signalled art discovery group.",
+      "specs": {
+        "work_id": "OL19361721W",
+        "author": "Richard Panek",
+        "subjects": "Dark energy (Astronomy); Astrophysics; Dark matter (Astronomy); Physics; Cosmology",
+        "record_scope": "Work-level bibliographic identity; edition-specific details are intentionally not collapsed into this record.",
+        "selection_signal": "5 Open Library reader-rating events in the monthly dump; not a quality score."
+      }
+    }
+  ],
+  "faq": [
+    {
+      "question": "What does this page identify about The 4-Percent Universe: Dark Matter, Dark Energy, and the Race to Discover the Rest of Reality?",
+      "answer": "It identifies the Open Library work record OL19361721W, its linked author record, recorded subjects, and work-level first-publication context. It deliberately does not collapse distinct ISBN editions into one offer."
+    },
+    {
+      "question": "Why is The 4-Percent Universe: Dark Matter, Dark Energy, and the Race to Discover the Rest of Reality included under art?",
+      "answer": "Open Library records subjects including Dark energy (Astronomy); Astrophysics; Dark matter (Astronomy); Physics; Cosmology. The record was selected with an observable reader-rating count, while the stated query is a book-discovery pattern rather than a claimed search-volume measurement."
+    },
+    {
+      "question": "Does this page claim a current price, rating, stock status, publisher, or ISBN?",
+      "answer": "No. Those facts are edition- and market-specific. Check the cited work record and the exact current edition or retailer page before buying or citing a particular format."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Open Library work record",
+      "publisher": "Open Library",
+      "url": "https://openlibrary.org/works/OL19361721W"
+    },
+    {
+      "label": "Open Library author record",
+      "publisher": "Open Library",
+      "url": "https://openlibrary.org/authors/OL224936A"
+    }
+  ],
+  "resources": [
+    {
+      "title": "The 4-Percent Universe: Dark Matter, Dark Energy, and the Race to Discover the Rest of Reality",
+      "target_url": "https://www.amazon.es/s?k=The+4-Percent+Universe%3A+Dark+Matter%2C+Dark+Energy%2C+and+the+Race+to+Discover+the+Rest+of+Reality+Richard+Panek&tag=blackboxia92-21",
+      "note": "Amazon ES is an optional route to locate a current exact edition. Confirm ISBN, language, publisher, format, price, stock, and seller before purchase."
+    }
+  ],
+  "buyer_consensus": {
+    "status": "No buyer-review or rating claim is made. Open Library rating events are used only as a source-selection signal.",
+    "pros": [
+      "Work ID OL19361721W with recorded subjects and an author record."
+    ],
+    "cons": [
+      "Publisher, ISBN, format, translation, price, stock, and suitability remain edition-specific checks."
+    ],
+    "verdict": "A bibliographic identity record, not a product recommendation."
+  }
+}

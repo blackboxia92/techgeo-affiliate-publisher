@@ -1,0 +1,138 @@
+{
+  "catalog_origin": "transversal-v1",
+  "catalog_entry_id": "transversal-0005",
+  "content_model": "v2",
+  "slug": "notion-vs-obsidian-for-personal-knowledge-management",
+  "status": "reviewed",
+  "locale": "en",
+  "category": "software",
+  "transversal_family": "software and services",
+  "intent_type": "comparison",
+  "canonical_intent": "software:comparison:entity-notion--entity-obsidian:audience=people-choosing-a-personal-knowledge-management-system",
+  "audience": "people choosing a personal knowledge management system",
+  "demand_evidence": {
+    "kind": "query-pattern",
+    "query": "Notion vs Obsidian personal knowledge management",
+    "observed_at": "2026-09-27",
+    "note": "The query expresses a distinct workflow choice between shared workspaces and local-file note systems."
+  },
+  "publication_role": {
+    "kind": "demand-cluster",
+    "cluster": "software and services",
+    "note": "An explicit observed decision-query pattern contributes to a commercial comparison cluster without asserting a current merchant route."
+  },
+  "entity_provenance": [
+    {
+      "entity_id": "notion",
+      "entity_type": "online-service",
+      "source": {
+        "label": "Notion guide to getting started",
+        "publisher": "Notion",
+        "url": "https://www.notion.com/help/guides/what-is-notion"
+      },
+      "facts_verified_at": "2026-09-27"
+    },
+    {
+      "entity_id": "obsidian",
+      "entity_type": "software",
+      "source": {
+        "label": "Obsidian help documentation",
+        "publisher": "Obsidian",
+        "url": "https://help.obsidian.md/"
+      },
+      "facts_verified_at": "2026-09-27"
+    }
+  ],
+  "title": "Notion vs Obsidian for personal knowledge management",
+  "meta_description": "Notion vs Obsidian for people choosing a personal knowledge management system: documented workflows, constraints, and a source-backed decision summary.",
+  "eyebrow": "software and services comparison",
+  "intro": "This source-backed comparison addresses the observed query pattern “Notion vs Obsidian personal knowledge management” for people choosing a personal knowledge management system. It compares stable, documented workflows and constraints rather than volatile prices, inventory, ratings, or reviews.",
+  "verdict": "Choose Notion when a shared workspace with connected pages and databases matches the work. Choose Obsidian when local Markdown files and a customizable vault are the priority. Validate sharing, sync, export, backup, and organization needs before committing a knowledge base.",
+  "updated_at": "2026-09-28",
+  "reviewed_by": "StackSignal editorial research desk",
+  "criteria": [
+    {
+      "key": "model",
+      "label": "Option",
+      "description": "Named book, product, or service being evaluated."
+    },
+    {
+      "key": "workflow",
+      "label": "Primary workflow",
+      "description": "The documented job or workflow the option supports."
+    },
+    {
+      "key": "constraints",
+      "label": "Decision constraints",
+      "description": "Compatibility, ownership, or implementation limits to verify."
+    },
+    {
+      "key": "fit",
+      "label": "Best fit",
+      "description": "The stated use case for which the option is the stronger fit."
+    }
+  ],
+  "alternatives": [
+    {
+      "name": "Notion",
+      "url": "https://www.notion.com/help/guides/what-is-notion",
+      "summary": "A collaborative workspace documented around pages, databases, blocks, templates, and shared team workspaces.",
+      "specs": {
+        "model": "Notion",
+        "workflow": "Create connected pages and databases in a collaborative workspace.",
+        "constraints": "Confirm permissions, offline expectations, data structure, exports, and administration requirements before standardizing.",
+        "fit": "Teams that want a flexible shared workspace for knowledge and lightweight processes."
+      }
+    },
+    {
+      "name": "Obsidian",
+      "url": "https://help.obsidian.md/",
+      "summary": "A knowledge-base application documented around local Markdown files, links, plugins, and configurable vaults.",
+      "specs": {
+        "model": "Obsidian",
+        "workflow": "Organize notes as linked Markdown files in a local vault with optional plugins and sync choices.",
+        "constraints": "Confirm device sync, plugin policy, collaboration, backup, and local-file handling before standardizing.",
+        "fit": "People who prioritize local files and a customizable personal knowledge workflow."
+      }
+    }
+  ],
+  "faq": [
+    {
+      "question": "What query pattern justified this Notion vs Obsidian comparison?",
+      "answer": "The editorial backlog records the recurring query pattern “Notion vs Obsidian personal knowledge management” (query-pattern observed 2026-09-27). The query expresses a distinct workflow choice between shared workspaces and local-file note systems. This is a qualitative signal, not a claimed search-volume figure."
+    },
+    {
+      "question": "Does this comparison include live price, availability, ratings, or a discount claim?",
+      "answer": "No. Those values vary by plan, region, seller, edition, and time. The comparison links to primary documentation and, where relevant, an Amazon ES search route for the current listing."
+    },
+    {
+      "question": "How should a reader make the final choice?",
+      "answer": "Start with the documented workflow and constraints: Notion is described for Teams that want a flexible shared workspace for knowledge and lightweight processes; Obsidian is described for People who prioritize local files and a customizable personal knowledge workflow. Confirm current account, device, plan, regional, and edition details in the cited primary sources."
+    }
+  ],
+  "sources": [
+    {
+      "label": "Notion guide to getting started",
+      "publisher": "Notion",
+      "url": "https://www.notion.com/help/guides/what-is-notion"
+    },
+    {
+      "label": "Obsidian help documentation",
+      "publisher": "Obsidian",
+      "url": "https://help.obsidian.md/"
+    }
+  ],
+  "resources": [],
+  "buyer_consensus": {
+    "status": "No buyer-review dataset is claimed; this is a primary-source editorial synthesis.",
+    "pros": [
+      "A collaborative workspace documented around pages, databases, blocks, templates, and shared team workspaces.",
+      "A knowledge-base application documented around local Markdown files, links, plugins, and configurable vaults."
+    ],
+    "cons": [
+      "Confirm permissions, offline expectations, data structure, exports, and administration requirements before standardizing.",
+      "Confirm device sync, plugin policy, collaboration, backup, and local-file handling before standardizing."
+    ],
+    "verdict": "Choose Notion when a shared workspace with connected pages and databases matches the work. Choose Obsidian when local Markdown files and a customizable vault are the priority. Validate sharing, sync, export, backup, and organization needs before committing a knowledge base."
+  }
+}
